@@ -1,0 +1,342 @@
+import Navbar from "./navbar";
+import Footer from "./footer";
+import ContactForm from "./contact-form";
+import { Button } from "@/components/ui/button";
+
+function Home() {
+  return (
+    <div className="min-h-screen flex flex-col bg-white">
+      <Navbar />
+      <main className="flex-1">
+        {/* Hero Section */}
+        <div className="container mx-auto py-16 md:py-24">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6 px-4 md:px-0">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                Revolucione o seu <span className="text-gray-500">Negócio</span>{" "}
+                conosco
+              </h1>
+              <p className="text-lg text-gray-600 max-w-lg mb-12">
+                Desenvolvemos websites inovadores e personalizados que
+                potencializam o crescimento do seu negócio online. Transforme
+                sua presença digital com soluções à medida.
+              </p>
+              <a href="/contact">
+                <Button className="rounded-full text-lg px-8 py-6 bg-black text-white hover:bg-gray-800">
+                  Contacte-nos
+                </Button>
+              </a>
+            </div>
+            <div className="relative h-[500px] md:h-[600px]">
+              <img
+                src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1000"
+                alt="AI Robot"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Services Section */}
+        <div className="py-16 md:py-24 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-0">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-2">Os nossos serviços</h2>
+              <div className="w-12 h-1 bg-black mx-auto"></div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Web Design & Development",
+                  description:
+                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+                },
+                {
+                  title: "Sistema de Reservas",
+                  description:
+                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+                },
+                {
+                  title: "Chat IA",
+                  description:
+                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+                },
+              ].map((service, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="w-12 h-12 bg-black text-white flex items-center justify-center rounded-full mb-4">
+                    <span className="text-xl">&lt;/&gt;</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+                  <p className="text-gray-600">{service.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <Button
+                variant="outline"
+                className="rounded-full border-2 border-black"
+              >
+                Ver mais
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Reasons Section */}
+        <div className="py-16 md:py-24">
+          <div className="container mx-auto px-4 md:px-0">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold">
+                As razões pelo qual nos deve escolher
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="grid grid-cols-2 gap-4">
+                <img
+                  src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b"
+                  alt="Product 1"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8c"
+                  alt="Product 2"
+                  className="w-full h-48 object-cover rounded-lg mt-8"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8d"
+                  alt="Product 3"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8e"
+                  alt="Product 4"
+                  className="w-full h-48 object-cover rounded-lg mt-8"
+                />
+              </div>
+
+              <div className="space-y-8">
+                {[
+                  {
+                    title: "Tech architecture",
+                    description:
+                      "We have incredible apps into microservices. Decoupling the code allows teams to move faster and more independently.",
+                  },
+                  {
+                    title: "Tech architecture",
+                    description:
+                      "We have incredible apps into microservices. Decoupling the code allows teams to move faster and more independently.",
+                  },
+                  {
+                    title: "Tech architecture",
+                    description:
+                      "We have incredible apps into microservices. Decoupling the code allows teams to move faster and more independently.",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="space-y-2">
+                    <h3 className="text-xl font-bold">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Portfolio Section */}
+        <div className="py-16 md:py-24 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-0">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">
+                Websites personalizados para todo o tipo de empresas
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12">
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+                <img
+                  src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48"
+                  alt="Personal Trainer Website"
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-4">Personal Trainer</h3>
+                  <p className="text-gray-600 mb-6">
+                    A Website is an extension of yourself and we can help you to
+                    express it properly. In a digital age, your website is your
+                    number one marketing asset.
+                  </p>
+                  <Button
+                    variant="link"
+                    className="text-black hover:text-gray-600"
+                  >
+                    Explore website →
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg overflow-hidden shadow-lg">
+                <img
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf"
+                  alt="Restaurant Website"
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-4">Restaurant</h3>
+                  <p className="text-gray-600 mb-6">
+                    A Website is an extension of yourself and we can help you to
+                    express it properly. In a digital age, your website is your
+                    number one marketing asset.
+                  </p>
+                  <Button
+                    variant="link"
+                    className="text-black hover:text-gray-600"
+                  >
+                    Explore website →
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Testimonials Section */}
+        <div className="py-16 md:py-24">
+          <div className="container mx-auto px-4 md:px-0">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">O que dizem sobre nós</h2>
+            </div>
+
+            <div className="relative">
+              <div className="flex gap-8 justify-center items-center">
+                {[
+                  {
+                    name: "Katherine Lee",
+                    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
+                    rating: 5,
+                    text: "Without any doubt I recommend Alcyone Solutions as one of the best web design and digital marketing agencies. One of the best agencies I've came across so far. Would be hesitated to introduce their work to someone else.",
+                  },
+                  {
+                    name: "Katherine Lee",
+                    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
+                    rating: 5,
+                    text: "Without any doubt I recommend Alcyone Solutions as one of the best web design and digital marketing agencies.",
+                  },
+                  {
+                    name: "Bryan Khan",
+                    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
+                    rating: 5,
+                    text: "Without any doubt I recommend Alcyone Solutions as one of the best web design and digital marketing agencies.",
+                  },
+                  {
+                    name: "Katherine Lee",
+                    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
+                    rating: 5,
+                    text: "Without any doubt I recommend Alcyone Solutions as one of the best web design and digital marketing agencies.",
+                  },
+                  {
+                    name: "Katherine Lee",
+                    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=5",
+                    rating: 5,
+                    text: "Without any doubt I recommend Alcyone Solutions as one of the best web design and digital marketing agencies.",
+                  },
+                ].map((testimonial, index) => (
+                  <div key={index} className="text-center w-64">
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="w-16 h-16 mx-auto mb-4 rounded-full"
+                    />
+                    <div className="flex justify-center mb-2">
+                      {"★".repeat(testimonial.rating)}
+                    </div>
+                    <p className="text-sm text-gray-600 mb-2">
+                      {testimonial.text}
+                    </p>
+                    <p className="font-semibold">{testimonial.name}</p>
+                  </div>
+                ))}
+              </div>
+              <button className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center">
+                ←
+              </button>
+              <button className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center">
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="py-16 md:py-24 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-0">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">FAQ's</h2>
+            </div>
+
+            <div className="max-w-3xl mx-auto space-y-6">
+              {[
+                {
+                  question: "What is UX design?",
+                  answer:
+                    "UX design stands for User Experience design. It is the process of designing digital or physical products that are easy to use, intuitive, and enjoyable for the user.",
+                },
+                {
+                  question: "What are the key principles of UX design?",
+                  answer:
+                    "The key principles include usability, accessibility, hierarchy, consistency, and feedback.",
+                },
+                {
+                  question: "What is the difference between UX and UI design?",
+                  answer:
+                    "While UX focuses on the overall experience and functionality, UI (User Interface) design focuses on the visual elements and layout.",
+                },
+                {
+                  question: "What is a wireframe?",
+                  answer:
+                    "A wireframe is a basic visual guide that represents the skeletal framework of a website or app.",
+                },
+              ].map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow-sm cursor-pointer hover:shadow-md transition-shadow group"
+                  onClick={(e) => {
+                    const answer = e.currentTarget.querySelector(".answer");
+                    const icon = e.currentTarget.querySelector(".icon");
+                    if (answer.classList.contains("max-h-0")) {
+                      answer.classList.remove("max-h-0", "opacity-0");
+                      answer.classList.add("max-h-[200px]", "opacity-100");
+                      icon.classList.add("rotate-45");
+                    } else {
+                      answer.classList.remove("max-h-[200px]", "opacity-100");
+                      answer.classList.add("max-h-0", "opacity-0");
+                      icon.classList.remove("rotate-45");
+                    }
+                  }}
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">{faq.question}</h3>
+                    <span className="text-2xl transition-transform duration-300 icon">
+                      +
+                    </span>
+                  </div>
+                  <div className="answer overflow-hidden transition-all duration-300 max-h-0 opacity-0">
+                    <div className="mt-4 text-gray-600">{faq.answer}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default Home;
