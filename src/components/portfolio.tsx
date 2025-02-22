@@ -1,6 +1,7 @@
 import Navbar from "./navbar";
 import Footer from "./footer";
 import { Button } from "@/components/ui/button";
+import Counter from "./counter-animation";
 
 export default function Portfolio() {
   return (
@@ -107,13 +108,15 @@ export default function Portfolio() {
           <div className="container mx-auto px-4 md:px-0">
             <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
-                { number: "50+", label: "Projetos Concluídos" },
-                { number: "30+", label: "Clientes Satisfeitos" },
-                { number: "5+", label: "Anos de Experiência" },
-                { number: "100%", label: "Taxa de Satisfação" },
+                { number: 50, label: "Projetos Concluídos", suffix: "+" },
+                { number: 30, label: "Clientes Satisfeitos", suffix: "+" },
+                { number: 5, label: "Anos de Experiência", suffix: "+" },
+                { number: 100, label: "Taxa de Satisfação", suffix: "%" },
               ].map((stat, index) => (
                 <div key={index}>
-                  <div className="text-4xl font-bold mb-2">{stat.number}</div>
+                  <div className="text-4xl font-bold mb-2">
+                    <Counter end={stat.number} suffix={stat.suffix} />
+                  </div>
                   <div className="text-gray-400">{stat.label}</div>
                 </div>
               ))}

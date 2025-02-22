@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="w-full bg-black text-white py-8 mt-auto px-4 md:px-0">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-4">
+          <div className="space-y-8">
             <h3 className="text-xl font-bold">PIXEL WEB</h3>
             <a href="/contact">
               <Button

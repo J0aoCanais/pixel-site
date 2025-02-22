@@ -1,0 +1,33 @@
+@layer components {
+  .portfolio-grid {
+    @apply grid md:grid-cols-3 gap-8 px-4 md:px-0;
+  }
+
+  .portfolio-item {
+    @apply group relative overflow-hidden rounded-lg cursor-pointer;
+  }
+
+  .portfolio-image {
+    @apply w-full h-72 object-cover transition-transform group-hover:scale-110;
+  }
+
+  .portfolio-overlay {
+    @apply absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center items-center text-white p-6;
+  }
+
+  .stats-section {
+    @apply py-16 md:py-24 bg-black text-white;
+  }
+
+  .stats-grid {
+    @apply grid md:grid-cols-4 gap-8 text-center;
+  }
+
+  .stat-number {
+    @apply text-4xl font-bold mb-2;
+  }
+
+  .stat-label {
+    @apply text-gray-400;
+  }
+}

@@ -1,0 +1,25 @@
+@layer components {
+  .navbar {
+    @apply w-full py-4 px-4 md:px-0;
+  }
+
+  .navbar-container {
+    @apply container mx-auto flex justify-between items-center;
+  }
+
+  .navbar-brand {
+    @apply text-xl font-bold;
+  }
+
+  .navbar-menu {
+    @apply hidden md:flex gap-6 items-center;
+  }
+
+  .navbar-link {
+    @apply hover:text-gray-600 transition-colors duration-300;
+  }
+
+  .navbar-button {
+    @apply rounded-full border-2 transition-all duration-300 hover:scale-105;
+  }
+}

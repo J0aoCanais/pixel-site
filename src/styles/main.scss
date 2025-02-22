@@ -1,0 +1,8 @@
+@use "variables";
+@use "mixins";
+
+// Import component styles
+@import "components/navbar";
+@import "components/footer";
+@import "components/contact-form";
+@import "components/portfolio";

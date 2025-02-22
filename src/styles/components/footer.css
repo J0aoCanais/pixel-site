@@ -1,0 +1,29 @@
+@layer components {
+  .footer {
+    @apply w-full bg-black text-white py-8 mt-auto px-4 md:px-0;
+  }
+
+  .footer-container {
+    @apply container mx-auto;
+  }
+
+  .footer-content {
+    @apply flex flex-col md:flex-row justify-between items-start md:items-center gap-8;
+  }
+
+  .footer-nav {
+    @apply grid grid-cols-2 md:flex gap-8;
+  }
+
+  .footer-link {
+    @apply text-white hover:text-gray-300;
+  }
+
+  .footer-social {
+    @apply w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black;
+  }
+
+  .footer-bottom {
+    @apply mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4;
+  }
+}

@@ -1,0 +1,83 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.portfolio {
+  &-grid {
+    display: grid;
+    gap: 2rem;
+    padding: 0 1rem;
+
+    @include tablet {
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0;
+    }
+  }
+
+  &-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius;
+    cursor: pointer;
+
+    &:hover {
+      .portfolio-image {
+        transform: scale(1.1);
+      }
+
+      .portfolio-overlay {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-image {
+    width: 100%;
+    height: 18rem;
+    object-fit: cover;
+    @include transition(transform);
+  }
+
+  &-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    @include transition(opacity);
+    @include flex-center;
+    flex-direction: column;
+    color: white;
+    padding: 1.5rem;
+  }
+}
+
+.stats {
+  &-section {
+    padding: 4rem 0;
+    background-color: black;
+    color: white;
+
+    @include tablet {
+      padding: 6rem 0;
+    }
+  }
+
+  &-grid {
+    display: grid;
+    gap: 2rem;
+    text-align: center;
+
+    @include tablet {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &-number {
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  &-label {
+    color: hsl(0, 0%, 75%);
+  }
+}
