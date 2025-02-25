@@ -6,7 +6,13 @@ export default function Navbar() {
   return (
     <nav className="w-full py-4 px-4 md:px-0">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-xl font-bold">PIXEL WEB</h1>
+        <a href="/" className="cursor-pointer">
+          <img
+            src="/src/assets/PIXEL WEB.svg"
+            alt="PIXEL WEB"
+            className="h-6"
+          />
+        </a>
 
         {/* Mobile Menu */}
         <Sheet>
@@ -19,8 +25,7 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent side="right" className="w-full border-0 p-0">
             <div className="h-full w-full bg-white text-black px-4 py-8 flex flex-col">
-              <div className="flex justify-between items-center mb-12">
-                <h2 className="text-xl font-bold">PIXEL WEB</h2>
+              <div className="flex justify-end mb-12">
                 <SheetTrigger>
                   <X className="h-6 w-6 transition-transform duration-300 hover:rotate-90 hover:scale-110" />
                 </SheetTrigger>
@@ -66,21 +71,21 @@ export default function Navbar() {
                 <div className="flex justify-center gap-6 mt-8">
                   <a
                     href="#"
-                    className="text-black hover:text-gray-600 transition-colors duration-300"
+                    className="text-black hover:text-gray-600 transition-colors duration-300 text-xl"
                   >
-                    𝕏
+                    <i className="fab fa-instagram"></i>
                   </a>
                   <a
                     href="#"
-                    className="text-black hover:text-gray-600 transition-colors duration-300"
+                    className="text-black hover:text-gray-600 transition-colors duration-300 text-xl"
                   >
-                    in
+                    <i className="fab fa-whatsapp"></i>
                   </a>
                   <a
                     href="#"
-                    className="text-black hover:text-gray-600 transition-colors duration-300"
+                    className="text-black hover:text-gray-600 transition-colors duration-300 text-xl"
                   >
-                    fb
+                    <i className="fab fa-facebook"></i>
                   </a>
                 </div>
               </div>
@@ -117,7 +122,7 @@ export default function Navbar() {
           <a href="/contact">
             <Button
               variant="outline"
-              className="rounded-full border-2 transition-all duration-300 hover:scale-105"
+              className="rounded-full border-2 border-white bg-black text-white transition-all duration-300 hover:scale-105 hover:bg-gray-800"
             >
               Contacte-nos
             </Button>

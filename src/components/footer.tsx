@@ -5,12 +5,18 @@ export default function Footer() {
     <footer className="w-full bg-black text-white py-8 mt-auto px-4 md:px-0">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-8">
-            <h3 className="text-xl font-bold">PIXEL WEB</h3>
+          <div className="space-y-16">
+            <a href="/" className="cursor-pointer">
+              <img
+                src="/src/assets/PIXEL WEB.svg"
+                alt="PIXEL WEB"
+                className="h-6 invert font-bold"
+              />
+            </a>
             <a href="/contact">
               <Button
                 variant="outline"
-                className="rounded-full border-2 border-white text-black hover:bg-white hover:text-black"
+                className="rounded-full border-2 border-white text-white bg-black hover:bg-gray-800"
               >
                 Contacte-nos
               </Button>
@@ -55,10 +61,13 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-400 order-1 md:order-none">
             Designed and developed by PIXEL WEB
           </p>
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-sm text-gray-400 text-center md:text-left">
+          <p className="text-sm text-gray-400 order-2 md:order-none">
+            © 2024. All rights reserved.
+          </p>
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-sm text-gray-400 text-center md:text-left order-3 md:order-none">
             <a href="#" className="hover:text-white">
               Terms of Service
             </a>
@@ -69,7 +78,6 @@ export default function Footer() {
               Cookies
             </a>
           </div>
-          <p className="text-sm text-gray-400">© 2024. All rights reserved.</p>
         </div>
       </div>
     </footer>
