@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
+  const location = useLocation();
+  const isContactPage = location.pathname === "/contact";
   return (
     <nav className="w-full py-4 px-4 md:px-0">
       <div className="container mx-auto flex justify-between items-center">
@@ -62,7 +65,7 @@ export default function Navbar() {
                 <a href="/contact">
                   <Button
                     variant="outline"
-                    className="w-full rounded-full border-2 border-black text-black transition-all duration-300 hover:bg-black hover:text-white hover:scale-[1.02] active:scale-100"
+                    className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 ${isContactPage ? "border-black bg-white text-black hover:bg-gray-50" : "border-white bg-black text-white hover:bg-gray-800"}`}
                   >
                     Contacte-nos
                   </Button>
@@ -122,7 +125,7 @@ export default function Navbar() {
           <a href="/contact">
             <Button
               variant="outline"
-              className="rounded-full border-2 border-white bg-black text-white transition-all duration-300 hover:scale-105 hover:bg-gray-800"
+              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 ${isContactPage ? "border-black bg-white text-black hover:bg-gray-50" : "border-white bg-black text-white hover:bg-gray-800"}`}
             >
               Contacte-nos
             </Button>

@@ -4,8 +4,8 @@ export default function Footer() {
   return (
     <footer className="w-full bg-black text-white py-8 mt-auto px-4 md:px-0">
       <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="space-y-16">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col items-center md:items-start gap-8 w-full md:w-auto">
             <a href="/" className="cursor-pointer">
               <img
                 src="/src/assets/PIXEL WEB.svg"
@@ -13,17 +13,23 @@ export default function Footer() {
                 className="h-6 invert font-bold"
               />
             </a>
-            <a href="/contact">
-              <Button
-                variant="outline"
-                className="rounded-full border-2 border-white text-white bg-black hover:bg-gray-800"
-              >
-                Contacte-nos
-              </Button>
-            </a>
+            <div className="flex flex-wrap justify-center gap-6 md:hidden">
+              <a href="/" className="text-white hover:text-gray-300">
+                Home
+              </a>
+              <a href="/services" className="text-white hover:text-gray-300">
+                Services
+              </a>
+              <a href="/prices" className="text-white hover:text-gray-300">
+                Preços
+              </a>
+              <a href="/portfolio" className="text-white hover:text-gray-300">
+                Portefólio
+              </a>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 md:flex gap-8">
+          <div className="hidden md:flex gap-8">
             <a href="/" className="text-white hover:text-gray-300">
               Home
             </a>
@@ -38,25 +44,35 @@ export default function Footer() {
             </a>
           </div>
 
-          <div className="flex gap-4">
-            <a
-              href="#"
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black"
-            >
-              𝕏
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <a href="/contact">
+              <Button
+                variant="outline"
+                className="rounded-full border-2 border-white text-white bg-black hover:bg-gray-800"
+              >
+                Contacte-nos
+              </Button>
             </a>
-            <a
-              href="#"
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black"
-            >
-              in
-            </a>
-            <a
-              href="#"
-              className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black"
-            >
-              fb
-            </a>
+            <div className="flex gap-4">
+              <a
+                href="#"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black text-xl"
+              >
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a
+                href="#"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black text-xl"
+              >
+                <i className="fab fa-facebook"></i>
+              </a>
+              <a
+                href="#"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black text-xl"
+              >
+                <i className="fab fa-whatsapp"></i>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -65,7 +81,7 @@ export default function Footer() {
             Designed and developed by PIXEL WEB
           </p>
           <p className="text-sm text-gray-400 order-2 md:order-none">
-            © 2024. All rights reserved.
+            © 2025. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-sm text-gray-400 text-center md:text-left order-3 md:order-none">
             <a href="#" className="hover:text-white">
