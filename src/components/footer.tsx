@@ -20,9 +20,6 @@ export default function Footer() {
               <a href="/services" className="text-white hover:text-gray-300">
                 Services
               </a>
-              <a href="/prices" className="text-white hover:text-gray-300">
-                Preços
-              </a>
               <a href="/portfolio" className="text-white hover:text-gray-300">
                 Portefólio
               </a>
@@ -36,9 +33,6 @@ export default function Footer() {
             <a href="/services" className="text-white hover:text-gray-300">
               Services
             </a>
-            <a href="/prices" className="text-white hover:text-gray-300">
-              Preços
-            </a>
             <a href="/portfolio" className="text-white hover:text-gray-300">
               Portefólio
             </a>
@@ -48,7 +42,7 @@ export default function Footer() {
             <a href="/contact">
               <Button
                 variant="outline"
-                className="rounded-full border-2 border-white text-white bg-black hover:bg-gray-800"
+                className="rounded-full border-2 border-white text-white bg-black hover:bg-white hover:text-black"
               >
                 Contacte-nos
               </Button>
@@ -56,21 +50,21 @@ export default function Footer() {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black text-xl"
+                className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl"
               >
-                <i className="fab fa-instagram"></i>
+                <i className="fab fa-instagram flex items-center justify-center w-full h-full"></i>
               </a>
               <a
                 href="#"
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black text-xl"
+                className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl"
               >
-                <i className="fab fa-facebook"></i>
+                <i className="fab fa-facebook flex items-center justify-center w-full h-full"></i>
               </a>
               <a
                 href="#"
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-black text-xl"
+                className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl"
               >
-                <i className="fab fa-whatsapp"></i>
+                <i className="fab fa-whatsapp flex items-center justify-center w-full h-full"></i>
               </a>
             </div>
           </div>
