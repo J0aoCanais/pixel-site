@@ -8,7 +8,7 @@ export default function Navbar() {
   const isContactPage = location.pathname === "/contact";
   return (
     <nav className="w-full py-4 px-4 md:px-0">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center relative">
         <a href="/" className="cursor-pointer">
           <img
             src="/src/assets/PIXEL WEB.svg"
@@ -47,12 +47,6 @@ export default function Navbar() {
                   </span>
                   <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="/prices" className="relative group">
-                  <span className="transition-colors duration-300 group-hover:text-gray-400">
-                    Preços
-                  </span>
-                  <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                </a>
                 <a href="/portfolio" className="relative group">
                   <span className="transition-colors duration-300 group-hover:text-gray-400">
                     Portefólio
@@ -65,7 +59,7 @@ export default function Navbar() {
                 <a href="/contact">
                   <Button
                     variant="outline"
-                    className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 ${isContactPage ? "border-black bg-white text-black hover:bg-gray-50" : "border-white bg-black text-white hover:bg-gray-800"}`}
+                    className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-black bg-black text-white hover:bg-white hover:text-black"}`}
                   >
                     Contacte-nos
                   </Button>
@@ -74,19 +68,19 @@ export default function Navbar() {
                 <div className="flex justify-center gap-6 mt-8">
                   <a
                     href="#"
-                    className="text-black hover:text-gray-600 transition-colors duration-300 text-xl"
+                    className="text-black hover:text-gray-900 transition-colors duration-300 text-xl"
                   >
                     <i className="fab fa-instagram"></i>
                   </a>
                   <a
                     href="#"
-                    className="text-black hover:text-gray-600 transition-colors duration-300 text-xl"
+                    className="text-black hover:text-gray-900 transition-colors duration-300 text-xl"
                   >
                     <i className="fab fa-whatsapp"></i>
                   </a>
                   <a
                     href="#"
-                    className="text-black hover:text-gray-600 transition-colors duration-300 text-xl"
+                    className="text-black hover:text-gray-900 transition-colors duration-300 text-xl"
                   >
                     <i className="fab fa-facebook"></i>
                   </a>
@@ -98,42 +92,37 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 items-center">
-          <a
-            href="/"
-            className="hover:text-gray-600 transition-colors duration-300"
-          >
-            Home
+          <a href="/" className="relative group">
+            <span>Home</span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a
-            href="/services"
-            className="hover:text-gray-600 transition-colors duration-300"
-          >
-            Services
+          <a href="/services" className="relative group">
+            <span>Services</span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a
-            href="/prices"
-            className="hover:text-gray-600 transition-colors duration-300"
-          >
-            Preços
+          <a href="/portfolio" className="relative group">
+            <span>Portefólio</span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a
-            href="/portfolio"
-            className="hover:text-gray-600 transition-colors duration-300"
-          >
-            Portefólio
-          </a>
+        </div>
+
+        <div className="hidden md:flex items-center gap-4">
+          <div className="flex gap-2 mr-4">
+            <span className="cursor-pointer hover:text-gray-900 transition-colors duration-300">
+              PT
+            </span>
+            <span className="cursor-pointer hover:text-gray-900 transition-colors duration-300">
+              EN
+            </span>
+          </div>
           <a href="/contact">
             <Button
               variant="outline"
-              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 ${isContactPage ? "border-black bg-white text-black hover:bg-gray-50" : "border-white bg-black text-white hover:bg-gray-800"}`}
+              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 hover:border-black ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-white bg-black text-white hover:bg-white hover:text-black"}`}
             >
               Contacte-nos
             </Button>
           </a>
-          <div className="flex gap-2">
-            <span>PT</span>
-            <span>EN</span>
-          </div>
         </div>
       </div>
     </nav>

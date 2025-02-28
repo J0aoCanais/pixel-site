@@ -21,17 +21,17 @@ export default function Home() {
                 potencializam o crescimento do seu negócio online. Transforme
                 sua presença digital com soluções à medida.
               </p>
-              <a href="/contact">
-                <Button className="rounded-full text-lg px-8 py-6 bg-black text-white hover:bg-gray-800">
+              <a href="/contact" className="mt-8 inline-block cursor-pointer">
+                <Button className="rounded-full text-lg px-8 py-6 bg-black text-white">
                   Contacte-nos
                 </Button>
               </a>
             </div>
-            <div className="relative h-[500px] md:h-[600px]">
+            <div className="relative h-[600px] md:h-[700px] ml-auto">
               <img
-                src="/src/fotos/ai-head-Photoroom.png"
+                src="https://images.unsplash.com/photo-1531746790731-6bf607ccff6f"
                 alt="AI Head"
-                className="absolute inset-0 w-full h-full object-contain"
+                className="absolute right-0 top-0 w-full h-full object-contain"
               />
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function Home() {
             <div className="text-center mt-12">
               <Button
                 variant="outline"
-                className="rounded-full border-2 border-black px-8"
+                className="rounded-full border-2 border-black text-black hover:bg-black hover:text-white px-8"
               >
                 Ver mais
               </Button>
@@ -211,18 +211,21 @@ export default function Home() {
         </div>
 
         {/* Stats Section */}
-        <div className="py-16 bg-black text-white">
+        <div className="py-16 md:py-24 bg-black text-white">
           <div className="container mx-auto px-4 md:px-0">
-            <div className="grid md:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-4 gap-8 text-center">
               {[
-                { number: "6", label: "Happy Clients" },
-                { number: "11", label: "Completed Projects" },
-                { number: "7M", label: "Transactions" },
-                { number: "6000+", label: "Customers" },
+                { number: 50, label: "Projetos Concluídos", suffix: "+" },
+                { number: 30, label: "Clientes Satisfeitos", suffix: "+" },
+                { number: 5, label: "Anos de Experiência", suffix: "+" },
+                { number: 100, label: "Taxa de Satisfação", suffix: "%" },
               ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold mb-1">{stat.number}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                <div key={index}>
+                  <div className="text-4xl font-bold mb-2">
+                    {stat.number}
+                    {stat.suffix}
+                  </div>
+                  <div className="text-gray-400">{stat.label}</div>
                 </div>
               ))}
             </div>
