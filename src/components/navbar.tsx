@@ -59,7 +59,7 @@ export default function Navbar() {
                 <a href="/contact">
                   <Button
                     variant="outline"
-                    className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-black bg-black text-white hover:bg-white hover:text-black"}`}
+                    className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 text-lg py-3 ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-white bg-black text-white hover:bg-white hover:text-black"}`}
                   >
                     Contacte-nos
                   </Button>
@@ -91,34 +91,40 @@ export default function Navbar() {
         </Sheet>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6 items-center">
-          <a href="/" className="relative group">
+        <div className="hidden md:flex gap-6 items-center z-10">
+          <a href="/" className="relative group z-10">
             <span>Home</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="/services" className="relative group">
+          <a href="/services" className="relative group z-10">
             <span>Services</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
           </a>
-          <a href="/portfolio" className="relative group">
+          <a href="/portfolio" className="relative group z-10">
             <span>Portefólio</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
           </a>
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 z-10">
           <div className="flex gap-2 mr-4">
-            <span className="cursor-pointer hover:text-gray-900 transition-colors duration-300">
+            <a
+              href="#"
+              className="cursor-pointer hover:text-gray-900 transition-colors duration-300 z-10"
+            >
               PT
-            </span>
-            <span className="cursor-pointer hover:text-gray-900 transition-colors duration-300">
+            </a>
+            <a
+              href="#"
+              className="cursor-pointer hover:text-gray-900 transition-colors duration-300 z-10"
+            >
               EN
-            </span>
+            </a>
           </div>
-          <a href="/contact">
+          <a href="/contact" className="z-10">
             <Button
               variant="outline"
-              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 hover:border-black ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-white bg-black text-white hover:bg-white hover:text-black"}`}
+              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 hover:border-black z-10 ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-white bg-black text-white hover:bg-white hover:text-black"}`}
             >
               Contacte-nos
             </Button>
