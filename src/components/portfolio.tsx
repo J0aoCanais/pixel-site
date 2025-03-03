@@ -102,27 +102,6 @@ export default function Portfolio() {
             ))}
           </div>
         </div>
-
-        {/* Stats Section */}
-        <div className="py-16 md:py-24 bg-black text-white">
-          <div className="container mx-auto px-4 md:px-0">
-            <div className="grid md:grid-cols-4 gap-8 text-center">
-              {[
-                { number: 50, label: "Projetos Concluídos", suffix: "+" },
-                { number: 30, label: "Clientes Satisfeitos", suffix: "+" },
-                { number: 5, label: "Anos de Experiência", suffix: "+" },
-                { number: 100, label: "Taxa de Satisfação", suffix: "%" },
-              ].map((stat, index) => (
-                <div key={index}>
-                  <div className="text-4xl font-bold mb-2">
-                    <Counter end={stat.number} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-gray-400">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </main>
       <Footer />
     </div>
