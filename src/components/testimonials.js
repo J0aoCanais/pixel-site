@@ -56,7 +56,9 @@ window.changeTestimonial = function (direction) {
       const isActive = index === currentTestimonialIndex;
       const clientElement = document.createElement("div");
       clientElement.id = `client-${index}`;
-      clientElement.className = `text-center transition-all duration-300 mx-2 ${isActive ? "scale-125 z-10" : "opacity-50 scale-90"}`;
+      clientElement.className = `text-center transition-all duration-300 mx-2 ${
+        isActive ? "scale-125 z-10" : "opacity-50 scale-90"
+      } sm:block ${!isActive ? "hidden sm:block" : ""}`;
 
       // Always show all clients on desktop
       // No display:none condition here
@@ -87,10 +89,43 @@ document.addEventListener("DOMContentLoaded", function () {
   const nextButton = document.getElementById("next-testimonial");
 
   if (prevButton) {
-    prevButton.addEventListener("click", () => changeTestimonial("prev"));
+    prevButton.addEventListener("click", () => {
+      changeTestimonial("prev");
+      resetAutoRotation(); // Reset timer when manually navigating
+    });
   }
 
   if (nextButton) {
-    nextButton.addEventListener("click", () => changeTestimonial("next"));
+    nextButton.addEventListener("click", () => {
+      changeTestimonial("next");
+      resetAutoRotation(); // Reset timer when manually navigating
+    });
   }
+
+  // Auto-rotation functionality
+  let autoRotationInterval;
+
+  function startAutoRotation() {
+    autoRotationInterval = setInterval(() => {
+      changeTestimonial("next");
+    }, 5000); // Change testimonial every 5 seconds
+  }
+
+  function resetAutoRotation() {
+    clearInterval(autoRotationInterval);
+    startAutoRotation();
+  }
+
+  // Start auto-rotation
+  startAutoRotation();
+
+  // Stop auto-rotation when user interacts with the testimonials section
+  const testimonialSection = document.querySelector("#testimonial-content").parentElement;
+  testimonialSection.addEventListener("mouseenter", () => {
+    clearInterval(autoRotationInterval);
+  });
+
+  testimonialSection.addEventListener("mouseleave", () => {
+    startAutoRotation();
+  });
 });

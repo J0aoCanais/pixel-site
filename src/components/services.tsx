@@ -1,146 +1,154 @@
 import Navbar from "./navbar";
 import Footer from "./footer";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
+const timelineItems = [
+  {
+    number: "#1",
+    title: "Análise e Planejamento",
+    description: "Entendemos suas necessidades e desenvolvemos um plano estratégico personalizado para seu projeto.",
+  },
+  {
+    number: "#2",
+    title: "Design e Prototipagem",
+    description: "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual.",
+  },
+  {
+    number: "#3",
+    title: "Desenvolvimento",
+    description: "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil.",
+  },
+  {
+    number: "#4",
+    title: "Testes e Otimização",
+    description: "Realizamos testes rigorosos e otimizamos o desempenho para garantir a melhor experiência.",
+  },
+  {
+    number: "#5",
+    title: "Lançamento",
+    description: "Preparamos tudo para o lançamento, garantindo uma transição suave e sem problemas.",
+  },
+  {
+    number: "#6",
+    title: "Suporte Contínuo",
+    description: "Oferecemos suporte contínuo e atualizações para manter seu projeto sempre atualizado e funcionando perfeitamente.",
+  },
+];
 
 export default function Services() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
       <main className="flex-1">
         {/* Roadmap Section */}
         <div className="container mx-auto py-16 md:py-20 px-4 md:px-0">
-          <div className="text-center mb-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
             <h2 className="text-4xl font-bold mb-3">
               O Caminho para o seu sucesso
             </h2>
             <div className="w-16 h-1 bg-black mx-auto"></div>
-          </div>
+          </motion.div>
 
-          <div className="relative mt-16 mb-20">
-            {/* Main horizontal timeline line */}
-            <div className="absolute left-0 right-0 h-0.5 bg-gray-200 top-1/2 -translate-y-1/2"></div>
+          <div className="relative mt-16 mb-20" ref={ref}>
+            {/* Main horizontal timeline line with animation */}
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute left-0 right-0 h-1 bg-gradient-to-r from-black via-black to-black top-[250px] md:top-[250px]"
+            />
 
-            {/* Timeline items */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-              {/* Item 1 */}
-              <div className="relative">
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-                  <div className="text-gray-400 font-semibold text-sm mb-2">
-                    #1
+            {/* Timeline items - Top Row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mb-32">
+              {timelineItems.slice(0, 3).map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  className="relative"
+                >
+                  <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full transform transition-transform hover:scale-105 hover:shadow-xl mb-8">
+                    <div className="text-black font-bold text-sm mb-2 bg-gray-100 w-fit px-3 py-1 rounded-full">
+                      {item.number}
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-gray-600 text-sm">{item.description}</p>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Assemble the right team
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    We handle all aspects of vetting and choosing the right team
-                    that you don't have the time, expertise, or desire to do.
-                  </p>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-0.5 h-12 bg-gray-300"></div>
-              </div>
-
-              {/* Item 3 */}
-              <div className="relative">
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-                  <div className="text-gray-400 font-semibold text-sm mb-2">
-                    #3
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Tech architecture
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    We break monolithic apps into microservices. Decoupling the
-                    code allows teams to move faster and more independently.
-                  </p>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-0.5 h-12 bg-gray-300"></div>
-              </div>
-
-              {/* Item 5 */}
-              <div className="relative">
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-                  <div className="text-gray-400 font-semibold text-sm mb-2">
-                    #5
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">Code reviews</h3>
-                  <p className="text-gray-600 text-sm">
-                    Code reviews before release help detect issues like memory
-                    leaks, file leaks, performance signs, and general bad
-                    smells.
-                  </p>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-0.5 h-12 bg-gray-300"></div>
-              </div>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={inView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
+                    className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-4 h-4 bg-black rounded-full z-10 border-2 border-white shadow-lg"
+                  />
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={inView ? { height: "40px" } : { height: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
+                    className="absolute left-1/2 transform -translate-x-1/2 bottom-4 w-0.5 bg-black"
+                  />
+                </motion.div>
+              ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-24">
-              {/* Item 2 */}
-              <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-0 -translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-0 w-0.5 h-12 bg-gray-300"></div>
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-                  <div className="text-gray-400 font-semibold text-sm mb-2">
-                    #2
+            {/* Timeline items - Bottom Row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-8">
+              {timelineItems.slice(3).map((item, index) => (
+                <motion.div
+                  key={index + 3}
+                  initial={{ opacity: 0, y: -50 }}
+                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
+                  transition={{ duration: 0.6, delay: (index + 3) * 0.2 }}
+                  className="relative"
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={inView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ duration: 0.4, delay: (index + 3) * 0.2 + 0.3 }}
+                    className="absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-black rounded-full z-10 border-2 border-white shadow-lg"
+                  />
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={inView ? { height: "40px" } : { height: 0 }}
+                    transition={{ duration: 0.4, delay: (index + 3) * 0.2 + 0.3 }}
+                    className="absolute left-1/2 transform -translate-x-1/2 top-4 w-0.5 bg-black"
+                  />
+                  <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full transform transition-transform hover:scale-105 hover:shadow-xl mt-8">
+                    <div className="text-black font-bold text-sm mb-2 bg-gray-100 w-fit px-3 py-1 rounded-full">
+                      {item.number}
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-gray-600 text-sm">{item.description}</p>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Sprint planning
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Sprint roadmap is a collective planning effort. Team members
-                    collaborate to clarify items and ensure shared
-                    understanding.
-                  </p>
-                </div>
-              </div>
-
-              {/* Item 4 */}
-              <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-0 -translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-0 w-0.5 h-12 bg-gray-300"></div>
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-                  <div className="text-gray-400 font-semibold text-sm mb-2">
-                    #4
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Standups & weekly demos
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Standups, weekly demos, and reviews make sure everyone is on
-                    the same page and can raise their concerns.
-                  </p>
-                </div>
-              </div>
-
-              {/* Item 6 */}
-              <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-0 -translate-y-1/2 w-3 h-3 bg-black rounded-full z-10"></div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-0 w-0.5 h-12 bg-gray-300"></div>
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-                  <div className="text-gray-400 font-semibold text-sm mb-2">
-                    #6
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    Iterative delivery
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    We divide the implementation process into several
-                    checkpoints rather than a single deadline.
-                  </p>
-                </div>
-              </div>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Trophy at the end */}
-            <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="w-12 h-12 text-yellow-400 flex items-center justify-center bg-white rounded-full shadow-md">
+            {/* Trophy at the end with animation */}
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={inView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+              transition={{ duration: 0.6, delay: 1.8 }}
+              className="absolute right-[-30px] top-[250px] transform -translate-y-1/2 z-10"
+            >
+              <div className="w-16 h-16 text-yellow-400 flex items-center justify-center bg-white rounded-full shadow-lg border-2 border-yellow-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="w-8 h-8"
+                  className="w-10 h-10"
                 >
                   <path
                     fillRule="evenodd"
@@ -149,7 +157,7 @@ export default function Services() {
                   />
                 </svg>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
