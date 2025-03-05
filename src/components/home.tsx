@@ -3,36 +3,43 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Counter from "./counter-animation";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
-  const [currentService, setCurrentService] = useState(0);
-  const services = [
-    {
-      title: "Web Design & Development",
-      description:
-        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-      icon: "🌐",
-    },
-    {
-      title: "Chat IA",
-      description:
-        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-      icon: "🤖",
-    },
-    {
-      title: "Sistema de Reservas",
-      description:
-        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-      icon: "📅",
-    },
-    {
-      title: "Web Design & Development",
-      description:
-        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-      icon: "💻",
-    },
-  ];
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+
+  // Function to change service slide
+  const changeServiceSlide = (direction) => {
+    const totalSlides = 4; // Total number of services
+    let newIndex;
+
+    if (direction === "next") {
+      newIndex = (currentServiceIndex + 1) % totalSlides;
+    } else {
+      newIndex = (currentServiceIndex - 1 + totalSlides) % totalSlides;
+    }
+
+    goToServiceSlide(newIndex);
+  };
+
+  // Function to go to a specific slide
+  const goToServiceSlide = (index) => {
+    setCurrentServiceIndex(index);
+    const carousel = document.getElementById("services-carousel");
+    if (carousel) {
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    // Update active indicator
+    document.querySelectorAll(".indicator-dot").forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.add("bg-black");
+        dot.classList.remove("bg-gray-300");
+      } else {
+        dot.classList.remove("bg-black");
+        dot.classList.add("bg-gray-300");
+      }
+    });
+  };
 
   useEffect(() => {
     // Load testimonials script
@@ -41,24 +48,29 @@ export default function Home() {
     script.async = true;
     document.body.appendChild(script);
 
-    const timer = setInterval(() => {
-      setCurrentService((prev) => (prev + 1) % services.length);
-    }, 3000);
+    // Auto-rotate services
+    const serviceInterval = setInterval(() => {
+      changeServiceSlide("next");
+    }, 6000); //  6000 (6 seconds)
+
+    // Set initial active indicator
+    setTimeout(() => {
+      document.querySelectorAll(".indicator-dot").forEach((dot, i) => {
+        if (i === currentServiceIndex) {
+          dot.classList.add("bg-black");
+          dot.classList.remove("bg-gray-300");
+        } else {
+          dot.classList.remove("bg-black");
+          dot.classList.add("bg-gray-300");
+        }
+      });
+    }, 100);
 
     return () => {
       document.body.removeChild(script);
-      clearInterval(timer);
+      clearInterval(serviceInterval);
     };
-  }, []);
-
-  const nextService = () => {
-    setCurrentService((prev) => (prev + 1) % services.length);
-  };
-
-  const prevService = () => {
-    setCurrentService((prev) => (prev - 1 + services.length) % services.length);
-  };
-
+  }, [currentServiceIndex]);
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -77,7 +89,10 @@ export default function Home() {
                 potencializam o crescimento do seu negócio online. Transforme
                 sua presença digital com soluções à medida.
               </p>
-              <a href="/contact" className="mt-4 md:mt-8 inline-block cursor-pointer">
+              <a
+                href="/contact"
+                className="mt-4 md:mt-8 inline-block cursor-pointer"
+              >
                 <Button className="rounded-full text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-black text-white">
                   Contacte-nos
                 </Button>
@@ -94,87 +109,99 @@ export default function Home() {
         </div>
         <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
         {/* Services Section */}
-        <div className="w-full px-4 md:px-8 py-8 md:py-16 overflow-hidden">
+        <div className="w-full px-4 md:px-8 py-8 md:py-16">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold">Os nossos serviços</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">
+                Os nossos serviços
+              </h2>
             </div>
 
-            <div className="relative">
-              {/* Navigation Arrows */}
-              <button
-                onClick={prevService}
-                className="absolute left-[-60px] top-[150px] z-10 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 transition-colors"
-                aria-label="Previous service"
+            <div className="relative overflow-hidden">
+              <div
+                id="services-carousel"
+                className="flex transition-transform duration-500 ease-in-out"
               >
-                <i className="fas fa-chevron-left text-lg"></i>
-              </button>
-
-              <button
-                onClick={nextService}
-                className="absolute right-[-60px] top-[150px] z-10 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 transition-colors"
-                aria-label="Next service"
-              >
-                <i className="fas fa-chevron-right text-lg"></i>
-              </button>
-
-              {/* Services Carousel */}
-              <div className="relative h-[300px] flex items-center justify-center px-16">
-                <AnimatePresence mode="popLayout">
-                  {services.map((service, index) => {
-                    const position = (index - currentService + services.length) % services.length;
-                    const isActive = position === 0;
-                    const offset = position === 0 ? 0 : position <= services.length / 2 ? 300 : -300;
-
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{ scale: 0.8, opacity: 0, x: offset }}
-                        animate={{
-                          scale: isActive ? 1 : 0.7,
-                          opacity: isActive ? 1 : 0.3,
-                          x: offset,
-                          zIndex: isActive ? 1 : 0,
-                        }}
-                        exit={{ scale: 0.8, opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className={`absolute top-[50px] w-full max-w-lg mx-auto ${
-                          isActive ? "z-10" : "z-0"
-                        }`}
-                      >
-                        <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform transition-all duration-300">
-                          <div className="text-5xl mb-6">{service.icon}</div>
-                          <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                          <p className="text-gray-600 text-base">{service.description}</p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
-              </div>
-
-              {/* Service Indicators */}
-              <div className="flex justify-center gap-2">
-                {services.map((_, index) => (
-                  <button
+                {[
+                  {
+                    title: "Web Design & Development",
+                    description:
+                      "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+                    icon: (
+                      <i className="fas fa-laptop-code text-black text-3xl mb-4"></i>
+                    ),
+                  },
+                  {
+                    title: "Chat IA",
+                    description:
+                      "Implementamos assistentes virtuais inteligentes que oferecem suporte 24/7, melhoram o engajamento do cliente e automatizam respostas para perguntas frequentes.",
+                    icon: (
+                      <i className="fas fa-robot text-black text-3xl mb-4"></i>
+                    ),
+                  },
+                  {
+                    title: "Sistema de Reservas",
+                    description:
+                      "Desenvolvemos sistemas completos de reservas online que simplificam o agendamento, gerenciam disponibilidade e processam pagamentos de forma segura.",
+                    icon: (
+                      <i className="fas fa-calendar-check text-black text-3xl mb-4"></i>
+                    ),
+                  },
+                  {
+                    title: "Marketing Digital",
+                    description:
+                      "Criamos estratégias personalizadas de marketing digital que aumentam sua visibilidade online, geram leads qualificados e impulsionam o crescimento do seu negócio.",
+                    icon: (
+                      <i className="fas fa-bullhorn text-black text-3xl mb-4"></i>
+                    ),
+                  },
+                ].map((service, index) => (
+                  <div
                     key={index}
-                    onClick={() => setCurrentService(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentService ? "bg-black w-4" : "bg-gray-300"
-                    }`}
-                    aria-label={`Go to service ${index + 1}`}
-                  />
+                    className="min-w-full px-4 flex-shrink-0 flex flex-col items-center justify-center"
+                  >
+                    <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 max-w-xl mx-auto text-center">
+                      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        {service.icon}
+                      </div>
+                      <h3 className="text-xl font-bold mb-3">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-600">{service.description}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
-            </div>
 
-            <div className="text-center mt-8 md:mt-12">
-              <Button
-                variant="outline"
-                className="rounded-full border-2 border-black text-black hover:bg-black hover:text-white px-6 md:px-8 py-2 md:py-3"
+              {/* Navigation Buttons */}
+              <button
+                id="prev-service"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-10 ml-2"
+                onClick={() => changeServiceSlide("prev")}
               >
-                Ver mais
-              </Button>
+                <i className="fas fa-chevron-left"></i>
+              </button>
+
+              <button
+                id="next-service"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-10 mr-2"
+                onClick={() => changeServiceSlide("next")}
+              >
+                <i className="fas fa-chevron-right"></i>
+              </button>
+
+              {/* Indicators */}
+              <div className="flex justify-center mt-6 gap-2">
+                {[0, 1, 2, 3].map((index) => (
+                  <button
+                    key={index}
+                    className="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-colors focus:outline-none indicator-dot"
+                    data-index={index}
+                    onClick={() => goToServiceSlide(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                  ></button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -288,12 +315,17 @@ export default function Home() {
         <div className="w-full px-4 md:px-8 py-8 md:py-16">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold">O que dizem sobre nós</h2>
+              <h2 className="text-2xl md:text-3xl font-bold">
+                O que dizem sobre nós
+              </h2>
             </div>
 
             <div className="max-w-4xl mx-auto relative">
               <div className="text-center mb-8 md:mb-12 px-4 md:px-16">
-                <div id="testimonial-content" className="relative min-h-[200px] flex items-center justify-center mb-20">
+                <div
+                  id="testimonial-content"
+                  className="relative min-h-[200px] flex items-center justify-center mb-20"
+                >
                   <img
                     src="/src/assets/quote_left.svg"
                     alt="Quote"
@@ -332,25 +364,29 @@ export default function Home() {
                       {
                         name: "Imran Khan",
                         role: "Software Engineer",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
+                        image:
+                          "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
                         active: true,
                       },
                       {
                         name: "Alexander M. Smith",
                         role: "CEO, TechCorp",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
+                        image:
+                          "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
                         active: false,
                       },
                       {
                         name: "Patricia R. Miller",
                         role: "Marketing Director",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
+                        image:
+                          "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
                         active: false,
                       },
                       {
                         name: "Michael J. Brown",
                         role: "Entrepreneur",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
+                        image:
+                          "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
                         active: false,
                       },
                     ].map((person, index) => (
@@ -376,8 +412,12 @@ export default function Home() {
                             ></i>
                           ))}
                         </div>
-                        <p className="text-sm font-medium truncate">{person.name}</p>
-                        <p className="text-xs text-gray-500 truncate">{person.role}</p>
+                        <p className="text-sm font-medium truncate">
+                          {person.name}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {person.role}
+                        </p>
                       </div>
                     ))}
                   </div>
