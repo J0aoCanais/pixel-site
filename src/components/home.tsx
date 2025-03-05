@@ -2,9 +2,38 @@ import { Button } from "@/components/ui/button";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import Counter from "./counter-animation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
+  const [currentService, setCurrentService] = useState(0);
+  const services = [
+    {
+      title: "Web Design & Development",
+      description:
+        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+      icon: "🌐",
+    },
+    {
+      title: "Chat IA",
+      description:
+        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+      icon: "🤖",
+    },
+    {
+      title: "Sistema de Reservas",
+      description:
+        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+      icon: "📅",
+    },
+    {
+      title: "Web Design & Development",
+      description:
+        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+      icon: "💻",
+    },
+  ];
+
   useEffect(() => {
     // Load testimonials script
     const script = document.createElement("script");
@@ -12,10 +41,24 @@ export default function Home() {
     script.async = true;
     document.body.appendChild(script);
 
+    const timer = setInterval(() => {
+      setCurrentService((prev) => (prev + 1) % services.length);
+    }, 3000);
+
     return () => {
       document.body.removeChild(script);
+      clearInterval(timer);
     };
   }, []);
+
+  const nextService = () => {
+    setCurrentService((prev) => (prev + 1) % services.length);
+  };
+
+  const prevService = () => {
+    setCurrentService((prev) => (prev - 1 + services.length) % services.length);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -51,40 +94,78 @@ export default function Home() {
         </div>
         <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
         {/* Services Section */}
-        <div className="w-full px-4 md:px-8 py-8 md:py-16">
+        <div className="w-full px-4 md:px-8 py-8 md:py-16 overflow-hidden">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8 md:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold">Os nossos serviços</h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-              {[
-                {
-                  title: "Web Design & Development",
-                  description:
-                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-                },
-                {
-                  title: "Chat IA",
-                  description:
-                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-                },
-                {
-                  title: "Sistema de Reservas",
-                  description:
-                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-                },
-                {
-                  title: "Web Design & Development",
-                  description:
-                    "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-                },
-              ].map((service, index) => (
-                <div key={index} className="bg-white p-6">
-                  <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
-                </div>
-              ))}
+            <div className="relative">
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevService}
+                className="absolute left-[-60px] top-[150px] z-10 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 transition-colors"
+                aria-label="Previous service"
+              >
+                <i className="fas fa-chevron-left text-lg"></i>
+              </button>
+
+              <button
+                onClick={nextService}
+                className="absolute right-[-60px] top-[150px] z-10 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-800 transition-colors"
+                aria-label="Next service"
+              >
+                <i className="fas fa-chevron-right text-lg"></i>
+              </button>
+
+              {/* Services Carousel */}
+              <div className="relative h-[300px] flex items-center justify-center px-16">
+                <AnimatePresence mode="popLayout">
+                  {services.map((service, index) => {
+                    const position = (index - currentService + services.length) % services.length;
+                    const isActive = position === 0;
+                    const offset = position === 0 ? 0 : position <= services.length / 2 ? 300 : -300;
+
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ scale: 0.8, opacity: 0, x: offset }}
+                        animate={{
+                          scale: isActive ? 1 : 0.7,
+                          opacity: isActive ? 1 : 0.3,
+                          x: offset,
+                          zIndex: isActive ? 1 : 0,
+                        }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className={`absolute top-[50px] w-full max-w-lg mx-auto ${
+                          isActive ? "z-10" : "z-0"
+                        }`}
+                      >
+                        <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 transform transition-all duration-300">
+                          <div className="text-5xl mb-6">{service.icon}</div>
+                          <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
+                          <p className="text-gray-600 text-base">{service.description}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+              </div>
+
+              {/* Service Indicators */}
+              <div className="flex justify-center gap-2">
+                {services.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentService(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentService ? "bg-black w-4" : "bg-gray-300"
+                    }`}
+                    aria-label={`Go to service ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="text-center mt-8 md:mt-12">
