@@ -3,43 +3,17 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Counter from "./counter-animation";
 import { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export default function Home() {
-  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
-
-  // Function to change service slide
-  const changeServiceSlide = (direction) => {
-    const totalSlides = 4; // Total number of services
-    let newIndex;
-
-    if (direction === "next") {
-      newIndex = (currentServiceIndex + 1) % totalSlides;
-    } else {
-      newIndex = (currentServiceIndex - 1 + totalSlides) % totalSlides;
-    }
-
-    goToServiceSlide(newIndex);
-  };
-
-  // Function to go to a specific slide
-  const goToServiceSlide = (index) => {
-    setCurrentServiceIndex(index);
-    const carousel = document.getElementById("services-carousel");
-    if (carousel) {
-      carousel.style.transform = `translateX(-${index * 100}%)`;
-    }
-
-    // Update active indicator
-    document.querySelectorAll(".indicator-dot").forEach((dot, i) => {
-      if (i === index) {
-        dot.classList.add("bg-black");
-        dot.classList.remove("bg-gray-300");
-      } else {
-        dot.classList.remove("bg-black");
-        dot.classList.add("bg-gray-300");
-      }
-    });
-  };
+  const [api, setApi] = useState(null);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     // Load testimonials script
@@ -48,29 +22,53 @@ export default function Home() {
     script.async = true;
     document.body.appendChild(script);
 
-    // Auto-rotate services
-    const serviceInterval = setInterval(() => {
-      changeServiceSlide("next");
-    }, 6000); //  6000 (6 seconds)
-
-    // Set initial active indicator
-    setTimeout(() => {
-      document.querySelectorAll(".indicator-dot").forEach((dot, i) => {
-        if (i === currentServiceIndex) {
-          dot.classList.add("bg-black");
-          dot.classList.remove("bg-gray-300");
-        } else {
-          dot.classList.remove("bg-black");
-          dot.classList.add("bg-gray-300");
-        }
-      });
-    }, 100);
-
     return () => {
-      document.body.removeChild(script);
-      clearInterval(serviceInterval);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
-  }, [currentServiceIndex]);
+  }, []);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+
+    api.on("reInit", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const services = [
+    {
+      title: "Web Design & Development",
+      description:
+        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+      icon: <i className="fas fa-laptop-code text-3xl"></i>,
+    },
+    {
+      title: "Chat IA",
+      description:
+        "Implementamos assistentes virtuais inteligentes que oferecem suporte 24/7, melhoram o engajamento do cliente e automatizam respostas para perguntas frequentes.",
+      icon: <i className="fas fa-robot text-3xl"></i>,
+    },
+    {
+      title: "Sistema de Reservas",
+      description:
+        "Desenvolvemos sistemas completos de reservas online que simplificam o agendamento, gerenciam disponibilidade e processam pagamentos de forma segura.",
+      icon: <i className="fas fa-calendar-check text-3xl"></i>,
+    },
+    {
+      title: "Marketing Digital",
+      description:
+        "Criamos estratégias personalizadas de marketing digital que aumentam sua visibilidade online, geram leads qualificados e impulsionam o crescimento do seu negócio.",
+      icon: <i className="fas fa-bullhorn text-3xl"></i>,
+    },
+  ];
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -102,110 +100,97 @@ export default function Home() {
               <img
                 src="/src/assets/AI_MODEL.svg"
                 alt="AI Head"
-                className="absolute right-0 top-0 w-full h-full object-contain md:object-cover scale-110 transform md:translate-x-0 z-0"
+                className="absolute right-0 top-0 w-full h-full object-contain md:object-cover scale-110 transform md:translate-x-0 z-0 -mt-4"
               />
             </div>
           </div>
         </div>
         <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
-        {/* Services Section */}
-        <div className="w-full px-4 md:px-8 py-8 md:py-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold">
-                Os nossos serviços
+        {/* Services Section - Estilo centralizado com prévia */}
+        <div className="w-full py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            {" "}
+            {/* Container para título */}
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Os Nossos Serviços
               </h2>
-            </div>
-
-            <div className="relative overflow-hidden">
-              <div
-                id="services-carousel"
-                className="flex transition-transform duration-500 ease-in-out"
-              >
-                {[
-                  {
-                    title: "Web Design & Development",
-                    description:
-                      "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
-                    icon: (
-                      <i className="fas fa-laptop-code text-black text-3xl mb-4"></i>
-                    ),
-                  },
-                  {
-                    title: "Chat IA",
-                    description:
-                      "Implementamos assistentes virtuais inteligentes que oferecem suporte 24/7, melhoram o engajamento do cliente e automatizam respostas para perguntas frequentes.",
-                    icon: (
-                      <i className="fas fa-robot text-black text-3xl mb-4"></i>
-                    ),
-                  },
-                  {
-                    title: "Sistema de Reservas",
-                    description:
-                      "Desenvolvemos sistemas completos de reservas online que simplificam o agendamento, gerenciam disponibilidade e processam pagamentos de forma segura.",
-                    icon: (
-                      <i className="fas fa-calendar-check text-black text-3xl mb-4"></i>
-                    ),
-                  },
-                  {
-                    title: "Marketing Digital",
-                    description:
-                      "Criamos estratégias personalizadas de marketing digital que aumentam sua visibilidade online, geram leads qualificados e impulsionam o crescimento do seu negócio.",
-                    icon: (
-                      <i className="fas fa-bullhorn text-black text-3xl mb-4"></i>
-                    ),
-                  },
-                ].map((service, index) => (
-                  <div
-                    key={index}
-                    className="min-w-full px-4 flex-shrink-0 flex flex-col items-center justify-center"
-                  >
-                    <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 max-w-xl mx-auto text-center">
-                      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                        {service.icon}
-                      </div>
-                      <h3 className="text-xl font-bold mb-3">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-600">{service.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Navigation Buttons */}
-              <button
-                id="prev-service"
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-10 ml-2"
-                onClick={() => changeServiceSlide("prev")}
-              >
-                <i className="fas fa-chevron-left"></i>
-              </button>
-
-              <button
-                id="next-service"
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-10 mr-2"
-                onClick={() => changeServiceSlide("next")}
-              >
-                <i className="fas fa-chevron-right"></i>
-              </button>
-
-              {/* Indicators */}
-              <div className="flex justify-center mt-6 gap-2">
-                {[0, 1, 2, 3].map((index) => (
-                  <button
-                    key={index}
-                    className="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-colors focus:outline-none indicator-dot"
-                    data-index={index}
-                    onClick={() => goToServiceSlide(index)}
-                    aria-label={`Go to slide ${index + 1}`}
-                  ></button>
-                ))}
-              </div>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Oferecemos soluções digitais completas para impulsionar o seu
+                negócio online.
+              </p>
             </div>
           </div>
+
+          {/* Container do Carousel - Padding largo para setas e prévia */}
+          <div className="relative px-16 md:px-20 lg:px-24">
+            <Carousel
+              setApi={setApi}
+              className="w-full"
+              opts={{
+                align: "center", // Centraliza o item ativo
+                loop: true, // Ativa o loop infinito
+              }}
+            >
+              {/* Padding no conteúdo para revelar itens adjacentes */}
+              <CarouselContent className="flex -ml-4 px-4 md:px-6">
+                {services.map((service, index) => (
+                  // Define a base para múltiplos itens visíveis
+                  <CarouselItem
+                    key={index}
+                    className="md:basis-2/3 lg:basis-1/2 pl-4"
+                  >
+                    {/* Wrapper do card com transição de escala e opacidade */}
+                    <div
+                      className={`h-full transition-all duration-300 ${
+                        current === index
+                          ? "scale-100 opacity-100" // Item ativo
+                          : "scale-90 opacity-60" // Itens inativos
+                      }`}
+                    >
+                      {/* Conteúdo do card com flex para alinhar botão em baixo */}
+                      <div className="bg-white rounded-xl shadow-lg p-8 h-full border border-gray-200 flex flex-col">
+                        {/* Ícone */}
+                        <div
+                          className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 flex-shrink-0 ${
+                            current === index
+                              ? "bg-black text-white"
+                              : "bg-gray-100 text-gray-600"
+                          }`}
+                        >
+                          {service.icon}
+                        </div>
+                        {/* Título e Descrição (ocupa espaço restante) */}
+                        <div className="flex-grow">
+                          <h3 className="text-2xl font-bold mb-4">
+                            {service.title}
+                          </h3>
+                          <p className="text-gray-600 text-base mb-6">
+                            {service.description}
+                          </p>
+                        </div>
+                        {/* Botão (alinhado em baixo) */}
+                        <Button
+                          className={`mt-auto w-full py-6 text-lg ${
+                            current === index
+                              ? "bg-black text-white hover:bg-gray-800"
+                              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                        >
+                          Saber mais
+                        </Button>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {/* Setas posicionadas bem para fora */}
+              <CarouselPrevious className="left-0 -ml-8 md:-ml-12 lg:-ml-16 bg-black text-white hover:bg-gray-800" />
+              <CarouselNext className="right-0 -mr-8 md:-mr-12 lg:-mr-16 bg-black text-white hover:bg-gray-800" />
+            </Carousel>
+          </div>
         </div>
-        <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
+        {/* Fim da Seção Services */}
         {/* Reasons Section */}
         <div className="w-full px-4 md:px-8 py-8 md:py-16">
           <div className="max-w-7xl mx-auto">

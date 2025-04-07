@@ -52,19 +52,19 @@ export default function Footer() {
                 href="#"
                 className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl"
               >
-                <i className="fab fa-instagram flex items-center justify-center w-full h-full"></i>
+                <i className="fab fa-instagram flex items-center justify-center w-full h-full leading-none"></i>
               </a>
               <a
                 href="#"
                 className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl"
               >
-                <i className="fab fa-facebook flex items-center justify-center w-full h-full"></i>
+                <i className="fab fa-facebook flex items-center justify-center w-full h-full leading-none"></i>
               </a>
               <a
                 href="#"
                 className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl"
               >
-                <i className="fab fa-whatsapp flex items-center justify-center w-full h-full"></i>
+                <i className="fab fa-whatsapp flex items-center justify-center w-full h-full leading-none"></i>
               </a>
             </div>
           </div>

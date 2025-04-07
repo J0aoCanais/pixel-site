@@ -3,37 +3,108 @@ import Footer from "./footer";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useState } from "react";
 
 const timelineItems = [
   {
     number: "#1",
     title: "Análise e Planejamento",
-    description: "Entendemos suas necessidades e desenvolvemos um plano estratégico personalizado para seu projeto.",
+    description:
+      "Entendemos suas necessidades e desenvolvemos um plano estratégico personalizado para seu projeto.",
   },
   {
     number: "#2",
     title: "Design e Prototipagem",
-    description: "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual.",
+    description:
+      "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual.",
   },
   {
     number: "#3",
     title: "Desenvolvimento",
-    description: "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil.",
+    description:
+      "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil.",
   },
   {
     number: "#4",
     title: "Testes e Otimização",
-    description: "Realizamos testes rigorosos e otimizamos o desempenho para garantir a melhor experiência.",
+    description:
+      "Realizamos testes rigorosos e otimizamos o desempenho para garantir a melhor experiência.",
   },
   {
     number: "#5",
     title: "Lançamento",
-    description: "Preparamos tudo para o lançamento, garantindo uma transição suave e sem problemas.",
+    description:
+      "Preparamos tudo para o lançamento, garantindo uma transição suave e sem problemas.",
   },
   {
     number: "#6",
     title: "Suporte Contínuo",
-    description: "Oferecemos suporte contínuo e atualizações para manter seu projeto sempre atualizado e funcionando perfeitamente.",
+    description:
+      "Oferecemos suporte contínuo e atualizações para manter seu projeto sempre atualizado e funcionando perfeitamente.",
+  },
+];
+
+// Dados para a seção de tabs
+const serviceTabsData = [
+  {
+    id: "budget",
+    title: "Budget Overview",
+    icon: <i className="fas fa-chart-line text-teal-500"></i>,
+    description:
+      "Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida que atendem às necessidades específicas do seu negócio.",
+    image:
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    heading: "Desenvolvimento de Websites",
+  },
+  {
+    id: "design",
+    title: "Design & Sketch",
+    icon: <i className="fas fa-pencil-ruler text-gray-500"></i>,
+    description:
+      "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual para garantir uma presença online única e memorável que destaca sua marca no mercado digital.",
+    image:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    heading: "Design & Sketch",
+  },
+  {
+    id: "dev",
+    title: "Web Development",
+    icon: <i className="fas fa-code text-purple-500"></i>,
+    description:
+      "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil, garantindo alta performance, escalabilidade e segurança para sua aplicação web ou mobile.",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    heading: "Web Development",
+  },
+  {
+    id: "website",
+    title: "Optimize website",
+    icon: <i className="fas fa-tachometer-alt text-blue-500"></i>,
+    description:
+      "Otimizamos seu site para melhor desempenho, velocidade e SEO, garantindo que seu negócio tenha visibilidade e alcance mais clientes online. Nossas estratégias de otimização são baseadas em dados e melhores práticas do mercado.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
+    heading: "Optimize Website",
+  },
+  {
+    id: "dashboard",
+    title: "Custom Dashboard",
+    icon: <i className="fas fa-chart-pie text-orange-500"></i>,
+    description:
+      "Desenvolvemos dashboards personalizados que oferecem insights valiosos sobre seu negócio, facilitando a tomada de decisões estratégicas e o monitoramento em tempo real do desempenho de suas operações digitais.",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1531746790731-6bf607ccff6f?w=800&q=80",
+    heading: "Custom Dashboard",
   },
 ];
 
@@ -43,121 +114,269 @@ export default function Services() {
     threshold: 0.1,
   });
 
+  // Estado para controlar a tab ativa
+  const [activeTab, setActiveTab] = useState("budget");
+
+  // Encontrar o índice da tab ativa
+  const activeTabIndex = serviceTabsData.findIndex(
+    (tab) => tab.id === activeTab,
+  );
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
       <main className="flex-1">
+        {/* Seção Confie em nós - Atualizada conforme a imagem */}
+        <div className="container mx-auto py-16 px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-xl"
+            >
+              <h2 className="text-5xl font-bold mb-6 leading-tight">
+                Confie em nós e <br />
+                veja os <span className="text-gray-400">negócios</span> <br />
+                aparecerem
+              </h2>
+
+              <p className="text-gray-600 mb-8">
+                Desenvolvemos websites inovadores e personalizados que
+                potencializam o crescimento do seu negócio online. Transforme
+                sua presença digital com soluções à medida. Desenvolvemos
+                websites inovadores e personalizados que potencializam o
+                crescimento do seu negócio online.
+              </p>
+
+              <div className="flex flex-col md:flex-row gap-4 mb-12">
+                <div className="relative flex-grow">
+                  <input
+                    type="email"
+                    placeholder="Your email address"
+                    className="w-full py-3 px-4 border-b-2 border-gray-300 focus:outline-none focus:border-black transition-colors"
+                  />
+                </div>
+                <Button className="bg-black text-white hover:bg-gray-800 px-6 rounded-full self-end">
+                  Contacte-nos
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white rounded-lg overflow-hidden shadow-xl"
+            >
+              {/* Imagem estática à direita */}
+              <div className="grid grid-cols-1 items-center">
+                <div className="overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                    alt="Business Growth"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Nova seção de tabs de serviços */}
+        <div className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            {/* Tabs de serviços */}
+            <div className="mb-12">
+              <div className="flex justify-center space-x-6 md:space-x-12 mb-6">
+                {serviceTabsData.map((tab, index) => (
+                  <motion.div
+                    key={tab.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`text-center cursor-pointer transition-all`}
+                    onClick={() => setActiveTab(tab.id)}
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-2 transition-colors ${activeTab === tab.id ? "bg-teal-50" : ""}`}
+                    >
+                      {tab.icon}
+                    </div>
+                    <p className="text-xs font-medium text-gray-600">
+                      {tab.title}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Barra de progresso */}
+              <div className="h-1 bg-gray-200 w-full mb-8 relative max-w-3xl mx-auto">
+                <motion.div
+                  className="absolute h-1 bg-teal-500"
+                  initial={{
+                    width: `${((activeTabIndex + 1) / serviceTabsData.length) * 100}%`,
+                    left: "0%",
+                  }}
+                  animate={{
+                    width: `${((activeTabIndex + 1) / serviceTabsData.length) * 100}%`,
+                    left: "0%",
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                    mass: 1.2,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Conteúdo dinâmico baseado na tab selecionada */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mt-16">
+              {/* Imagens à esquerda */}
+              <div className="order-1">
+                {/* Imagens sobrepostas com posições invertidas */}
+                <div className="relative ml-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="rounded-lg overflow-hidden shadow-lg z-0 relative"
+                  >
+                    <img
+                      src={
+                        serviceTabsData.find((tab) => tab.id === activeTab)
+                          ?.image
+                      }
+                      alt="Service"
+                      className="w-full h-80 object-cover"
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="absolute -bottom-16 -right-12 w-2/3 rounded-lg overflow-hidden shadow-lg z-10"
+                  >
+                    <img
+                      src={
+                        serviceTabsData.find((tab) => tab.id === activeTab)
+                          ?.secondaryImage
+                      }
+                      alt="Service Secondary"
+                      className="w-full h-64 object-cover"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Texto à direita */}
+              <div className="order-2 pr-8">
+                <h3 className="text-5xl font-bold mb-6">
+                  {serviceTabsData.find((tab) => tab.id === activeTab)?.heading}
+                </h3>
+                <p className="text-gray-600 mb-8 text-lg">
+                  {
+                    serviceTabsData.find((tab) => tab.id === activeTab)
+                      ?.description
+                  }
+                </p>
+                <p className="text-gray-600 mb-8">
+                  Nossos especialistas trabalham com as mais recentes
+                  tecnologias e metodologias para garantir resultados
+                  excepcionais. Cada projeto é tratado com dedicação e atenção
+                  aos detalhes, assegurando que sua visão seja transformada em
+                  realidade digital de forma eficiente e inovadora.
+                </p>
+                <Button className="bg-black text-white hover:bg-gray-800 px-6 py-2 rounded-full">
+                  Portfolio
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Roadmap Section */}
-        <div className="container mx-auto py-16 md:py-20 px-4 md:px-0">
-          <motion.div 
+        <div className="container mx-auto py-12 px-4 relative">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-12 relative z-10"
           >
-            <h2 className="text-4xl font-bold mb-3">
+            <h2 className="text-3xl font-bold mb-3">
               O Caminho para o seu sucesso
             </h2>
-            <div className="w-16 h-1 bg-black mx-auto"></div>
           </motion.div>
 
-          <div className="relative mt-16 mb-20" ref={ref}>
-            {/* Main horizontal timeline line with animation */}
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute left-0 right-0 h-1 bg-gradient-to-r from-black via-black to-black top-[250px] md:top-[250px]"
-            />
+          <div className="relative px-4">
+            {/* Linha horizontal principal */}
+            <div className="absolute left-0 right-0 h-1 bg-black top-1/2 transform -translate-y-1/2" />
 
-            {/* Timeline items - Top Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mb-32">
+            <div className="grid grid-cols-3 gap-8 relative">
               {timelineItems.slice(0, 3).map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="flex flex-col items-center"
                 >
-                  <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full transform transition-transform hover:scale-105 hover:shadow-xl mb-8">
-                    <div className="text-black font-bold text-sm mb-2 bg-gray-100 w-fit px-3 py-1 rounded-full">
+                  {/* Card Superior */}
+                  <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200 text-center mb-4">
+                    <div className="text-xl font-bold text-black mb-2">
                       {item.number}
                     </div>
-                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                    <p className="text-gray-600 text-sm">{item.description}</p>
+                    <h3 className="text-sm font-bold mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-xs">{item.description}</p>
                   </div>
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={inView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-4 h-4 bg-black rounded-full z-10 border-2 border-white shadow-lg"
-                  />
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={inView ? { height: "40px" } : { height: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 bottom-4 w-0.5 bg-black"
-                  />
+
+                  {/* Linha vertical conectora */}
+                  <div className="h-8 w-px bg-black" />
+
+                  {/* Círculo na linha */}
+                  <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full" />
+                  </div>
                 </motion.div>
               ))}
-            </div>
 
-            {/* Timeline items - Bottom Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-8">
               {timelineItems.slice(3).map((item, index) => (
                 <motion.div
                   key={index + 3}
-                  initial={{ opacity: 0, y: -50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
-                  transition={{ duration: 0.6, delay: (index + 3) * 0.2 }}
-                  className="relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: (index + 3) * 0.1 }}
+                  className="flex flex-col items-center"
                 >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={inView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.4, delay: (index + 3) * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-black rounded-full z-10 border-2 border-white shadow-lg"
-                  />
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={inView ? { height: "40px" } : { height: 0 }}
-                    transition={{ duration: 0.4, delay: (index + 3) * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 top-4 w-0.5 bg-black"
-                  />
-                  <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full transform transition-transform hover:scale-105 hover:shadow-xl mt-8">
-                    <div className="text-black font-bold text-sm mb-2 bg-gray-100 w-fit px-3 py-1 rounded-full">
+                  {/* Círculo na linha */}
+                  <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full" />
+                  </div>
+
+                  {/* Linha vertical conectora */}
+                  <div className="h-8 w-px bg-black" />
+
+                  {/* Card Inferior */}
+                  <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200 text-center mt-4">
+                    <div className="text-xl font-bold text-black mb-2">
                       {item.number}
                     </div>
-                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                    <p className="text-gray-600 text-sm">{item.description}</p>
+                    <h3 className="text-sm font-bold mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-xs">{item.description}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Trophy at the end with animation */}
-            <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={inView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-              transition={{ duration: 0.6, delay: 1.8 }}
-              className="absolute right-[-30px] top-[250px] transform -translate-y-1/2 z-10"
-            >
-              <div className="w-16 h-16 text-yellow-400 flex items-center justify-center bg-white rounded-full shadow-lg border-2 border-yellow-200">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-10 h-10"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 00-.584.859 6.753 6.753 0 006.138 5.6 6.73 6.73 0 002.743 1.346A6.707 6.707 0 019.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 00-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 00.75-.75 2.25 2.25 0 00-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 01-1.112-3.173 6.73 6.73 0 002.743-1.347 6.753 6.753 0 006.139-5.6.75.75 0 00-.585-.858 47.077 47.077 0 00-3.07-.543V2.62a.75.75 0 00-.658-.744 49.22 49.22 0 00-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 00-.657.744zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 013.16 5.337a45.6 45.6 0 012.006-.343v.256zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 01-2.863 3.207 6.72 6.72 0 00.857-3.294z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+            {/* Troféu no final */}
+            <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2">
+              <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center z-20">
+                <i className="fas fa-trophy text-xl text-white"></i>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
