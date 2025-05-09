@@ -14,7 +14,7 @@ export default function Home() {
 
   // Function to change service slide
   const changeServiceSlide = (direction: string) => {
-    const totalSlides = 4; // Total number of services
+    const totalSlides = services.length; // Total number of services
     let newIndex;
 
     if (direction === "next") {
@@ -51,35 +51,14 @@ export default function Home() {
         "Criamos estratégias personalizadas de marketing digital que aumentam sua visibilidade online, geram leads qualificados e impulsionam o crescimento do seu negócio.",
       icon: <i className="fas fa-bullhorn text-black text-3xl mb-4"></i>,
     },
+    // New card added below
+    {
+      title: "E-commerce",
+      description:
+        "Desenvolvemos lojas online completas, seguras e otimizadas para aumentar as suas vendas e expandir o seu negócio digital.",
+      icon: <i className="fas fa-shopping-cart text-black text-3xl mb-4"></i>,
+    },
   ]);
-
-  const renderServiceCard = (service: any, index: number) => {
-    const isCenter = index === currentServiceIndex;
-    const opacity = isCenter ? 1 : 0.5;
-    const scale = isCenter ? 1.1 : 0.9;
-    const translateX = (index - currentServiceIndex) * 100; // Adjust spacing
-
-    return (
-      <div
-        key={index}
-        className={`service-card absolute w-full md:w-1/3 transition-all duration-300`}
-        style={{
-          opacity: opacity,
-          transform: `translateX(${translateX}%) scale(${scale})`,
-          zIndex: isCenter ? 2 : 1,
-        }}
-        onClick={() => goToServiceSlide(index)}
-      >
-        <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 max-w-xl mx-auto text-center">
-          <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-            {service.icon}
-          </div>
-          <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-          <p className="text-gray-600">{service.description}</p>
-        </div>
-      </div>
-    );
-  };
 
   const renderNavigationDots = () => {
     return (
@@ -98,12 +77,46 @@ export default function Home() {
     );
   };
 
-  const handleViewMoreClick = () => {
-    const servicesSection = document.getElementById("services-section");
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // Animated typing effect for the main title
+  const phrases = [
+    "Revolucione o seu\nNegócio connosco",
+    "Transforme ideias em experiências digitais",
+    "O futuro do seu negócio começa aqui",
+    "Transformamos cliques em clientes",
+    "Da ideia ao pixel perfeito",
+    "Seu sucesso, nosso compromisso",
+    "Transforme ideias em pixels com a Pixel Web",
+  ];
+
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const fullText = phrases[currentPhraseIndex];
+    let typingSpeed = 60;
+
+    if (isDeleting) typingSpeed = 30;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        setDisplayedText(fullText.slice(0, displayedText.length + 1));
+        if (displayedText.length + 1 === fullText.length) {
+          setTimeout(() => setIsDeleting(true), 1200); // Pause before deleting
+        }
+      } else {
+        // Deleting
+        setDisplayedText(fullText.slice(0, displayedText.length - 1));
+        if (displayedText.length === 0) {
+          setIsDeleting(false);
+          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, isDeleting, currentPhraseIndex, phrases]);
 
   useEffect(() => {
     // Load testimonials script
@@ -144,10 +157,15 @@ export default function Home() {
         <div className="w-full px-4 md:px-8 py-4 md:py-8">
           <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center max-w-7xl mx-auto">
             <div className="space-y-4 md:space-y-6 relative z-10">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Revolucione o seu
-                <br />
-                <span className="text-gray-400">Negócio</span> connosco
+              {/* Animated Title */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[3.5em]">
+                {displayedText.split("\n").map((line, idx) => (
+                  <span key={idx}>
+                    {line}
+                    {idx !== displayedText.split("\n").length - 1 && <br />}
+                  </span>
+                ))}
+                <span className="animate-pulse">|</span>
               </h1>
               <p className="text-gray-600 text-sm md:text-base max-w-lg">
                 Desenvolvemos websites inovadores e personalizados que
@@ -156,7 +174,7 @@ export default function Home() {
               </p>
               <a
                 href="/contact"
-                className="mt-4 md:mt-8 inline-block cursor-pointer"
+                className="mt-4 md:mt-8 hidden md:inline-block cursor-pointer"
               >
                 <Button className="rounded-full text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-black text-white">
                   Contacte-nos
@@ -185,20 +203,74 @@ export default function Home() {
               </h2>
             </div>
 
-            <div className="relative w-full flex justify-center items-center transition-transform duration-500 ease-in-out">
-              {services.map((service, index) =>
-                renderServiceCard(service, index),
-              )}
+            <div className="relative w-full flex justify-center items-center transition-transform duration-500 ease-in-out overflow-hidden" style={{ minHeight: 370 }}>
+              {services.map((service, index) => {
+                const isCenter = index === currentServiceIndex;
+                const isPrev = index === (currentServiceIndex - 1 + services.length) % services.length;
+                const isNext = index === (currentServiceIndex + 1) % services.length;
+
+                let style = {
+                  opacity: 0,
+                  pointerEvents: "none",
+                  transform: "scale(0.8) translateX(0%)",
+                  zIndex: 0,
+                  transition: "all 0.3s"
+                };
+                // Increased width for desktop: md:w-2/5 (was md:w-1/3)
+                let className = "service-card absolute left-1/2 top-0 w-full md:w-2/5";
+
+                if (isCenter) {
+                  style = {
+                    opacity: 1,
+                    pointerEvents: "auto",
+                    transform: "translateX(-50%) scale(1.1)",
+                    zIndex: 2,
+                    transition: "all 0.3s"
+                  };
+                } else if (isPrev) {
+                  style = {
+                    opacity: 0.5,
+                    pointerEvents: "auto",
+                    transform: "translateX(-160%) scale(0.9)", // more left
+                    zIndex: 1,
+                    transition: "all 0.3s"
+                  };
+                } else if (isNext) {
+                  style = {
+                    opacity: 0.5,
+                    pointerEvents: "auto",
+                    transform: "translateX(60%) scale(0.9)", // more right
+                    zIndex: 1,
+                    transition: "all 0.3s"
+                  };
+                }
+
+                return (
+                  <div
+                    key={index}
+                    className={className}
+                    style={{
+                      opacity: style.opacity,
+                      pointerEvents: style.pointerEvents as 'auto' | 'none',
+                      transform: style.transform,
+                      zIndex: style.zIndex,
+                      transition: style.transition
+                    }}
+                    onClick={() => goToServiceSlide(index)}
+                  >
+                    <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 max-w-xl mx-auto text-center">
+                      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        {service.icon}
+                      </div>
+                      <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+                      <p className="text-gray-600">{service.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {renderNavigationDots()}
-
-            <Button
-              className="rounded-full text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-black text-white mt-8 block mx-auto"
-              onClick={handleViewMoreClick}
-            >
-              Ver mais
-            </Button>
           </div>
         </div>
         <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
@@ -346,7 +418,7 @@ export default function Home() {
                   <button
                     id="prev-testimonial"
                     className="w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-20"
-                    onClick={() => window.changeTestimonial?.("prev")}
+                    onClick={() => (window as any).changeTestimonial?.("prev")}
                   >
                     <i className="fas fa-arrow-left"></i>
                   </button>
@@ -421,7 +493,7 @@ export default function Home() {
                   <button
                     id="next-testimonial"
                     className="w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-20"
-                    onClick={() => window.changeTestimonial?.("next")}
+                    onClick={() => (window as any).changeTestimonial?.("next")}
                   >
                     <i className="fas fa-arrow-right"></i>
                   </button>
