@@ -1,39 +1,110 @@
 import Navbar from "./navbar";
 import Footer from "./footer";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useState, useEffect, useRef } from "react";
 
 const timelineItems = [
   {
     number: "#1",
-    title: "Análise e Planejamento",
-    description: "Entendemos suas necessidades e desenvolvemos um plano estratégico personalizado para seu projeto.",
+    title: "Assemble the right team",
+    description:
+      "We handle all aspects of vetting and choosing the right team that you don't have the time, expertise, or desire to do.",
   },
   {
     number: "#2",
-    title: "Design e Prototipagem",
-    description: "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual.",
+    title: "Sprint planning",
+    description:
+      "Sprint roadmap is a collective planning effort. Team members collaborate to clarify items and ensure shared understanding.",
   },
   {
     number: "#3",
-    title: "Desenvolvimento",
-    description: "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil.",
+    title: "Tech architecture",
+    description:
+      "We break monolithic apps into microservices. Decoupling the code allows teams to move faster and more independently.",
   },
   {
     number: "#4",
-    title: "Testes e Otimização",
-    description: "Realizamos testes rigorosos e otimizamos o desempenho para garantir a melhor experiência.",
+    title: "Standups & weekly demos",
+    description:
+      "Standups, weekly demos, and weekly reviews make sure everyone is on the same page and can raise their concerns.",
   },
   {
     number: "#5",
-    title: "Lançamento",
-    description: "Preparamos tudo para o lançamento, garantindo uma transição suave e sem problemas.",
+    title: "Code reviews",
+    description:
+      "Code reviews before release help detect issues like memory leaks, file leaks, performance signs, and general bad smells.",
   },
   {
     number: "#6",
-    title: "Suporte Contínuo",
-    description: "Oferecemos suporte contínuo e atualizações para manter seu projeto sempre atualizado e funcionando perfeitamente.",
+    title: "Iterative delivery",
+    description:
+      "We divide the implementation process into several checkpoints rather than a single deadline.",
+  },
+];
+
+// Dados para a seção de tabs
+const serviceTabsData = [
+  {
+    id: "budget",
+    title: "Budget Overview",
+    icon: <i className="fas fa-chart-line text-teal-500"></i>,
+    description:
+      "Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida que atendem às necessidades específicas do seu negócio.",
+    image:
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    heading: "Desenvolvimento de Websites",
+  },
+  {
+    id: "design",
+    title: "Design & Sketch",
+    icon: <i className="fas fa-pencil-ruler text-gray-500"></i>,
+    description:
+      "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual para garantir uma presença online única e memorável que destaca sua marca no mercado digital.",
+    image:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    heading: "Design & Sketch",
+  },
+  {
+    id: "dev",
+    title: "Web Development",
+    icon: <i className="fas fa-code text-purple-500"></i>,
+    description:
+      "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil, garantindo alta performance, escalabilidade e segurança para sua aplicação web ou mobile.",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    heading: "Web Development",
+  },
+  {
+    id: "website",
+    title: "Optimize website",
+    icon: <i className="fas fa-tachometer-alt text-blue-500"></i>,
+    description:
+      "Otimizamos seu site para melhor desempenho, velocidade e SEO, garantindo que seu negócio tenha visibilidade e alcance mais clientes online. Nossas estratégias de otimização são baseadas em dados e melhores práticas do mercado.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
+    heading: "Optimize Website",
+  },
+  {
+    id: "dashboard",
+    title: "Custom Dashboard",
+    icon: <i className="fas fa-chart-pie text-orange-500"></i>,
+    description:
+      "Desenvolvemos dashboards personalizados que oferecem insights valiosos sobre seu negócio, facilitando a tomada de decisões estratégicas e o monitoramento em tempo real do desempenho de suas operações digitais.",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    secondaryImage:
+      "https://images.unsplash.com/photo-1531746790731-6bf607ccff6f?w=800&q=80",
+    heading: "Custom Dashboard",
   },
 ];
 
@@ -43,121 +114,438 @@ export default function Services() {
     threshold: 0.1,
   });
 
+  // Estado para controlar a tab ativa
+  const [activeTab, setActiveTab] = useState("budget");
+
+  // Estado para controlar a animação automática
+  const [isAutoCycling, setIsAutoCycling] = useState(true);
+  const autoChangeInterval = useRef<NodeJS.Timeout | null>(null);
+
+  // Estado para controlar a largura da barra de progresso
+  const [progressWidth, setProgressWidth] = useState(20); // Começa em 20% (primeiro item)
+
+  // Encontrar o índice da tab ativa
+  const activeTabIndex = serviceTabsData.findIndex(
+    (tab) => tab.id === activeTab,
+  );
+
+  // Função para mudar para a próxima tab
+  const goToNextTab = () => {
+    const nextIndex = (activeTabIndex + 1) % serviceTabsData.length;
+    setActiveTab(serviceTabsData[nextIndex].id);
+  };
+
+  // Efeito para animar a barra de progresso
+  useEffect(() => {
+    if (!isAutoCycling) return;
+
+    let animationFrame: number;
+    let startTime: number | null = null;
+    const duration = 5000; // 5 segundos para completar a animação
+
+    // Calcula a largura inicial e final para a animação
+    const initialWidth = (activeTabIndex / serviceTabsData.length) * 100;
+    const targetWidth = ((activeTabIndex + 1) / serviceTabsData.length) * 100;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Calcula a largura atual com base no progresso da animação
+      const currentWidth =
+        initialWidth + (targetWidth - initialWidth) * progress;
+      setProgressWidth(currentWidth);
+
+      // Se a animação não estiver completa, continua
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        // Quando a animação completa, muda para a próxima tab
+        if (isAutoCycling) {
+          goToNextTab();
+        }
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [activeTabIndex, isAutoCycling]);
+
+  // Pausa a animação automática quando o usuário interage
+  const handleTabClick = (tabId: string) => {
+    setActiveTab(tabId);
+
+    // Atualiza a largura da barra de progresso para a tab selecionada
+    const newIndex = serviceTabsData.findIndex((tab) => tab.id === tabId);
+    setProgressWidth(((newIndex + 1) / serviceTabsData.length) * 100);
+
+    // Não desativa a animação automática, apenas reinicia a partir da nova posição
+    // Removido: setIsAutoCycling(false);
+
+    // Não é mais necessário reativar a animação após um tempo
+    // Removido: setTimeout(() => { setIsAutoCycling(true); }, 15000);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
       <main className="flex-1">
-        {/* Roadmap Section */}
-        <div className="container mx-auto py-16 md:py-20 px-4 md:px-0">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold mb-3">
-              O Caminho para o seu sucesso
-            </h2>
-            <div className="w-16 h-1 bg-black mx-auto"></div>
-          </motion.div>
-
-          <div className="relative mt-16 mb-20" ref={ref}>
-            {/* Main horizontal timeline line with animation */}
-            <motion.div 
-              initial={{ scaleX: 0 }}
-              animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute left-0 right-0 h-1 bg-gradient-to-r from-black via-black to-black top-[250px] md:top-[250px]"
-            />
-
-            {/* Timeline items - Top Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mb-32">
-              {timelineItems.slice(0, 3).map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative"
-                >
-                  <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full transform transition-transform hover:scale-105 hover:shadow-xl mb-8">
-                    <div className="text-black font-bold text-sm mb-2 bg-gray-100 w-fit px-3 py-1 rounded-full">
-                      {item.number}
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                    <p className="text-gray-600 text-sm">{item.description}</p>
-                  </div>
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={inView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-4 h-4 bg-black rounded-full z-10 border-2 border-white shadow-lg"
-                  />
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={inView ? { height: "40px" } : { height: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 bottom-4 w-0.5 bg-black"
-                  />
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Timeline items - Bottom Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative mt-8">
-              {timelineItems.slice(3).map((item, index) => (
-                <motion.div
-                  key={index + 3}
-                  initial={{ opacity: 0, y: -50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
-                  transition={{ duration: 0.6, delay: (index + 3) * 0.2 }}
-                  className="relative"
-                >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={inView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.4, delay: (index + 3) * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-black rounded-full z-10 border-2 border-white shadow-lg"
-                  />
-                  <motion.div
-                    initial={{ height: 0 }}
-                    animate={inView ? { height: "40px" } : { height: 0 }}
-                    transition={{ duration: 0.4, delay: (index + 3) * 0.2 + 0.3 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 top-4 w-0.5 bg-black"
-                  />
-                  <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-full transform transition-transform hover:scale-105 hover:shadow-xl mt-8">
-                    <div className="text-black font-bold text-sm mb-2 bg-gray-100 w-fit px-3 py-1 rounded-full">
-                      {item.number}
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                    <p className="text-gray-600 text-sm">{item.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Trophy at the end with animation */}
+        {/* Seção Confie em nós - Atualizada conforme a imagem */}
+        <div className="container mx-auto py-16 px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={inView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-              transition={{ duration: 0.6, delay: 1.8 }}
-              className="absolute right-[-30px] top-[250px] transform -translate-y-1/2 z-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-xl"
             >
-              <div className="w-16 h-16 text-yellow-400 flex items-center justify-center bg-white rounded-full shadow-lg border-2 border-yellow-200">
+              <h2 className="text-6xl font-bold mb-6 leading-tight">
+                Confie em nós e <br />
+                veja os <span className="text-gray-400">negócios</span> <br />
+                aparecerem
+              </h2>
+
+              <p className="text-gray-600 mb-8">
+                Desenvolvemos websites inovadores e personalizados que
+                potencializam o crescimento do seu negócio online. Transforme
+                sua presença digital com soluções à medida. Desenvolvemos
+                websites inovadores e personalizados que potencializam o
+                crescimento do seu negócio online.
+              </p>
+
+              <div className="flex flex-col md:flex-row gap-4 mb-12">
+                <div className="relative flex-grow">
+                  <input
+                    type="email"
+                    placeholder="Your email address"
+                    className="w-full py-3 px-4 border-b-2 border-gray-300 focus:outline-none focus:border-black transition-colors"
+                  />
+                </div>
+                <Button className="bg-black text-white hover:bg-gray-800 px-6 rounded-full self-end">
+                  Contacte-nos
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white rounded-lg overflow-hidden shadow-xl"
+            >
+              {/* Imagem estática à direita */}
+              <div className="grid grid-cols-1 items-center">
+                <div className="overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                    alt="Business Growth"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Nova seção de tabs de serviços */}
+        <div className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            {/* Tabs de serviços */}
+            <div className="mb-12">
+              <div className="flex justify-center space-x-6 md:space-x-12 mb-6">
+                {serviceTabsData.map((tab, index) => (
+                  <motion.div
+                    key={tab.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`text-center cursor-pointer transition-all`}
+                    onClick={() => handleTabClick(tab.id)}
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-2 transition-colors ${activeTab === tab.id ? "bg-teal-50" : ""}`}
+                    >
+                      {tab.icon}
+                    </div>
+                    <p className="text-xs font-medium text-gray-600">
+                      {tab.title}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Barra de progresso */}
+              <div className="h-1 bg-gray-200 w-full mb-8 relative max-w-3xl mx-auto">
+                <motion.div
+                  className="absolute h-1 bg-teal-500"
+                  style={{ width: `${progressWidth}%`, left: "0%" }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </div>
+
+            {/* Conteúdo dinâmico baseado na tab selecionada */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mt-16">
+              {/* Imagens à esquerda */}
+              <div className="order-1">
+                {/* Imagens sobrepostas com posições invertidas */}
+                <div className="relative ml-4">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`main-${activeTab}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="rounded-lg overflow-hidden shadow-lg z-0 relative"
+                    >
+                      <img
+                        src={
+                          serviceTabsData.find((tab) => tab.id === activeTab)
+                            ?.image
+                        }
+                        alt="Service"
+                        className="w-full h-80 object-cover"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`secondary-${activeTab}`}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 40 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="absolute -bottom-16 -right-12 w-2/3 rounded-lg overflow-hidden shadow-lg z-10"
+                    >
+                      <img
+                        src={
+                          serviceTabsData.find((tab) => tab.id === activeTab)
+                            ?.secondaryImage
+                        }
+                        alt="Service Secondary"
+                        className="w-full h-64 object-cover"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Texto à direita */}
+              <div className="order-2 pr-8 lg:pl-8">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`content-${activeTab}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {/* Typing effect for heading */}
+                    <motion.h3
+                      className="text-5xl font-bold mb-6 min-h-[4rem]"
+                      initial={{ opacity: 1 }}
+                      animate={{
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.05,
+                        },
+                      }}
+                    >
+                      {serviceTabsData
+                        .find((tab) => tab.id === activeTab)
+                        ?.heading.split("")
+                        .map((char, index) => (
+                          <motion.span
+                            key={index}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.1, delay: index * 0.05 }}
+                          >
+                            {char}
+                          </motion.span>
+                        ))}
+                    </motion.h3>
+
+                    <motion.p
+                      className="text-gray-600 mb-8 text-lg"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                    >
+                      {
+                        serviceTabsData.find((tab) => tab.id === activeTab)
+                          ?.description
+                      }
+                    </motion.p>
+
+                    <motion.p
+                      className="text-gray-600 mb-8"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.4 }}
+                    >
+                      Nossos especialistas trabalham com as mais recentes
+                      tecnologias e metodologias para garantir resultados
+                      excepcionais. Cada projeto é tratado com dedicação e
+                      atenção aos detalhes, assegurando que sua visão seja
+                      transformada em realidade digital de forma eficiente e
+                      inovadora.
+                    </motion.p>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                    >
+                      <Button className="bg-black text-white hover:bg-gray-800 px-6 py-2 rounded-full">
+                        Portfolio
+                      </Button>
+                    </motion.div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Roadmap Section */}
+        <div className="container mx-auto py-8 px-4 mt-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold">O Caminho para o seu sucesso</h2>
+          </div>
+
+          <div className="relative">
+            {/* Linha horizontal principal */}
+            <div
+              className="absolute left-0 right-0 h-0.5 bg-gray-300 z-10"
+              style={{ top: "50%" }}
+            ></div>
+
+            <div className="flex justify-between relative z-20">
+              {/* COLUNA 1 */}
+              <div className="w-1/3 flex flex-col items-center relative">
+                {/* Linha superior */}
+                <div className="absolute h-6 w-0.5 bg-gray-300 bottom-[50%] left-[27%]"></div>
+
+                {/* Item #1 */}
+                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mb-6 w-7/12 min-h-[120px] right-[23%]">
+                  <div className="flex items-baseline">
+                    <p className="text-gray-500 text-sm font-bold mr-2">#1</p>
+                    <h3 className="font-bold text-sm">
+                      Assemble the right team
+                    </h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    We handle all aspects of vetting and choosing the right team
+                    that you don't have the time, expertise, or desire to do.
+                  </p>
+                </div>
+
+                {/* Linha inferior */}
+                <div className="absolute h-6 w-0.5 bg-gray-300 top-[50%] left-[73%]"></div>
+
+                {/* Item #2 */}
+                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mt-6 w-7/12 min-h-[120px] left-[23%]">
+                  <div className="flex items-baseline">
+                    <p className="text-gray-500 text-sm font-bold mr-2">#2</p>
+                    <h3 className="font-bold text-sm">Spirit planning</h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Spirit roadmap is a collective planning effort. Team members
+                    collaborate to clarify items and ensure shared
+                    understanding.
+                  </p>
+                </div>
+              </div>
+
+              {/* COLUNA 2 */}
+              <div className="w-1/3 flex flex-col items-center relative">
+                <div className="absolute h-6 w-0.5 bg-gray-300 bottom-[50%] left-[27%]"></div>
+
+                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mb-6 w-7/12 min-h-[120px] right-[23%]">
+                  <div className="flex items-baseline">
+                    <p className="text-gray-500 text-sm font-bold mr-2">#3</p>
+                    <h3 className="font-bold text-sm">Tech architecture</h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    We break monolithic apps into microservices. Decoupling the
+                    code allows teams to move faster and more independently.
+                  </p>
+                </div>
+
+                <div className="absolute h-6 w-0.5 bg-gray-300 top-[50%] left-[73%]"></div>
+
+                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mt-6 w-7/12 min-h-[120px] left-[23%]">
+                  <div className="flex items-baseline">
+                    <p className="text-gray-500 text-sm font-bold mr-2">#4</p>
+                    <h3 className="font-bold text-sm">
+                      Standups & weekly demos
+                    </h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Standups, weekly demos, and weekly reviews make sure
+                    everyone can be on the same page and can raise their
+                    concerns.
+                  </p>
+                </div>
+              </div>
+
+              {/* COLUNA 3 */}
+              <div className="w-1/3 flex flex-col items-center relative">
+                <div className="absolute h-6 w-0.5 bg-gray-300 bottom-[50%] left-[27%]"></div>
+
+                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mb-6 w-7/12 min-h-[120px] right-[23%]">
+                  <div className="flex items-baseline">
+                    <p className="text-gray-500 text-sm font-bold mr-2">#5</p>
+                    <h3 className="font-bold text-sm">Code reviews</h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Code reviews before release help detect issues like memory
+                    leaks, file leaks, performance signs, and general bad
+                    smells.
+                  </p>
+                </div>
+
+                <div className="absolute h-6 w-0.5 bg-gray-300 top-[50%] left-[73%]"></div>
+
+                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mt-6 w-7/12 min-h-[120px] left-[23%]">
+                  <div className="flex items-baseline">
+                    <p className="text-gray-500 text-sm font-bold mr-2">#6</p>
+                    <h3 className="font-bold text-sm">Iterative delivery</h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">
+                    We divide the implementation process into several
+                    checkpoints rather than a simple deadline.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Troféu no final */}
+            <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 z-30">
+              <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-white"
+                  fill="none"
                   viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-10 h-10"
+                  stroke="currentColor"
                 >
                   <path
-                    fillRule="evenodd"
-                    d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 00-.584.859 6.753 6.753 0 006.138 5.6 6.73 6.73 0 002.743 1.346A6.707 6.707 0 019.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 00-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 00.75-.75 2.25 2.25 0 00-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 01-1.112-3.173 6.73 6.73 0 002.743-1.347 6.753 6.753 0 006.139-5.6.75.75 0 00-.585-.858 47.077 47.077 0 00-3.07-.543V2.62a.75.75 0 00-.658-.744 49.22 49.22 0 00-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 00-.657.744zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 013.16 5.337a45.6 45.6 0 012.006-.343v.256zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 01-2.863 3.207 6.72 6.72 0 00.857-3.294z"
-                    clipRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                   />
                 </svg>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
