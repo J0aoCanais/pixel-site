@@ -19,7 +19,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         <Sheet>
-          <SheetTrigger className="md:hidden">
+          <SheetTrigger className="md:hidden pr-4">
             <div className="w-8 h-8 flex flex-col justify-center gap-1.5 group">
               <div className="w-full h-0.5 bg-black transition-all duration-300 group-hover:w-1/2"></div>
               <div className="w-full h-0.5 bg-black transition-all duration-300"></div>
