@@ -10,13 +10,55 @@ export default function Navbar() {
     <nav className="w-full py-4 px-4 md:px-0">
       <div className="container mx-auto flex justify-between items-center relative">
         {/* Logo aligned to the left */}
-        <a href="/" className="cursor-pointer flex-1 flex justify-start">
+        <a href="/" className="cursor-pointer">
           <img
             src="/src/assets/PIXEL WEB.svg"
             alt="PIXEL WEB"
-            className="h-6"
+            className="h-5 md:h-6 ml-2 md:ml-0"
           />
         </a>
+
+        {/* Desktop Menu - Centered */}
+        <div className="hidden md:flex gap-6 items-center z-10 absolute left-1/2 -translate-x-1/2">
+          <a href="/" className="relative group z-10">
+            <span>Home</span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="/services" className="relative group z-10">
+            <span>Services</span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="/portfolio" className="relative group z-10">
+            <span>Portefólio</span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </div>
+
+        {/* Right side buttons */}
+        <div className="hidden md:flex items-center gap-4 z-10">
+          <div className="flex gap-2 mr-4">
+            <a
+              href="#"
+              className="cursor-pointer hover:text-gray-900 transition-colors duration-300 z-10"
+            >
+              PT
+            </a>
+            <a
+              href="#"
+              className="cursor-pointer hover:text-gray-900 transition-colors duration-300 z-10"
+            >
+              EN
+            </a>
+          </div>
+          <a href="/contact" className="z-10">
+            <Button
+              variant="outline"
+              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 hover:border-black z-10 ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-white bg-black text-white hover:bg-white hover:text-black"}`}
+            >
+              Contacte-nos
+            </Button>
+          </a>
+        </div>
 
         {/* Mobile Menu */}
         <Sheet>
@@ -105,47 +147,6 @@ export default function Navbar() {
             </div>
           </SheetContent>
         </Sheet>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6 items-center z-10">
-          <a href="/" className="relative group z-10">
-            <span>Home</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a href="/services" className="relative group z-10">
-            <span>Services</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a href="/portfolio" className="relative group z-10">
-            <span>Portefólio</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-          </a>
-        </div>
-
-        <div className="hidden md:flex items-center gap-4 z-10">
-          <div className="flex gap-2 mr-4">
-            <a
-              href="#"
-              className="cursor-pointer hover:text-gray-900 transition-colors duration-300 z-10"
-            >
-              PT
-            </a>
-            <a
-              href="#"
-              className="cursor-pointer hover:text-gray-900 transition-colors duration-300 z-10"
-            >
-              EN
-            </a>
-          </div>
-          <a href="/contact" className="z-10">
-            <Button
-              variant="outline"
-              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 hover:border-black z-10 ${isContactPage ? "border-black bg-white text-black hover:bg-black hover:text-white" : "border-white bg-black text-white hover:bg-white hover:text-black"}`}
-            >
-              Contacte-nos
-            </Button>
-          </a>
-        </div>
       </div>
     </nav>
   );
