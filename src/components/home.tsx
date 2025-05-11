@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import Counter from "./counter-animation";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function Home() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
@@ -258,18 +259,61 @@ export default function Home() {
     };
   }, [currentServiceIndex]);
 
+  // Parallax mouse effect for cards
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const handleParallax = (e: React.MouseEvent) => {
+    if (!parallaxRef.current) return;
+    const rect = parallaxRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+    setParallax({ x, y });
+  };
+  const resetParallax = () => setParallax({ x: 0, y: 0 });
+
+  // Testimonial state for mobile
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const testimonials = [
+    {
+      name: "Imran Khan",
+      role: "Software Engineer",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
+      text: "Without any doubt I recommend Alcaline Solutions as one of the best web design and digital marketing agencies. One of the best agencies I've come across so far. Wouldn't be hesitated to introduce their work to someone else."
+    },
+    {
+      name: "Alexander M. Smith",
+      role: "CEO, TechCorp",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
+      text: "A equipa da Pixel Web superou as nossas expectativas. O site ficou incrível e o suporte é excelente!"
+    },
+    {
+      name: "Patricia R. Miller",
+      role: "Marketing Director",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
+      text: "Profissionais, rápidos e criativos. Recomendo a todos que querem crescer online."
+    },
+    {
+      name: "Michael J. Brown",
+      role: "Entrepreneur",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
+      text: "O melhor investimento digital que já fiz. O resultado foi além do esperado!"
+    },
+  ];
+  const handlePrevTestimonial = () => setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const handleNextTestimonial = () => setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-gray-900 to-gray-800">
       <Navbar />
       <main className="flex-1 w-full overflow-hidden">
         {/* Hero Section */}
-        <div className="w-full px-4 md:px-8 py-4 md:py-8 relative overflow-hidden">
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
-            transition={{ duration: 1 }}
-          />
+        <div className="w-full px-4 md:px-8 py-2 md:py-4 relative overflow-hidden bg-gradient-to-b from-black via-gray-900 to-gray-800">
+          {/* Linhas Futuristas Animadas atrás da AI + mais linhas neon */}
+          <motion.svg className="absolute left-0 top-0 w-full h-full z-0 pointer-events-none" width="100%" height="100%" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 0.2, scale: 1 }} transition={{ duration: 1.2 }}>
+            <motion.line x1="100" y1="50" x2="1100" y2="50" stroke="#fff" strokeWidth="2" strokeDasharray="20 10" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.2 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+            <motion.circle cx="900" cy="300" r="80" stroke="#fff" strokeWidth="1.5" strokeDasharray="12 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+            <motion.line x1="200" y1="350" x2="1000" y2="350" stroke="#fff" strokeWidth="2" strokeDasharray="16 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.5 }} style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
+          </motion.svg>
           <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center max-w-7xl mx-auto relative">
             <motion.div 
               className="space-y-2 md:space-y-4 relative z-10"
@@ -277,8 +321,16 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              {/* Animated Title */}
-              <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[3.5em] cursor-default">
+              {/* Animated Title with stagger */}
+              <motion.h1
+                className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[3.5em] cursor-default text-white"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: 0.08 } },
+                }}
+              >
                 {displayedText.split("\n").map((line, idx) => (
                   <span key={idx}>
                     {line.split(" ").map((word, wordIdx) => {
@@ -289,14 +341,15 @@ export default function Home() {
                       const isWordComplete = displayedText.length >= wordEnd;
                       const isWordBeingTyped = displayedText.length > wordStart && displayedText.length < wordEnd;
                       const shouldHighlight = isHighlightedWord && (isWordBeingTyped || isWordComplete) && correctionComplete;
-                      
                       return (
                         <motion.span
                           key={wordIdx}
-                          className={`transition-colors duration-150 cursor-default ${
-                            shouldHighlight ? "text-gray-400" : ""
-                          }`}
+                          className={`transition-colors duration-150 cursor-default ${shouldHighlight ? "text-white drop-shadow-[0_0_8px_#fff]" : ""}`}
                           whileHover={{ scale: 1.05 }}
+                          variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+                          }}
                         >
                           {isWordVisible ? (
                             <span className="inline-block">
@@ -315,7 +368,7 @@ export default function Home() {
                   animate={{ opacity: [1, 0.5, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >|</motion.span>
-              </h1>
+              </motion.h1>
               <motion.p 
                 className="text-gray-600 text-base md:text-base max-w-lg cursor-default"
                 initial={{ opacity: 0, y: 20 }}
@@ -329,16 +382,22 @@ export default function Home() {
               <motion.a
                 href="/contact"
                 className="mt-4 md:mt-8 hidden md:inline-block cursor-pointer"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.08, filter: "drop-shadow(0 0 16px #fff)" }}
                 whileTap={{ scale: 0.95 }}
+                animate={{ filter: [
+                  "drop-shadow(0 0 0px #fff)",
+                  "drop-shadow(0 0 12px #fff)",
+                  "drop-shadow(0 0 0px #fff)"
+                ] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Button className="rounded-full text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-black text-white hover:bg-gray-800 transition-all duration-300">
+                <Button className="rounded-full text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-white text-black font-bold shadow-lg hover:shadow-[0_0_16px_#fff] hover:bg-gray-100 transition-all duration-300">
                   Contacte-nos
                 </Button>
               </motion.a>
             </motion.div>
             <motion.div 
-              className="relative h-[350px] sm:h-[400px] md:h-[700px] lg:h-[800px] w-full"
+              className="relative flex justify-end items-center h-[400px] sm:h-[500px] md:h-[700px] lg:h-[900px] xl:h-[1000px] w-full"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -346,31 +405,20 @@ export default function Home() {
               <motion.img
                 src="/src/assets/AI_MODEL.svg"
                 alt="AI Head"
-                className="absolute right-0 top-0 w-full h-full object-contain md:object-cover scale-95 transform translate-x-[2%] md:translate-x-[15%] lg:translate-x-[20%] z-0"
+                className="relative z-10 w-full max-w-[350px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1000px] h-auto object-contain"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               />
             </motion.div>
           </div>
         </div>
-
-        <motion.div 
-          className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.5 }}
-        />
-
-        {/* Reasons Section */}
-        <div className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-30"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.3 }}
-            viewport={{ once: false }}
-            transition={{ duration: 1 }}
-          />
+        {/* Reasons Section - agora logo após o hero */}
+        <div className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-gray-800 to-black relative overflow-hidden">
+          {/* Linhas neon adicionais */}
+          <motion.svg className="absolute right-0 bottom-0 w-1/2 h-1/2 z-0 pointer-events-none" width="100%" height="100%" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 0.15, scale: 1 }} transition={{ duration: 1.2 }}>
+            <motion.circle cx="500" cy="200" r="100" stroke="#fff" strokeWidth="1.5" strokeDasharray="10 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.3 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+            <motion.line x1="100" y1="250" x2="500" y2="50" stroke="#fff" strokeWidth="1.2" strokeDasharray="8 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.6 }} style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
+          </motion.svg>
           <div className="max-w-7xl mx-auto relative">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -384,7 +432,7 @@ export default function Home() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5 }}
-                className="text-3xl md:text-4xl font-bold mb-4 cursor-default"
+                className="text-3xl md:text-4xl font-bold mb-4 cursor-default text-white"
               >
                 As razões pelo qual nos
                 <br />
@@ -395,53 +443,57 @@ export default function Home() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-gray-600 max-w-2xl mx-auto cursor-default"
+                className="text-gray-300 max-w-2xl mx-auto cursor-default"
               >
                 Descubra por que somos a escolha certa para transformar sua presença digital
               </motion.p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div ref={parallaxRef} onMouseMove={handleParallax} onMouseLeave={resetParallax} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
                   title: "Entrega Rápida",
                   description: "Priorizamos processos ágeis e eficientes, garantindo que seu site esteja pronto para uso no menor tempo possível.",
-                  icon: <i className="fas fa-rocket text-4xl mb-4 text-orange-500"></i>,
-                  stat: "48h",
+                  icon: <i className="fas fa-rocket text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  stat: "48",
                   statLabel: "Tempo médio de entrega",
-                  bgColor: "bg-orange-100",
-                  hoverEffect: "hover:scale-105 hover:shadow-lg",
-                  animation: "animate-bounce"
+                  bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
+                  hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
+                  animation: "animate-bounce",
+                  suffix: "h"
                 },
                 {
                   title: "Acrescentamos Valor",
                   description: "Nosso trabalho vai além do desenvolvimento; buscamos agregar valor ao seu negócio através de estratégias que aumentam a visibilidade.",
-                  icon: <i className="fas fa-chart-line text-4xl mb-4 text-blue-500"></i>,
-                  stat: "150%",
+                  icon: <i className="fas fa-chart-line text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  stat: "150",
                   statLabel: "Aumento médio em conversões",
-                  bgColor: "bg-blue-100",
-                  hoverEffect: "hover:scale-105 hover:shadow-lg",
-                  animation: "animate-pulse"
+                  bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
+                  hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
+                  animation: "animate-pulse",
+                  suffix: "%"
                 },
                 {
                   title: "Soluções Escaláveis",
                   description: "Desenvolvemos projetos que acompanham o crescimento da sua empresa, permitindo expansões e atualizações conforme as demandas do mercado evoluem.",
-                  icon: <i className="fas fa-expand-arrows-alt text-4xl mb-4 text-purple-500"></i>,
-                  stat: "100%",
+                  icon: <i className="fas fa-expand-arrows-alt text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  stat: "100",
                   statLabel: "Projetos escaláveis",
-                  bgColor: "bg-purple-100",
-                  hoverEffect: "hover:scale-105 hover:shadow-lg",
-                  animation: "animate-spin-slow"
+                  bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
+                  hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
+                  animation: "animate-spin-slow",
+                  suffix: "%"
                 },
                 {
                   title: "Suporte Contínuo",
                   description: "Oferecemos suporte pós-lançamento e manutenção contínua, assegurando que o site se mantenha seguro e atualizado.",
-                  icon: <i className="fas fa-headset text-4xl mb-4 text-green-500"></i>,
-                  stat: "24/7",
+                  icon: <i className="fas fa-headset text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  stat: "24",
                   statLabel: "Suporte disponível",
-                  bgColor: "bg-green-100",
-                  hoverEffect: "hover:scale-105 hover:shadow-lg",
-                  animation: "animate-ping"
+                  bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
+                  hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
+                  animation: "animate-ping",
+                  suffix: "/7"
                 }
               ].map((reason, index) => (
                 <motion.div
@@ -450,7 +502,8 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, rotate: 1 }}
+                  whileHover={{ scale: 1.07, rotate: 1 }}
+                  animate={{ x: parallax.x, y: parallax.y }}
                   className={`${reason.bgColor} ${reason.hoverEffect} rounded-xl p-6 transition-all duration-300 relative overflow-hidden group cursor-default`}
                 >
                   <motion.div 
@@ -467,6 +520,12 @@ export default function Home() {
                     >
                       <motion.div
                         className={reason.animation}
+                        animate={{ filter: [
+                          "drop-shadow(0 0 8px #fff)",
+                          "drop-shadow(0 0 16px #fff)",
+                          "drop-shadow(0 0 8px #fff)"
+                        ] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         whileHover={{ scale: 1.2, rotate: 5 }}
                       >
                         {reason.icon}
@@ -475,18 +534,31 @@ export default function Home() {
                         className="text-right"
                         whileHover={{ scale: 1.1 }}
                       >
-                        <div className="text-2xl font-bold">{reason.stat}</div>
-                        <div className="text-sm text-gray-600">{reason.statLabel}</div>
+                        <motion.div 
+                          className="text-2xl font-bold text-white drop-shadow-[0_0_8px_#fff]"
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          viewport={{ once: false }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <Counter
+                            from={0}
+                            to={parseInt(reason.stat)}
+                            duration={2}
+                            suffix={reason.suffix}
+                          />
+                        </motion.div>
+                        <div className="text-sm text-gray-300">{reason.statLabel}</div>
                       </motion.div>
                     </motion.div>
                     <motion.h3 
-                      className="text-xl font-semibold mb-3 cursor-default"
+                      className="text-xl font-semibold mb-3 cursor-default text-white"
                       whileHover={{ scale: 1.05 }}
                     >
                       {reason.title}
                     </motion.h3>
                     <motion.p 
-                      className="text-gray-600 text-sm cursor-default"
+                      className="text-gray-300 text-sm cursor-default"
                       whileHover={{ scale: 1.02 }}
                     >
                       {reason.description}
@@ -495,66 +567,15 @@ export default function Home() {
                 </motion.div>
               ))}
             </div>
-
-            {/* Interactive Stats Counter */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
-            >
-              {[
-                { number: 500, label: "Projetos Concluídos", suffix: "+", color: "text-orange-500", icon: "fa-project-diagram" },
-                { number: 300, label: "Clientes Satisfeitos", suffix: "+", color: "text-blue-500", icon: "fa-smile" },
-                { number: 5, label: "Anos de Experiência", suffix: "+", color: "text-purple-500", icon: "fa-calendar-check" },
-                { number: 100, label: "Taxa de Satisfação", suffix: "%", color: "text-green-500", icon: "fa-star" }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={index} 
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
-                  transition={{ duration: 0.5, delay: 0.5 + (index * 0.1) }}
-                  whileHover={{ scale: 1.1, rotate: 2 }}
-                  className="text-center p-6 bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 cursor-default"
-                >
-                  <motion.div 
-                    className={`text-4xl font-bold mb-2 ${stat.color} flex items-center justify-center gap-2`}
-                    whileHover={{ scale: 1.2 }}
-                  >
-                    <motion.i 
-                      className={`fas ${stat.icon} text-2xl`}
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    ></motion.i>
-                    <Counter end={stat.number} suffix={stat.suffix} />
-                  </motion.div>
-                  <motion.div 
-                    className="text-gray-600 cursor-default"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    {stat.label}
-                  </motion.div>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
         </div>
-
-        <motion.div 
-          className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.5 }}
-        />
-
-        {/* Services Section */}
-        <div
-          id="services-section"
-          className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-white to-gray-50"
-        >
+        {/* Services Section - agora depois das razões */}
+        <div id="services-section" className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-black via-gray-900 to-gray-800 relative overflow-hidden">
+          {/* Linhas neon adicionais */}
+          <motion.svg className="absolute left-0 top-0 w-1/3 h-1/3 z-0 pointer-events-none" width="100%" height="100%" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 0.12, scale: 1 }} transition={{ duration: 1.2 }}>
+            <motion.line x1="50" y1="20" x2="350" y2="180" stroke="#fff" strokeWidth="1.2" strokeDasharray="8 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
+            <motion.circle cx="100" cy="100" r="60" stroke="#fff" strokeWidth="1.5" strokeDasharray="10 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.6 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+          </motion.svg>
           <div className="max-w-7xl mx-auto relative">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -568,7 +589,7 @@ export default function Home() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5 }}
-                className="text-3xl md:text-4xl font-bold mb-4 cursor-default"
+                className="text-3xl md:text-4xl font-bold mb-4 cursor-default text-white"
               >
                 Os nossos serviços
               </motion.h2>
@@ -577,7 +598,7 @@ export default function Home() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-gray-600 max-w-2xl mx-auto cursor-default"
+                className="text-gray-300 max-w-2xl mx-auto cursor-default"
               >
                 Soluções digitais completas para impulsionar seu negócio
               </motion.p>
@@ -589,6 +610,9 @@ export default function Home() {
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
+              ref={parallaxRef}
+              onMouseMove={handleParallax}
+              onMouseLeave={resetParallax}
             >
               {services.map((service, index) => {
                 const isCenter = index === currentServiceIndex;
@@ -611,24 +635,31 @@ export default function Home() {
                     onClick={() => goToServiceSlide(index)}
                   >
                     <motion.div 
-                      className={`bg-gradient-to-br ${service.gradient} p-4 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 max-w-xl mx-auto text-center cursor-default border-2 ${service.borderColor} ${service.hoverColor} my-4`}
+                      className={`bg-gradient-to-b from-gray-900 to-gray-800 p-4 sm:p-6 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 max-w-xl mx-auto text-center cursor-default border-2 border-gray-700 hover:border-gray-500 my-4`}
                       whileHover={{ y: -5, scale: 1.02 }}
+                      animate={{ x: parallax.x, y: parallax.y }}
                     >
                       <motion.div 
                         className={`w-16 h-16 sm:w-20 sm:h-20 ${service.iconBg} rounded-2xl mx-auto mb-4 sm:mb-6 flex items-center justify-center transform rotate-3`}
+                        animate={{ filter: [
+                          "drop-shadow(0 0 8px #fff)",
+                          "drop-shadow(0 0 16px #fff)",
+                          "drop-shadow(0 0 8px #fff)"
+                        ] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         whileHover={{ scale: 1.1, rotate: 0 }}
                         transition={{ duration: 0.2 }}
                       >
                         {service.icon}
                       </motion.div>
                       <motion.h3 
-                        className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 cursor-default"
+                        className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 cursor-default text-white"
                         whileHover={{ scale: 1.05 }}
                       >
                         {service.title}
                       </motion.h3>
                       <motion.p 
-                        className="text-base sm:text-lg text-gray-700 cursor-default"
+                        className="text-base sm:text-lg text-gray-300 cursor-default"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
@@ -663,26 +694,12 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-        <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
-        {/* Partners Section */}
-        <div className="w-full px-4 md:px-8 py-8 md:py-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold cursor-default">Parceiros</h2>
-            </div>
-
-            <div className="flex justify-center items-center gap-8 md:gap-16">
-              <img
-                src="/src/assets/parceiros.svg"
-                alt="Partner 2"
-                className="w-full max-w-[300px] md:max-w-[500px] h-auto object-contain py-4"
-              />
-            </div>
+        {/* Testimonials Section - gradiente alternado */}
+        <div className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-gray-800 to-black relative overflow-hidden">
+          {/* Linhas neon brancas animadas para destaque + mais linhas */}
+          <div className="relative w-full flex flex-col items-center mb-8">
+            <div className="w-11/12 md:w-4/5 h-0.5 bg-gradient-to-r from-white/30 via-white/60 to-white/30 mb-8" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
           </div>
-        </div>
-        <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
-        {/* Testimonials Section */}
-        <div className="w-full px-4 md:px-8 py-8 md:py-16">
           <div className="max-w-7xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -696,23 +713,56 @@ export default function Home() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5 }}
-                className="text-2xl md:text-3xl font-bold cursor-default"
+                className="text-2xl md:text-3xl font-bold cursor-default text-white drop-shadow-[0_0_8px_#fff]"
               >
                 O que dizem sobre nós
               </motion.h2>
             </motion.div>
-
-            <div className="max-w-4xl mx-auto relative">
+            {/* MOBILE: apenas 1 pessoa ativa, setas, sem quote.svg */}
+            <div className="block md:hidden max-w-xs mx-auto">
+              <motion.div
+                key={testimonialIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col items-center bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-6 shadow-lg relative"
+              >
+                <img 
+                  src={testimonials[testimonialIndex].image} 
+                  alt={testimonials[testimonialIndex].name} 
+                  className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white/20 shadow-[0_0_16px_#fff]" 
+                />
+                <div className="flex justify-center mb-2">
+                  {Array(5).fill().map((_, i) => (
+                    <i key={i} className="fas fa-star text-white text-xs"></i>
+                  ))}
+                </div>
+                <p className="text-base font-medium text-white mb-1 text-center">{testimonials[testimonialIndex].name}</p>
+                <p className="text-xs text-gray-400 mb-4 text-center">{testimonials[testimonialIndex].role}</p>
+                <p className="text-gray-200 text-sm text-center mb-4">{testimonials[testimonialIndex].text}</p>
+                <div className="flex justify-between w-full mt-2">
+                  <button onClick={handlePrevTestimonial} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200">
+                    <FaChevronLeft className="text-white text-lg" />
+                  </button>
+                  <button onClick={handleNextTestimonial} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200">
+                    <FaChevronRight className="text-white text-lg" />
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+            {/* DESKTOP: layout antigo */}
+            <div className="hidden md:block max-w-4xl mx-auto relative">
               <div className="text-center mb-8 md:mb-12 px-4 md:px-16">
                 <motion.div
                   id="testimonial-content"
-                  className="relative min-h-[200px] flex items-center justify-center mb-20"
+                  className="relative min-h-[200px] flex items-center justify-center mb-20 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false }}
                   transition={{ duration: 0.5 }}
                 >
-                  <motion.img
+                  {/* <motion.img
                     src="/src/assets/quote_left.svg"
                     alt="Quote"
                     className="absolute -top-4 -left-4 w-8 h-8 opacity-85"
@@ -720,155 +770,51 @@ export default function Home() {
                     whileInView={{ rotate: 0, opacity: 0.85 }}
                     viewport={{ once: false }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                  />
+                  /> */}
                   <div className="max-w-2xl mx-auto">
                     <motion.p 
-                      className="text-base md:text-lg cursor-default" 
+                      className="text-base md:text-lg cursor-default text-white transition-all duration-300" 
                       id="testimonial-text"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: false }}
                       transition={{ duration: 0.5, delay: 0.3 }}
                     >
-                      Without any doubt I recommend Alcaline Solutions as one of
-                      the best web design and digital marketing agencies. One of
-                      the best agencies I've come across so far. Wouldn't be
-                      hesitated to introduce their work to someone else.
+                      {testimonials[0].text}
                     </motion.p>
                   </div>
-                  <motion.img
-                    src="/src/assets/quote_right.svg"
-                    alt="Quote"
-                    className="absolute -bottom-4 -right-4 w-8 h-8 opacity-85"
-                    initial={{ rotate: 10, opacity: 0 }}
-                    whileInView={{ rotate: 0, opacity: 0.85 }}
-                    viewport={{ once: false }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  />
                 </motion.div>
-
-                <div className="flex justify-center items-center space-x-4 md:space-x-12">
-                  <motion.button
-                    id="prev-testimonial"
-                    className="w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-20"
-                    onClick={() => (window as any).changeTestimonial?.("prev")}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <i className="fas fa-arrow-left"></i>
-                  </motion.button>
-
-                  <div
-                    id="testimonial-clients"
-                    className="flex justify-center gap-4 md:gap-8 min-h-[160px] items-center overflow-hidden py-4"
-                  >
-                    {[
-                      {
-                        name: "Imran Khan",
-                        role: "Software Engineer",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
-                        active: true,
-                      },
-                      {
-                        name: "Alexander M. Smith",
-                        role: "CEO, TechCorp",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-                        active: false,
-                      },
-                      {
-                        name: "Patricia R. Miller",
-                        role: "Marketing Director",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-                        active: false,
-                      },
-                      {
-                        name: "Michael J. Brown",
-                        role: "Entrepreneur",
-                        image: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
-                        active: false,
-                      },
-                    ].map((person, index) => (
-                      <motion.div
-                        key={index}
-                        id={`client-${index}`}
-                        className={`text-center transition-all duration-300 mx-2 w-24 
-                          ${person.active ? "scale-125 z-10" : "opacity-50 scale-90"}
-                          sm:block ${!person.active ? "hidden sm:block" : ""}`}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: person.active ? 1 : 0.5, y: 0 }}
-                        viewport={{ once: false }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        whileHover={{ scale: person.active ? 1.3 : 1 }}
-                      >
-                        <motion.div 
-                          className="mb-2"
-                          whileHover={{ rotate: 5 }}
-                        >
-                          <motion.img
-                            src={person.image}
-                            alt={person.name}
-                            className="w-16 h-16 rounded-full mx-auto"
-                            whileHover={{ scale: 1.1 }}
-                          />
-                        </motion.div>
-                        <motion.div 
-                          className="flex justify-center mb-1"
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <motion.i
-                              key={star}
-                              className="fas fa-star text-black text-xs"
-                              whileHover={{ scale: 1.2, rotate: 10 }}
-                            ></motion.i>
-                          ))}
-                        </motion.div>
-                        <motion.p 
-                          className="text-sm font-medium truncate cursor-default"
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          {person.name}
-                        </motion.p>
-                        <motion.p 
-                          className="text-xs text-gray-500 truncate cursor-default"
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          {person.role}
-                        </motion.p>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <motion.button
-                    id="next-testimonial"
-                    className="w-10 h-10 rounded-full bg-black text-white shadow-md flex items-center justify-center hover:bg-gray-800 transition-colors z-20"
-                    onClick={() => (window as any).changeTestimonial?.("next")}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <i className="fas fa-arrow-right"></i>
-                  </motion.button>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12 md:mt-16 py-12 md:py-16">
-              <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24">
-                <h3 className="text-xl md:text-2xl font-bold text-center md:text-right cursor-default">
-                  Receba Todas As <br />
-                  Novidades
-                </h3>
-                <div className="relative w-full max-w-xl md:w-1/2 lg:w-2/3">
-                  <div className="border-b-2 border-gray-400 pb-4 relative">
-                    <input
-                      type="email"
-                      placeholder="Escreva O Seu Endereço De Email"
-                      className="w-full bg-transparent focus:outline-none pr-24 text-sm md:text-base cursor-text"
-                    />
-                    <button className="absolute right-0 bottom-4 text-black font-medium flex items-center text-sm md:text-base">
-                      Subscribe <i className="fas fa-arrow-right ml-2"></i>
-                    </button>
-                  </div>
+                <div
+                  id="testimonial-clients"
+                  className="flex justify-center gap-4 md:gap-8 min-h-[160px] items-center overflow-hidden py-4"
+                >
+                  {testimonials.map((client, index) => (
+                    <motion.div
+                      key={index}
+                      className={`text-center transition-all duration-300 mx-2 cursor-pointer ${
+                        index === 0 ? 'scale-110 z-10' : 'scale-90 opacity-60'
+                      }`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <div className="mb-2">
+                        <img 
+                          src={client.image} 
+                          alt={client.name} 
+                          className="w-16 h-16 rounded-full mx-auto transition-all duration-300" 
+                        />
+                      </div>
+                      <div className="flex justify-center mb-1">
+                        {Array(5).fill().map((_, i) => (
+                          <i key={i} className="fas fa-star text-white text-xs"></i>
+                        ))}
+                      </div>
+                      <p className="text-sm font-medium text-white">{client.name}</p>
+                      <p className="text-xs text-gray-500">{client.role}</p>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </div>

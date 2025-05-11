@@ -49,7 +49,7 @@ const serviceTabsData = [
   {
     id: "budget",
     title: "Budget Overview",
-    icon: <i className="fas fa-chart-line text-teal-500"></i>,
+    icon: <i className="fas fa-chart-line text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
       "Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida que atendem às necessidades específicas do seu negócio.",
     image:
@@ -61,7 +61,7 @@ const serviceTabsData = [
   {
     id: "design",
     title: "Design & Sketch",
-    icon: <i className="fas fa-pencil-ruler text-gray-500"></i>,
+    icon: <i className="fas fa-pencil-ruler text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
       "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual para garantir uma presença online única e memorável que destaca sua marca no mercado digital.",
     image:
@@ -73,7 +73,7 @@ const serviceTabsData = [
   {
     id: "dev",
     title: "Web Development",
-    icon: <i className="fas fa-code text-purple-500"></i>,
+    icon: <i className="fas fa-code text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
       "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil, garantindo alta performance, escalabilidade e segurança para sua aplicação web ou mobile.",
     image:
@@ -85,7 +85,7 @@ const serviceTabsData = [
   {
     id: "website",
     title: "Optimize website",
-    icon: <i className="fas fa-tachometer-alt text-blue-500"></i>,
+    icon: <i className="fas fa-tachometer-alt text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
       "Otimizamos seu site para melhor desempenho, velocidade e SEO, garantindo que seu negócio tenha visibilidade e alcance mais clientes online. Nossas estratégias de otimização são baseadas em dados e melhores práticas do mercado.",
     image:
@@ -97,7 +97,7 @@ const serviceTabsData = [
   {
     id: "dashboard",
     title: "Custom Dashboard",
-    icon: <i className="fas fa-chart-pie text-orange-500"></i>,
+    icon: <i className="fas fa-chart-pie text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
       "Desenvolvemos dashboards personalizados que oferecem insights valiosos sobre seu negócio, facilitando a tomada de decisões estratégicas e o monitoramento em tempo real do desempenho de suas operações digitais.",
     image:
@@ -182,118 +182,114 @@ export default function Services() {
     // Atualiza a largura da barra de progresso para a tab selecionada
     const newIndex = serviceTabsData.findIndex((tab) => tab.id === tabId);
     setProgressWidth(((newIndex + 1) / serviceTabsData.length) * 100);
-
-    // Não desativa a animação automática, apenas reinicia a partir da nova posição
-    // Removido: setIsAutoCycling(false);
-
-    // Não é mais necessário reativar a animação após um tempo
-    // Removido: setTimeout(() => { setIsAutoCycling(true); }, 15000);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-gray-900 to-gray-800">
       <Navbar />
-      <main className="flex-1">
-        {/* Seção Confie em nós - Atualizada conforme a imagem */}
+      <main className="flex-1 relative overflow-x-hidden">
+        {/* SVG Neon Lines Top */}
+        <motion.svg className="absolute left-0 top-0 w-full h-24 z-0 pointer-events-none" width="100%" height="96" viewBox="0 0 1200 96" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 0.18, y: 0 }} transition={{ duration: 1.2 }}>
+          <motion.line x1="100" y1="48" x2="1100" y2="48" stroke="#fff" strokeWidth="2" strokeDasharray="20 10" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.2 }} style={{ filter: 'drop-shadow(0 0 12px #fff)' }} />
+          <motion.circle cx="900" cy="80" r="16" stroke="#fff" strokeWidth="1.5" strokeDasharray="12 8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+        </motion.svg>
+        {/* Seção Confie em nós */}
         <div className="container mx-auto py-16 px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-xl"
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
             >
-              <h2 className="text-6xl font-bold mb-6 leading-tight">
+              <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
                 Confie em nós e <br />
-                veja os <span className="text-gray-400">negócios</span> <br />
+                veja os <span className="bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400 bg-clip-text text-transparent">negócios</span> <br />
                 aparecerem
               </h2>
-
-              <p className="text-gray-600 mb-8">
-                Desenvolvemos websites inovadores e personalizados que
-                potencializam o crescimento do seu negócio online. Transforme
-                sua presença digital com soluções à medida. Desenvolvemos
-                websites inovadores e personalizados que potencializam o
-                crescimento do seu negócio online.
+              <p className="text-gray-300 mb-8 text-base md:text-lg">
+                Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida. Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online.
               </p>
-
-              <div className="flex flex-col md:flex-row gap-4 mb-12">
+              <div className="flex flex-col md:flex-row gap-4 mb-12 w-full max-w-lg mx-auto lg:mx-0">
                 <div className="relative flex-grow">
                   <input
                     type="email"
                     placeholder="Your email address"
-                    className="w-full py-3 px-4 border-b-2 border-gray-300 focus:outline-none focus:border-black transition-colors"
+                    className="w-full py-3 px-4 border-b-2 border-gray-600 focus:outline-none focus:border-white bg-transparent text-white placeholder-gray-400 transition-colors rounded-md"
                   />
                 </div>
-                <Button className="bg-black text-white hover:bg-gray-800 px-6 rounded-full self-end">
+                <Button className="bg-white text-black hover:bg-gray-100 hover:shadow-[0_0_16px_#fff] px-6 rounded-full self-end transition-all duration-300 w-full md:w-auto">
                   Contacte-nos
                 </Button>
               </div>
             </motion.div>
-
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-white rounded-lg overflow-hidden shadow-xl"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="bg-gray-800 rounded-lg overflow-hidden shadow-xl hover:shadow-[0_0_16px_#fff] transition-all duration-300 w-full max-w-xl mx-auto hidden md:block"
             >
-              {/* Imagem estática à direita */}
               <div className="grid grid-cols-1 items-center">
                 <div className="overflow-hidden">
                   <img
                     src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
                     alt="Business Growth"
-                    className="w-full h-full object-cover"
+                    className="w-full h-64 md:h-full object-cover"
                   />
                 </div>
               </div>
             </motion.div>
           </div>
         </div>
-
+        {/* Linha divisória animada */}
+        <motion.div className="w-full flex justify-center my-8" initial={{ opacity: 0, scaleX: 0.8 }} whileInView={{ opacity: 1, scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+          <div className="h-1 w-11/12 md:w-3/4 bg-gradient-to-r from-white/10 via-white/60 to-white/10 rounded-full" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+        </motion.div>
         {/* Nova seção de tabs de serviços */}
-        <div className="py-12 bg-white">
-          <div className="container mx-auto px-4">
+        <div className="py-12">
+          <div className="container mx-auto px-2 sm:px-4">
             {/* Tabs de serviços */}
             <div className="mb-12">
-              <div className="flex justify-center space-x-6 md:space-x-12 mb-6">
+              <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-6">
                 {serviceTabsData.map((tab, index) => (
                   <motion.div
                     key={tab.id}
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className={`text-center cursor-pointer transition-all`}
+                    className={`text-center cursor-pointer transition-all w-20`}
                     onClick={() => handleTabClick(tab.id)}
                   >
                     <div
-                      className={`w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-2 transition-colors ${activeTab === tab.id ? "bg-teal-50" : ""}`}
+                      className={`w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mx-auto mb-2 transition-colors hover:shadow-[0_0_16px_#fff] ${
+                        activeTab === tab.id ? "bg-gray-700" : ""
+                      }`}
                     >
                       {tab.icon}
                     </div>
-                    <p className="text-xs font-medium text-gray-600">
+                    <p className="text-xs font-medium text-gray-300">
                       {tab.title}
                     </p>
                   </motion.div>
                 ))}
               </div>
-
               {/* Barra de progresso */}
-              <div className="h-1 bg-gray-200 w-full mb-8 relative max-w-3xl mx-auto">
+              <div className="h-1 bg-gray-800 w-full mb-8 relative max-w-3xl mx-auto">
                 <motion.div
-                  className="absolute h-1 bg-teal-500"
+                  className="absolute h-1 bg-white"
                   style={{ width: `${progressWidth}%`, left: "0%" }}
                   transition={{ duration: 0.3 }}
                 />
               </div>
             </div>
-
             {/* Conteúdo dinâmico baseado na tab selecionada */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center mt-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center mt-8">
               {/* Imagens à esquerda */}
-              <div className="order-1">
-                {/* Imagens sobrepostas com posições invertidas */}
-                <div className="relative ml-4">
+              <div className="order-1 w-full max-w-xl mx-auto">
+                <div className="relative ml-0 md:ml-4">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={`main-${activeTab}`}
@@ -301,7 +297,7 @@ export default function Services() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.5 }}
-                      className="rounded-lg overflow-hidden shadow-lg z-0 relative"
+                      className="rounded-lg overflow-hidden shadow-lg z-0 relative hover:shadow-[0_0_16px_#fff] transition-all duration-300"
                     >
                       <img
                         src={
@@ -309,11 +305,10 @@ export default function Services() {
                             ?.image
                         }
                         alt="Service"
-                        className="w-full h-80 object-cover"
+                        className="w-full h-56 md:h-80 object-cover"
                       />
                     </motion.div>
                   </AnimatePresence>
-
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={`secondary-${activeTab}`}
@@ -321,7 +316,7 @@ export default function Services() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 40 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
-                      className="absolute -bottom-16 -right-12 w-2/3 rounded-lg overflow-hidden shadow-lg z-10"
+                      className="absolute -bottom-10 -right-4 md:-bottom-16 md:-right-12 w-2/3 rounded-lg overflow-hidden shadow-lg z-10 hover:shadow-[0_0_16px_#fff] transition-all duration-300"
                     >
                       <img
                         src={
@@ -329,15 +324,14 @@ export default function Services() {
                             ?.secondaryImage
                         }
                         alt="Service Secondary"
-                        className="w-full h-64 object-cover"
+                        className="w-full h-40 md:h-64 object-cover"
                       />
                     </motion.div>
                   </AnimatePresence>
                 </div>
               </div>
-
               {/* Texto à direita */}
-              <div className="order-2 pr-8 lg:pl-8">
+              <div className="order-2 w-full max-w-xl mx-auto px-2 md:px-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`content-${activeTab}`}
@@ -346,9 +340,8 @@ export default function Services() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {/* Typing effect for heading */}
                     <motion.h3
-                      className="text-5xl font-bold mb-6 min-h-[4rem]"
+                      className="text-2xl md:text-5xl font-bold mb-6 min-h-[3rem] md:min-h-[4rem] bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent text-center md:text-left"
                       initial={{ opacity: 1 }}
                       animate={{
                         opacity: 1,
@@ -371,9 +364,8 @@ export default function Services() {
                           </motion.span>
                         ))}
                     </motion.h3>
-
                     <motion.p
-                      className="text-gray-600 mb-8 text-lg"
+                      className="text-gray-300 mb-6 md:mb-8 text-base md:text-lg text-center md:text-left"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.3 }}
@@ -383,9 +375,8 @@ export default function Services() {
                           ?.description
                       }
                     </motion.p>
-
                     <motion.p
-                      className="text-gray-600 mb-8"
+                      className="text-gray-300 mb-6 md:mb-8 text-center md:text-left"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.4 }}
@@ -397,13 +388,12 @@ export default function Services() {
                       transformada em realidade digital de forma eficiente e
                       inovadora.
                     </motion.p>
-
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.5 }}
                     >
-                      <Button className="bg-black text-white hover:bg-gray-800 px-6 py-2 rounded-full">
+                      <Button className="bg-white text-black hover:bg-gray-100 hover:shadow-[0_0_16px_#fff] px-6 py-2 rounded-full transition-all duration-300 w-full md:w-auto">
                         Portfolio
                       </Button>
                     </motion.div>
@@ -413,123 +403,162 @@ export default function Services() {
             </div>
           </div>
         </div>
-
+        {/* Linha divisória animada antes do roadmap */}
+        <motion.div className="w-full flex justify-center my-8" initial={{ opacity: 0, scaleX: 0.8 }} whileInView={{ opacity: 1, scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+          <div className="h-1 w-11/12 md:w-3/4 bg-gradient-to-r from-white/10 via-white/60 to-white/10 rounded-full" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+        </motion.div>
         {/* Roadmap Section */}
         <div className="container mx-auto py-8 px-4 mt-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold">O Caminho para o seu sucesso</h2>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">O Caminho para o seu sucesso</h2>
           </div>
-
           <div className="relative">
-            {/* Linha horizontal principal */}
-            <div
-              className="absolute left-0 right-0 h-0.5 bg-gray-300 z-10"
-              style={{ top: "50%" }}
-            ></div>
-
-            <div className="flex justify-between relative z-20">
+            {/* Linha vertical para mobile */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-white/10 via-white/60 to-white/10 rounded-full z-0 block md:hidden" style={{ transform: 'translateX(-50%)', filter: 'drop-shadow(0 0 8px #fff)' }}></div>
+            {/* Linha horizontal para desktop */}
+            <motion.div
+              className="absolute left-0 right-0 h-0.5 bg-gradient-to-r from-white/10 via-white/60 to-white/10 z-10 hidden md:block"
+              style={{ top: "50%", filter: 'drop-shadow(0 0 8px #fff)' }}
+              initial={{ opacity: 0, scaleX: 0.8 }}
+              whileInView={{ opacity: 1, scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            ></motion.div>
+            <div className="flex flex-col md:flex-row justify-between relative z-20 gap-8 md:gap-0">
               {/* COLUNA 1 */}
-              <div className="w-1/3 flex flex-col items-center relative">
-                {/* Linha superior */}
-                <div className="absolute h-6 w-0.5 bg-gray-300 bottom-[50%] left-[27%]"></div>
-
+              <div className="w-full md:w-1/3 flex flex-col items-center relative mb-8 md:mb-0">
+                {/* Linha superior (desktop) */}
+                <div className="absolute h-6 w-0.5 bg-gray-700 bottom-[50%] left-[27%] hidden md:block"></div>
+                {/* Bolinha marcador (mobile) */}
+                <div className="block md:hidden absolute left-1/2 top-0 w-4 h-4 bg-white rounded-full border-4 border-gray-900 z-10" style={{ transform: 'translate(-50%, -50%)', boxShadow: '0 0 8px #fff' }}></div>
                 {/* Item #1 */}
-                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mb-6 w-7/12 min-h-[120px] right-[23%]">
-                  <div className="flex items-baseline">
-                    <p className="text-gray-500 text-sm font-bold mr-2">#1</p>
-                    <h3 className="font-bold text-sm">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="relative bg-gray-800 p-4 rounded shadow-md border border-gray-700 mb-6 w-11/12 md:w-7/12 min-h-[120px] right-0 md:right-[23%] hover:shadow-[0_0_16px_#fff] transition-all duration-300 z-20"
+                >
+                  <div className="flex items-baseline justify-center md:justify-start">
+                    <p className="text-gray-400 text-sm font-bold mr-2">#1</p>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
                       Assemble the right team
                     </h3>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
                     We handle all aspects of vetting and choosing the right team
                     that you don't have the time, expertise, or desire to do.
                   </p>
-                </div>
-
-                {/* Linha inferior */}
-                <div className="absolute h-6 w-0.5 bg-gray-300 top-[50%] left-[73%]"></div>
-
+                </motion.div>
+                {/* Linha inferior (desktop) */}
+                <div className="absolute h-6 w-0.5 bg-gray-700 top-[50%] left-[73%] hidden md:block"></div>
+                {/* Bolinha marcador (mobile) */}
+                <div className="block md:hidden absolute left-1/2 bottom-0 w-4 h-4 bg-white rounded-full border-4 border-gray-900 z-10" style={{ transform: 'translate(-50%, 50%)', boxShadow: '0 0 8px #fff' }}></div>
                 {/* Item #2 */}
-                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mt-6 w-7/12 min-h-[120px] left-[23%]">
-                  <div className="flex items-baseline">
-                    <p className="text-gray-500 text-sm font-bold mr-2">#2</p>
-                    <h3 className="font-bold text-sm">Spirit planning</h3>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative bg-gray-800 p-4 rounded shadow-md border border-gray-700 mt-6 w-11/12 md:w-7/12 min-h-[120px] left-0 md:left-[23%] hover:shadow-[0_0_16px_#fff] transition-all duration-300 z-20"
+                >
+                  <div className="flex items-baseline justify-center md:justify-start">
+                    <p className="text-gray-400 text-sm font-bold mr-2">#2</p>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Spirit planning</h3>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
                     Spirit roadmap is a collective planning effort. Team members
                     collaborate to clarify items and ensure shared
                     understanding.
                   </p>
-                </div>
+                </motion.div>
               </div>
-
               {/* COLUNA 2 */}
-              <div className="w-1/3 flex flex-col items-center relative">
-                <div className="absolute h-6 w-0.5 bg-gray-300 bottom-[50%] left-[27%]"></div>
-
-                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mb-6 w-7/12 min-h-[120px] right-[23%]">
-                  <div className="flex items-baseline">
-                    <p className="text-gray-500 text-sm font-bold mr-2">#3</p>
-                    <h3 className="font-bold text-sm">Tech architecture</h3>
+              <div className="w-full md:w-1/3 flex flex-col items-center relative mb-8 md:mb-0">
+                <div className="absolute h-6 w-0.5 bg-gray-700 bottom-[50%] left-[27%] hidden md:block"></div>
+                <div className="block md:hidden absolute left-1/2 top-0 w-4 h-4 bg-white rounded-full border-4 border-gray-900 z-10" style={{ transform: 'translate(-50%, -50%)', boxShadow: '0 0 8px #fff' }}></div>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="relative bg-gray-800 p-4 rounded shadow-md border border-gray-700 mb-6 w-11/12 md:w-7/12 min-h-[120px] right-0 md:right-[23%] hover:shadow-[0_0_16px_#fff] transition-all duration-300 z-20"
+                >
+                  <div className="flex items-baseline justify-center md:justify-start">
+                    <p className="text-gray-400 text-sm font-bold mr-2">#3</p>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Tech architecture</h3>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
                     We break monolithic apps into microservices. Decoupling the
                     code allows teams to move faster and more independently.
                   </p>
-                </div>
-
-                <div className="absolute h-6 w-0.5 bg-gray-300 top-[50%] left-[73%]"></div>
-
-                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mt-6 w-7/12 min-h-[120px] left-[23%]">
-                  <div className="flex items-baseline">
-                    <p className="text-gray-500 text-sm font-bold mr-2">#4</p>
-                    <h3 className="font-bold text-sm">
+                </motion.div>
+                <div className="absolute h-6 w-0.5 bg-gray-700 top-[50%] left-[73%] hidden md:block"></div>
+                <div className="block md:hidden absolute left-1/2 bottom-0 w-4 h-4 bg-white rounded-full border-4 border-gray-900 z-10" style={{ transform: 'translate(-50%, 50%)', boxShadow: '0 0 8px #fff' }}></div>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative bg-gray-800 p-4 rounded shadow-md border border-gray-700 mt-6 w-11/12 md:w-7/12 min-h-[120px] left-0 md:left-[23%] hover:shadow-[0_0_16px_#fff] transition-all duration-300 z-20"
+                >
+                  <div className="flex items-baseline justify-center md:justify-start">
+                    <p className="text-gray-400 text-sm font-bold mr-2">#4</p>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
                       Standups & weekly demos
                     </h3>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
                     Standups, weekly demos, and weekly reviews make sure
                     everyone can be on the same page and can raise their
                     concerns.
                   </p>
-                </div>
+                </motion.div>
               </div>
-
               {/* COLUNA 3 */}
-              <div className="w-1/3 flex flex-col items-center relative">
-                <div className="absolute h-6 w-0.5 bg-gray-300 bottom-[50%] left-[27%]"></div>
-
-                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mb-6 w-7/12 min-h-[120px] right-[23%]">
-                  <div className="flex items-baseline">
-                    <p className="text-gray-500 text-sm font-bold mr-2">#5</p>
-                    <h3 className="font-bold text-sm">Code reviews</h3>
+              <div className="w-full md:w-1/3 flex flex-col items-center relative">
+                <div className="absolute h-6 w-0.5 bg-gray-700 bottom-[50%] left-[27%] hidden md:block"></div>
+                <div className="block md:hidden absolute left-1/2 top-0 w-4 h-4 bg-white rounded-full border-4 border-gray-900 z-10" style={{ transform: 'translate(-50%, -50%)', boxShadow: '0 0 8px #fff' }}></div>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="relative bg-gray-800 p-4 rounded shadow-md border border-gray-700 mb-6 w-11/12 md:w-7/12 min-h-[120px] right-0 md:right-[23%] hover:shadow-[0_0_16px_#fff] transition-all duration-300 z-20"
+                >
+                  <div className="flex items-baseline justify-center md:justify-start">
+                    <p className="text-gray-400 text-sm font-bold mr-2">#5</p>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Code reviews</h3>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
                     Code reviews before release help detect issues like memory
                     leaks, file leaks, performance signs, and general bad
                     smells.
                   </p>
-                </div>
-
-                <div className="absolute h-6 w-0.5 bg-gray-300 top-[50%] left-[73%]"></div>
-
-                <div className="relative bg-white p-4 rounded shadow-md border border-gray-200 mt-6 w-7/12 min-h-[120px] left-[23%]">
-                  <div className="flex items-baseline">
-                    <p className="text-gray-500 text-sm font-bold mr-2">#6</p>
-                    <h3 className="font-bold text-sm">Iterative delivery</h3>
+                </motion.div>
+                <div className="absolute h-6 w-0.5 bg-gray-700 top-[50%] left-[73%] hidden md:block"></div>
+                <div className="block md:hidden absolute left-1/2 bottom-0 w-4 h-4 bg-white rounded-full border-4 border-gray-900 z-10" style={{ transform: 'translate(-50%, 50%)', boxShadow: '0 0 8px #fff' }}></div>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative bg-gray-800 p-4 rounded shadow-md border border-gray-700 mt-6 w-11/12 md:w-7/12 min-h-[120px] left-0 md:left-[23%] hover:shadow-[0_0_16px_#fff] transition-all duration-300 z-20"
+                >
+                  <div className="flex items-baseline justify-center md:justify-start">
+                    <p className="text-gray-400 text-sm font-bold mr-2">#6</p>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Iterative delivery</h3>
                   </div>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
                     We divide the implementation process into several
                     checkpoints rather than a simple deadline.
                   </p>
-                </div>
+                </motion.div>
               </div>
             </div>
-
             {/* Troféu no final */}
             <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 z-30">
-              <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center shadow-[0_0_16px_#fff]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6 text-white"
@@ -545,154 +574,6 @@ export default function Services() {
                   />
                 </svg>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Hero Section */}
-        <div className="container mx-auto py-16 md:py-24">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Os Nossos Serviços
-            </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Oferecemos soluções digitais completas para impulsionar o seu
-              negócio online. Desde websites personalizados até sistemas
-              complexos de gestão.
-            </p>
-          </div>
-        </div>
-
-        {/* Main Services */}
-        <div className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-0">
-            <div className="grid md:grid-cols-2 gap-12">
-              {[
-                {
-                  title: "Web Design & Development",
-                  description:
-                    "Websites modernos e responsivos que convertem visitantes em clientes.",
-                  features: [
-                    "Design personalizado",
-                    "Otimização para dispositivos móveis",
-                    "Integração com redes sociais",
-                    "SEO otimizado",
-                  ],
-                  image:
-                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-                },
-                {
-                  title: "Sistema de Reservas",
-                  description:
-                    "Sistemas completos de reservas online para seu negócio.",
-                  features: [
-                    "Gestão de disponibilidade",
-                    "Pagamentos online",
-                    "Notificações automáticas",
-                    "Painel administrativo",
-                  ],
-                  image:
-                    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40",
-                },
-                {
-                  title: "Chat IA",
-                  description:
-                    "Assistentes virtuais inteligentes para atendimento 24/7.",
-                  features: [
-                    "Respostas automáticas",
-                    "Aprendizagem contínua",
-                    "Integração com WhatsApp",
-                    "Análise de sentimentos",
-                  ],
-                  image:
-                    "https://images.unsplash.com/photo-1531746790731-6bf607ccff6f",
-                },
-                {
-                  title: "Marketing Digital",
-                  description:
-                    "Estratégias completas para aumentar sua presença online.",
-                  features: [
-                    "SEO avançado",
-                    "Gestão de redes sociais",
-                    "Email marketing",
-                    "Análise de dados",
-                  ],
-                  image:
-                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-                },
-              ].map((service, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-lg overflow-hidden shadow-lg"
-                >
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                    <p className="text-gray-600 mb-6">{service.description}</p>
-                    <ul className="space-y-3 mb-8">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2">
-                          <span className="text-black">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button className="w-full bg-black text-white hover:bg-gray-800">
-                      Saber mais
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Process Section */}
-        <div className="py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-0">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">Como Trabalhamos</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Nosso processo é estruturado para garantir resultados
-                excepcionais em cada projeto
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-              {[
-                {
-                  step: "01",
-                  title: "Descoberta",
-                  description: "Entendemos suas necessidades e objetivos",
-                },
-                {
-                  step: "02",
-                  title: "Planejamento",
-                  description: "Desenvolvemos a estratégia e cronograma",
-                },
-                {
-                  step: "03",
-                  title: "Execução",
-                  description: "Implementamos as soluções definidas",
-                },
-                {
-                  step: "04",
-                  title: "Entrega",
-                  description: "Realizamos testes e ajustes finais",
-                },
-              ].map((phase, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
-                    {phase.step}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{phase.title}</h3>
-                  <p className="text-gray-600">{phase.description}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>

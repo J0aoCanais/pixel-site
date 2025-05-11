@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { useRoutes, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Home from "./components/home";
 import Services from "./components/services";
 import Portfolio from "./components/portfolio";
@@ -10,11 +10,24 @@ import Footer from "./components/footer";
 import ContactForm from "./components/contact-form";
 import Layout from "./components/layout";
 
+function NeonLoader() {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <motion.div
+        className="w-16 h-16 rounded-full border-4 border-white border-t-transparent drop-shadow-[0_0_24px_#fff]"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+        style={{ borderTopColor: "transparent" }}
+      />
+    </div>
+  );
+}
+
 function App() {
   const location = useLocation();
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<NeonLoader />}>
       <>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -47,19 +60,7 @@ function App() {
               path="/contact"
               element={
                 <Layout>
-                  <div className="min-h-screen flex flex-col bg-white">
-                    <Navbar />
-                    <main className="flex-1 container mx-auto py-8 md:py-12">
-                      <div className="text-center mb-12">
-                        <h1 className="text-3xl md:text-4xl font-bold mb-2 px-4 md:px-0">
-                          Contacte-nos
-                        </h1>
-                        <div className="w-12 h-1 mx-auto bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300"></div>
-                      </div>
-                      <ContactForm />
-                    </main>
-                    <Footer />
-                  </div>
+                  <ContactForm />
                 </Layout>
               }
             />

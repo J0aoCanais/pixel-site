@@ -28,104 +28,67 @@ window.testimonials = [
 
 window.currentTestimonialIndex = 0;
 
-// Function to change testimonial
-window.changeTestimonial = function (direction) {
-  // Update index based on direction
-  if (direction === "next") {
-    currentTestimonialIndex =
-      (currentTestimonialIndex + 1) % testimonials.length;
-  } else {
-    currentTestimonialIndex =
-      (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
+// Function to update testimonial with animation
+function updateTestimonial(index) {
+  const testimonial = testimonials[index];
+  const content = document.getElementById('testimonial-content');
+  const text = document.getElementById('testimonial-text');
+  const clients = document.getElementById('testimonial-clients');
+  
+  // Fade out current content
+  content.style.opacity = '0';
+  content.style.transform = 'translateY(20px)';
+  
+  setTimeout(() => {
+    // Update content
+    text.textContent = testimonial.text;
+    
+    // Update active client
+    const clientElements = clients.children;
+    for (let i = 0; i < clientElements.length; i++) {
+      const client = clientElements[i];
+      if (i === index) {
+        client.classList.add('active');
+        client.style.transform = 'scale(1.1)';
+        client.style.opacity = '1';
+        client.style.filter = 'drop-shadow(0 0 12px #fff)';
+        client.style.zIndex = '10';
+      } else {
+        client.classList.remove('active');
+        client.style.transform = 'scale(1)';
+        client.style.opacity = '0.6';
+        client.style.filter = 'none';
+        client.style.zIndex = '1';
+      }
+    }
+    
+    // Fade in new content
+    content.style.opacity = '1';
+    content.style.transform = 'translateY(0)';
+  }, 300);
+}
+
+// Auto-rotate testimonials
+let testimonialInterval = setInterval(() => {
+  window.currentTestimonialIndex = (window.currentTestimonialIndex + 1) % testimonials.length;
+  updateTestimonial(window.currentTestimonialIndex);
+}, 5000);
+
+// Add click handlers to client images
+document.addEventListener('DOMContentLoaded', () => {
+  const clients = document.getElementById('testimonial-clients');
+  if (clients) {
+    const clientElements = clients.children;
+    for (let i = 0; i < clientElements.length; i++) {
+      clientElements[i].addEventListener('click', () => {
+        window.currentTestimonialIndex = i;
+        updateTestimonial(i);
+        clearInterval(testimonialInterval);
+        testimonialInterval = setInterval(() => {
+          window.currentTestimonialIndex = (window.currentTestimonialIndex + 1) % testimonials.length;
+          updateTestimonial(window.currentTestimonialIndex);
+        }, 5000);
+      });
+    }
   }
-
-  // Update testimonial text
-  const testimonialText = document.getElementById("testimonial-text");
-  if (testimonialText) {
-    testimonialText.textContent = testimonials[currentTestimonialIndex].text;
-  }
-
-  // Update client display
-  const clientsContainer = document.getElementById("testimonial-clients");
-  if (clientsContainer) {
-    // Clear current clients
-    clientsContainer.innerHTML = "";
-
-    // Add clients with proper active state
-    testimonials.forEach((client, index) => {
-      const isActive = index === currentTestimonialIndex;
-      const clientElement = document.createElement("div");
-      clientElement.id = `client-${index}`;
-      clientElement.className = `text-center transition-all duration-300 mx-2 ${
-        isActive ? "scale-125 z-10" : "opacity-50 scale-90"
-      } sm:block ${!isActive ? "hidden sm:block" : ""}`;
-
-      // Always show all clients on desktop
-      // No display:none condition here
-
-      clientElement.innerHTML = `
-        <div class="mb-2">
-          <img src="${client.image}" alt="${client.name}" class="w-16 h-16 rounded-full mx-auto" />
-        </div>
-        <div class="flex justify-center mb-1">
-          ${Array(5)
-            .fill()
-            .map(() => '<i class="fas fa-star text-black text-xs"></i>')
-            .join("")}
-        </div>
-        <p class="text-sm font-medium">${client.name}</p>
-        <p class="text-xs text-gray-500">${client.role}</p>
-      `;
-
-      clientsContainer.appendChild(clientElement);
-    });
-  }
-};
-
-// Initialize testimonials when page loads
-document.addEventListener("DOMContentLoaded", function () {
-  // Set up event listeners for testimonial navigation
-  const prevButton = document.getElementById("prev-testimonial");
-  const nextButton = document.getElementById("next-testimonial");
-
-  if (prevButton) {
-    prevButton.addEventListener("click", () => {
-      changeTestimonial("prev");
-      resetAutoRotation(); // Reset timer when manually navigating
-    });
-  }
-
-  if (nextButton) {
-    nextButton.addEventListener("click", () => {
-      changeTestimonial("next");
-      resetAutoRotation(); // Reset timer when manually navigating
-    });
-  }
-
-  // Auto-rotation functionality
-  let autoRotationInterval;
-
-  function startAutoRotation() {
-    autoRotationInterval = setInterval(() => {
-      changeTestimonial("next");
-    }, 5000); // Change testimonial every 5 seconds
-  }
-
-  function resetAutoRotation() {
-    clearInterval(autoRotationInterval);
-    startAutoRotation();
-  }
-
-  // Start auto-rotation
-  startAutoRotation();
-
-  // Stop auto-rotation when user interacts with the testimonials section
-  const testimonialSection = document.querySelector("#testimonial-content").parentElement;
-  testimonialSection.addEventListener("mouseenter", () => {
-    clearInterval(autoRotationInterval);
-  });
-
-  testimonialSection.addEventListener("mouseleave", () => {
-    startAutoRotation();
-  });
 });

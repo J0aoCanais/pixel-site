@@ -138,86 +138,82 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-800 via-gray-900 to-black">
       <Navbar />
-      <main className="flex-1">
-        {/* Hero Section */}
-        <div className="container mx-auto py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+      <main className="flex-1 relative overflow-x-hidden">
+        <div className="container mx-auto py-16 px-4 relative z-10">
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.7 }}
+            className="text-4xl md:text-5xl font-bold mb-8 text-center bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Nosso Portfólio
-            </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Conheça alguns dos projetos incríveis que desenvolvemos para
-              nossos clientes
-            </p>
-          </motion.div>
-
-          {/* Filter Buttons */}
-          <motion.div
+            Portefólio
+          </motion.h1>
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-gray-300 text-center max-w-2xl mx-auto mb-12"
+          >
+            Conheça alguns dos nossos projetos mais recentes e inspiradores.
+          </motion.p>
+          {/* Filtros de tipo de projeto */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-wrap justify-center gap-4 mb-12"
           >
-            {projectTypes.map((filter, index) => (
-              <Button
-                key={filter}
-                variant="outline"
-                onClick={() => setSelectedFilter(filter)}
-                className={`rounded-full transition-all duration-300 ${
-                  selectedFilter === filter
-                    ? "bg-black text-white scale-110"
-                    : "hover:scale-105"
-                }`}
+            {projectTypes.map((type) => (
+              <button
+                key={type}
+                onClick={() => setSelectedFilter(type)}
+                className={`px-5 py-2 rounded-full border-2 text-sm font-semibold transition-all duration-300 focus:outline-none ${selectedFilter === type ? "bg-white text-black border-white shadow-[0_0_16px_#fff]" : "bg-transparent text-white border-white hover:bg-white hover:text-black hover:shadow-[0_0_16px_#fff]"}`}
               >
-                {filter}
-              </Button>
+                {type}
+              </button>
             ))}
           </motion.div>
-
-          {/* Portfolio Grid */}
-          <motion.div layout className="grid md:grid-cols-3 gap-8 px-4 md:px-0">
+          {/* Grid de projetos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence>
-              {filteredProjects.map((project, index) => (
+              {filteredProjects.map((project, idx) => (
                 <motion.div
                   key={project.title}
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5 }}
-                  className="group relative overflow-hidden rounded-lg cursor-pointer"
-                  onClick={() => openProjectDetails(project)}
+                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 40, scale: 0.95 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ scale: 1.04, boxShadow: "0 0 32px 8px #fff" }}
+                  className="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-white/10 hover:border-white/30 transition-all duration-300 group cursor-pointer relative"
                 >
-                  <img
+                  <motion.img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-56 object-cover group-hover:scale-105 transition-all duration-500"
+                    initial={{ scale: 1 }}
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ duration: 0.4 }}
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-center items-center text-white p-6">
-                    <h3 className="text-2xl font-bold mb-2 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <div className="p-6 flex flex-col gap-2">
+                    <h3 className="text-xl font-bold text-white mb-1 group-hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <span className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">
                       {project.category}
+                    </span>
+                    <p className="text-gray-300 text-sm mb-4">
+                      {project.description}
                     </p>
-                    <Button
-                      variant="outline"
-                      className="mt-4 rounded-full border-2 border-white text-black bg-white hover:bg-white hover:text-black transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300"
-                    >
-                      Ver detalhes
+                    <Button className="rounded-full bg-white text-black font-bold px-5 py-2 mt-auto shadow hover:shadow-[0_0_16px_#fff] transition-all duration-300" onClick={() => openProjectDetails(project)}>
+                      Ver Projeto
                     </Button>
                   </div>
                 </motion.div>
               ))}
             </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
 
         {/* Modal de Detalhes do Projeto */}

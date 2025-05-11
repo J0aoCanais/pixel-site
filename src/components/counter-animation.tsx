@@ -3,23 +3,25 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 
 interface CounterProps {
-  end: number;
+  from: number;
+  to: number;
   duration?: number;
   suffix?: string;
 }
 
 export default function Counter({
-  end,
+  from,
+  to,
   duration = 2,
   suffix = "",
 }: CounterProps) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(from);
   const ref = useRef(null);
   const isInView = useInView(ref);
 
   useEffect(() => {
     if (isInView) {
-      setCount(0); // Reset count when coming into view
+      setCount(from); // Reset count when coming into view
       let startTime: number | null = null;
       const step = (timestamp: number) => {
         if (!startTime) startTime = timestamp;
@@ -28,7 +30,7 @@ export default function Counter({
           1,
         );
 
-        setCount(Math.floor(progress * end));
+        setCount(Math.floor(from + progress * (to - from)));
 
         if (progress < 1) {
           window.requestAnimationFrame(step);
@@ -37,7 +39,7 @@ export default function Counter({
 
       window.requestAnimationFrame(step);
     }
-  }, [end, duration, isInView]);
+  }, [from, to, duration, isInView]);
 
   return (
     <span ref={ref}>
