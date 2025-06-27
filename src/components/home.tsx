@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Counter from "./counter-animation";
 import { useEffect, useState, useRef } from "react";
-import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import { motion, useAnimation, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function Home() {
@@ -152,10 +152,6 @@ export default function Home() {
       text: "Seu sucesso, nosso compromisso",
       highlight: "sucesso"
     },
-    {
-      text: "Transforme ideias em pixels com a Pixel Web",
-      highlight: "pixels"
-    },
   ];
 
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
@@ -273,6 +269,7 @@ export default function Home() {
 
   // Testimonial state for mobile
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
   const testimonials = [
     {
       name: "Imran Khan",
@@ -299,8 +296,31 @@ export default function Home() {
       text: "O melhor investimento digital que já fiz. O resultado foi além do esperado!"
     },
   ];
-  const handlePrevTestimonial = () => setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  const handleNextTestimonial = () => setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+  const testimonialVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 100 : -100,
+      opacity: 0
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 100 : -100,
+      opacity: 0
+    })
+  };
+
+  const handlePrevTestimonial = () => {
+    setDirection(-1);
+    setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+  const handleNextTestimonial = () => {
+    setDirection(1);
+    setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-gray-900 to-gray-800">
@@ -314,7 +334,7 @@ export default function Home() {
             <motion.circle cx="900" cy="300" r="80" stroke="#fff" strokeWidth="1.5" strokeDasharray="12 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
             <motion.line x1="200" y1="350" x2="1000" y2="350" stroke="#fff" strokeWidth="2" strokeDasharray="16 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.5 }} style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
           </motion.svg>
-          <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center max-w-7xl mx-auto relative">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center max-w-7xl mx-auto relative py-8 md:py-10 pt-16 md:pt-20">
             <motion.div 
               className="space-y-2 md:space-y-4 relative z-10"
               initial={{ opacity: 0, x: -50 }}
@@ -323,7 +343,7 @@ export default function Home() {
             >
               {/* Animated Title with stagger */}
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[3.5em] cursor-default text-white"
+                className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold leading-tight min-h-[2.5em] cursor-default text-white pb-2"
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -370,7 +390,7 @@ export default function Home() {
                 >|</motion.span>
               </motion.h1>
               <motion.p 
-                className="text-gray-600 text-base md:text-base max-w-lg cursor-default"
+                className="text-gray-600 text-base md:text-base max-w-lg cursor-default mt-0 pb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
@@ -381,7 +401,7 @@ export default function Home() {
               </motion.p>
               <motion.a
                 href="/contact"
-                className="mt-4 md:mt-8 hidden md:inline-block cursor-pointer"
+                className="hidden md:inline-block cursor-pointer"
                 whileHover={{ scale: 1.08, filter: "drop-shadow(0 0 16px #fff)" }}
                 whileTap={{ scale: 0.95 }}
                 animate={{ filter: [
@@ -397,7 +417,7 @@ export default function Home() {
               </motion.a>
             </motion.div>
             <motion.div 
-              className="relative flex justify-end items-center h-[400px] sm:h-[500px] md:h-[700px] lg:h-[900px] xl:h-[1000px] w-full"
+              className="relative flex justify-end items-center h-[300px] sm:h-[350px] md:h-[450px] lg:h-[550px] xl:h-[650px] w-full"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -454,45 +474,45 @@ export default function Home() {
                 {
                   title: "Entrega Rápida",
                   description: "Priorizamos processos ágeis e eficientes, garantindo que seu site esteja pronto para uso no menor tempo possível.",
-                  icon: <i className="fas fa-rocket text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  icon: <i className="fas fa-rocket text-4xl mb-4 text-white"></i>,
                   stat: "48",
                   statLabel: "Tempo médio de entrega",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
-                  animation: "animate-bounce",
+                  animation: "transition-all duration-300 hover:scale-110",
                   suffix: "h"
                 },
                 {
                   title: "Acrescentamos Valor",
                   description: "Nosso trabalho vai além do desenvolvimento; buscamos agregar valor ao seu negócio através de estratégias que aumentam a visibilidade.",
-                  icon: <i className="fas fa-chart-line text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  icon: <i className="fas fa-chart-line text-4xl mb-4 text-white"></i>,
                   stat: "150",
                   statLabel: "Aumento médio em conversões",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
-                  animation: "animate-pulse",
+                  animation: "transition-all duration-300 hover:scale-110",
                   suffix: "%"
                 },
                 {
                   title: "Soluções Escaláveis",
                   description: "Desenvolvemos projetos que acompanham o crescimento da sua empresa, permitindo expansões e atualizações conforme as demandas do mercado evoluem.",
-                  icon: <i className="fas fa-expand-arrows-alt text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  icon: <i className="fas fa-expand-arrows-alt text-4xl mb-4 text-white"></i>,
                   stat: "100",
                   statLabel: "Projetos escaláveis",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
-                  animation: "animate-spin-slow",
+                  animation: "transition-all duration-300 hover:scale-110",
                   suffix: "%"
                 },
                 {
                   title: "Suporte Contínuo",
                   description: "Oferecemos suporte pós-lançamento e manutenção contínua, assegurando que o site se mantenha seguro e atualizado.",
-                  icon: <i className="fas fa-headset text-4xl mb-4 text-white drop-shadow-[0_0_8px_#fff]"></i>,
+                  icon: <i className="fas fa-headset text-4xl mb-4 text-white"></i>,
                   stat: "24",
                   statLabel: "Suporte disponível",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
-                  animation: "animate-ping",
+                  animation: "transition-all duration-300 hover:scale-110",
                   suffix: "/7"
                 }
               ].map((reason, index) => (
@@ -519,14 +539,7 @@ export default function Home() {
                       whileHover={{ scale: 1.1 }}
                     >
                       <motion.div
-                        className={reason.animation}
-                        animate={{ filter: [
-                          "drop-shadow(0 0 8px #fff)",
-                          "drop-shadow(0 0 16px #fff)",
-                          "drop-shadow(0 0 8px #fff)"
-                        ] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        whileHover={{ scale: 1.2, rotate: 5 }}
+                        className={`${reason.animation} transition-all duration-300`}
                       >
                         {reason.icon}
                       </motion.div>
@@ -639,19 +652,11 @@ export default function Home() {
                       whileHover={{ y: -5, scale: 1.02 }}
                       animate={{ x: parallax.x, y: parallax.y }}
                     >
-                      <motion.div 
-                        className={`w-16 h-16 sm:w-20 sm:h-20 ${service.iconBg} rounded-2xl mx-auto mb-4 sm:mb-6 flex items-center justify-center transform rotate-3`}
-                        animate={{ filter: [
-                          "drop-shadow(0 0 8px #fff)",
-                          "drop-shadow(0 0 16px #fff)",
-                          "drop-shadow(0 0 8px #fff)"
-                        ] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        whileHover={{ scale: 1.1, rotate: 0 }}
-                        transition={{ duration: 0.2 }}
+                      <div 
+                        className={`w-16 h-16 sm:w-20 sm:h-20 ${service.iconBg} rounded-xl mx-auto mb-4 sm:mb-6 flex items-center justify-center transition-all duration-300 hover:scale-105`}
                       >
                         {service.icon}
-                      </motion.div>
+                      </div>
                       <motion.h3 
                         className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 cursor-default text-white"
                         whileHover={{ scale: 1.05 }}
@@ -762,42 +767,77 @@ export default function Home() {
                   viewport={{ once: false }}
                   transition={{ duration: 0.5 }}
                 >
-                  {/* <motion.img
-                    src="/src/assets/quote_left.svg"
-                    alt="Quote"
-                    className="absolute -top-4 -left-4 w-8 h-8 opacity-85"
-                    initial={{ rotate: -10, opacity: 0 }}
-                    whileInView={{ rotate: 0, opacity: 0.85 }}
-                    viewport={{ once: false }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  /> */}
+                  <button 
+                    onClick={handlePrevTestimonial} 
+                    className="absolute left-[-60px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200"
+                  >
+                    <FaChevronLeft className="text-white text-xl" />
+                  </button>
+                  <button 
+                    onClick={handleNextTestimonial} 
+                    className="absolute right-[-60px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200"
+                  >
+                    <FaChevronRight className="text-white text-xl" />
+                  </button>
                   <div className="max-w-2xl mx-auto">
-                    <motion.p 
-                      className="text-base md:text-lg cursor-default text-white transition-all duration-300" 
-                      id="testimonial-text"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: false }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                    >
-                      {testimonials[0].text}
-                    </motion.p>
+                    <AnimatePresence mode="wait" custom={direction}>
+                      <motion.div
+                        key={testimonialIndex}
+                        custom={direction}
+                        variants={testimonialVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.4 }}
+                        className="flex flex-col items-center"
+                      >
+                        <motion.p 
+                          className="text-base md:text-lg cursor-default text-white mb-6" 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {testimonials[testimonialIndex].text}
+                        </motion.p>
+                        <motion.div
+                          className="flex flex-col items-center"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 }}
+                        >
+                          <img 
+                            src={testimonials[testimonialIndex].image} 
+                            alt={testimonials[testimonialIndex].name} 
+                            className="w-16 h-16 rounded-full border-2 border-white/20 shadow-[0_0_16px_#fff] mb-3" 
+                          />
+                          <p className="text-white font-medium">{testimonials[testimonialIndex].name}</p>
+                          <p className="text-gray-400 text-sm">{testimonials[testimonialIndex].role}</p>
+                        </motion.div>
+                      </motion.div>
+                    </AnimatePresence>
                   </div>
                 </motion.div>
                 <div
                   id="testimonial-clients"
-                  className="flex justify-center gap-4 md:gap-8 min-h-[160px] items-center overflow-hidden py-4"
+                  className="flex justify-center gap-4 md:gap-8 min-h-[100px] items-center overflow-hidden py-4"
                 >
                   {testimonials.map((client, index) => (
                     <motion.div
                       key={index}
                       className={`text-center transition-all duration-300 mx-2 cursor-pointer ${
-                        index === 0 ? 'scale-110 z-10' : 'scale-90 opacity-60'
+                        index === testimonialIndex ? 'scale-110 z-10' : 'scale-90 opacity-60'
                       }`}
                       initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: false }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      animate={{ 
+                        opacity: index === testimonialIndex ? 1 : 0.6,
+                        scale: index === testimonialIndex ? 1.1 : 0.9,
+                        y: 0 
+                      }}
+                      transition={{ duration: 0.3 }}
+                      onClick={() => {
+                        setDirection(index > testimonialIndex ? 1 : -1);
+                        setTestimonialIndex(index);
+                      }}
                     >
                       <div className="mb-2">
                         <img 

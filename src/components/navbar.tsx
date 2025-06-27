@@ -8,7 +8,7 @@ export default function Navbar() {
   const location = useLocation();
   const isContactPage = location.pathname === "/contact";
   return (
-    <nav className="w-full py-4 px-4 md:px-0 bg-transparent">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full py-4 px-4 md:px-0 bg-transparent backdrop-blur-sm bg-black/25">
       <div className="container mx-auto flex justify-between items-center relative">
         {/* Logo aligned to the left */}
         <a href="/" className="cursor-pointer group">

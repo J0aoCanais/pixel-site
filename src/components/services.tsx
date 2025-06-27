@@ -185,7 +185,7 @@ export default function Services() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-gray-900 to-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-blue-950 to-black">
       <Navbar />
       <main className="flex-1 relative overflow-x-hidden">
         {/* SVG Neon Lines Top */}
@@ -194,7 +194,7 @@ export default function Services() {
           <motion.circle cx="900" cy="80" r="16" stroke="#fff" strokeWidth="1.5" strokeDasharray="12 8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
         </motion.svg>
         {/* Seção Confie em nós */}
-        <div className="container mx-auto py-16 px-4">
+        <div className="container mx-auto pt-24 px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
@@ -204,9 +204,9 @@ export default function Services() {
               className="max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
             >
               <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
-                Confie em nós e <br />
-                veja os <span className="bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400 bg-clip-text text-transparent">negócios</span> <br />
-                aparecerem
+                Confie e
+                veja o <span className="bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400 bg-clip-text text-transparent">negócio</span>
+                a mudar
               </h2>
               <p className="text-gray-300 mb-8 text-base md:text-lg">
                 Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida. Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online.
@@ -408,7 +408,7 @@ export default function Services() {
           <div className="h-1 w-11/12 md:w-3/4 bg-gradient-to-r from-white/10 via-white/60 to-white/10 rounded-full" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
         </motion.div>
         {/* Roadmap Section */}
-        <div className="container mx-auto py-8 px-4 mt-8">
+        <div className="container mx-auto py-8 pb-24 px-4 mt-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">O Caminho para o seu sucesso</h2>
           </div>
@@ -578,6 +578,20 @@ export default function Services() {
           </div>
         </div>
       </main>
+      <div className="relative w-full">
+        {/* Linha divisória animada antes do footer */}
+        <motion.div 
+          className="w-full flex justify-center mb-8" 
+          initial={{ opacity: 0, scaleX: 0.8 }} 
+          whileInView={{ opacity: 1, scaleX: 1 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.7 }}
+        >
+          <div className="h-1 w-11/12 md:w-3/4 bg-gradient-to-r from-white/10 via-white/60 to-white/10 rounded-full" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+        </motion.div>
+        {/* Neon glow effect behind the footer */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent" style={{ filter: 'blur(20px)' }} />
+      </div>
       <Footer />
     </div>
   );
