@@ -6,23 +6,22 @@ export default function Footer() {
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start gap-8 w-full md:w-auto">
-            <a href="/" className="cursor-pointer">
+            <a href="/" className="cursor-pointer pr-0 md:pr-16">
               <img
                 src="/src/assets/PIXEL WEB.svg"
                 alt="PIXEL WEB"
                 className="h-6 invert font-bold"
               />
             </a>
-            <div className="flex flex-wrap justify-center gap-6 md:hidden">
-              <a href="/" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
-                Home
-              </a>
-              <a href="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
-                Services
-              </a>
-              <a href="/portfolio" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
-                Portefólio
-              </a>
+            <div className="flex flex-wrap justify-center w-full gap-6 md:hidden">
+              <div className="flex justify-center w-full" >
+                <a href="/" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300 mx-3">
+                  Home
+                </a>
+                <a href="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300 mx-3">
+                  Services
+                </a>
+              </div>
             </div>
           </div>
 
@@ -32,9 +31,6 @@ export default function Footer() {
             </a>
             <a href="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
               Services
-            </a>
-            <a href="/portfolio" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
-              Portefólio
             </a>
           </div>
 
@@ -72,20 +68,14 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400 order-1 md:order-none hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
-            Designed and developed by PIXEL WEB
+            Designed and developed by NEXTJAI
           </p>
           <p className="text-sm text-gray-400 order-2 md:order-none hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
             © 2025. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-sm text-gray-400 text-center md:text-left order-3 md:order-none">
-            <a href="/privacy" className="text-white text-sm hover:text-white/80 transition-colors duration-300 hover:drop-shadow-[0_0_12px_#fff]">
+            <a href="/privacy" className="text-white text-sm hover:text-white/80 transition-colors duration-300 hover:drop-shadow-[0_0_12px_#fff] pl-0 md:pl-48">
               Privacy Policy
-            </a>
-            <a href="/terms" className="text-white text-sm hover:text-white/80 transition-colors duration-300 hover:drop-shadow-[0_0_12px_#fff]">
-              Terms of Service
-            </a>
-            <a href="#" className="text-white text-sm hover:text-white/80 transition-colors duration-300 hover:drop-shadow-[0_0_12px_#fff]">
-              Cookies
             </a>
           </div>
         </div>

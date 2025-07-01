@@ -9,6 +9,7 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ContactForm from "./components/contact-form";
 import Layout from "./components/layout";
+import PrivacyPolicy from "./components/privacy-policy";
 
 function NeonLoader() {
   return (
@@ -29,6 +30,7 @@ function App() {
   return (
     <Suspense fallback={<NeonLoader />}>
       <>
+        <Navbar />
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route
@@ -61,6 +63,14 @@ function App() {
               element={
                 <Layout>
                   <ContactForm />
+                </Layout>
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <Layout>
+                  <PrivacyPolicy />
                 </Layout>
               }
             />

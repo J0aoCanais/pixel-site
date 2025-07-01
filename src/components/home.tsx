@@ -58,9 +58,9 @@ export default function Home() {
 
   const [services] = useState([
     {
-      title: "Web Design & Development",
+      title: "Prospeção feita por si, todos os dias",
       description:
-        "A Website is an extension of yourself and we can help you to express it properly. Your website is your number one marketing asset because we live in a digital age.",
+        "A nossa IA procura novos clientes, envia mensagens e marca reuniões automaticamente. Você só precisa aparecer.",
       icon: <i className="fas fa-laptop-code text-4xl mb-4 text-blue-500"></i>,
       gradient: "from-blue-50 to-blue-100",
       borderColor: "border-blue-200",
@@ -68,9 +68,9 @@ export default function Home() {
       iconBg: "bg-blue-100"
     },
     {
-      title: "Chat IA",
+      title: "Marketing automático que funciona",
       description:
-        "Implementamos assistentes virtuais inteligentes que oferecem suporte 24/7, melhoram o engajamento do cliente e automatizam respostas para perguntas frequentes.",
+        "Enviamos campanhas por email, SMS ou WhatsApp para os contactos certos, na hora certa. Sem ter de mexer um dedo.",
       icon: <i className="fas fa-robot text-4xl mb-4 text-purple-500"></i>,
       gradient: "from-purple-50 to-purple-100",
       borderColor: "border-purple-200",
@@ -78,9 +78,9 @@ export default function Home() {
       iconBg: "bg-purple-100"
     },
     {
-      title: "Sistema de Reservas",
+      title: "CRM atualizado sem esforço",
       description:
-        "Desenvolvemos sistemas completos de reservas online que simplificam o agendamento, gerenciam disponibilidade e processam pagamentos de forma segura.",
+        "Nunca mais perca contactos ou siga-ups. Tudo entra direto no CRM — leads, conversas e tarefas — sem precisar preencher à mão.",
       icon: <i className="fas fa-calendar-check text-4xl mb-4 text-green-500"></i>,
       gradient: "from-green-50 to-green-100",
       borderColor: "border-green-200",
@@ -88,9 +88,9 @@ export default function Home() {
       iconBg: "bg-green-100"
     },
     {
-      title: "Marketing Digital",
+      title: "Ganhe tempo em tarefas repetitivas",
       description:
-        "Criamos estratégias personalizadas de marketing digital que aumentam sua visibilidade online, geram leads qualificados e impulsionam o crescimento do seu negócio.",
+        "Automatizamos o que toma tempo todos os dias. Você foca no que importa, o resto a IA resolve.",
       icon: <i className="fas fa-bullhorn text-4xl mb-4 text-orange-500"></i>,
       gradient: "from-orange-50 to-orange-100",
       borderColor: "border-orange-200",
@@ -98,9 +98,9 @@ export default function Home() {
       iconBg: "bg-orange-100"
     },
     {
-      title: "E-commerce",
+      title: "Agente 24h por dia",
       description:
-        "Desenvolvemos lojas online completas, seguras e otimizadas para aumentar as suas vendas e expandir o seu negócio digital.",
+        "Seus clientes recebem respostas mesmo fora do horário. Suporte rápido e educado — sem precisar de ninguém online.",
       icon: <i className="fas fa-shopping-cart text-4xl mb-4 text-red-500"></i>,
       gradient: "from-red-50 to-red-100",
       borderColor: "border-red-200",
@@ -111,16 +111,18 @@ export default function Home() {
 
   const renderNavigationDots = () => {
     return (
-      <div className="flex justify-center mt-6 gap-2">
+      <div className="flex justify-center mt-8 gap-3">
         {services.map((_, index) => (
-          <button
+          <motion.button
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === currentServiceIndex ? "bg-black" : "bg-gray-300"
-            } hover:bg-gray-400 transition-colors focus:outline-none`}
+            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full ${
+              index === currentServiceIndex ? "bg-white shadow-[0_0_8px_#fff]" : "bg-gray-500"
+            } hover:bg-white hover:shadow-[0_0_8px_#fff] transition-all duration-300 focus:outline-none`}
             onClick={() => goToServiceSlide(index)}
+            whileHover={{ scale: 1.3 }}
+            whileTap={{ scale: 0.9 }}
             aria-label={`Go to slide ${index + 1}`}
-          ></button>
+          />
         ))}
       </div>
     );
@@ -129,28 +131,24 @@ export default function Home() {
   // Animated typing effect for the main title
   const phrases = [
     {
-      text: "Revolucione o seu\nNegócio connosco",
-      highlight: "Revolucione"
+      text: "O seu negócio a crescer\nenquanto trata das tarefas importantes",
+      highlight: "crescer"
     },
     {
-      text: "Transforme ideias em experiências digitais",
-      highlight: "ideias"
+      text: "Automatize tarefas,\nfoco total nas vendas",
+      highlight: "Automatize"
     },
     {
-      text: "O futuro do seu negócio começa aqui",
-      highlight: "futuro"
+      text: "IA que trabalha por si\n24 horas por dia",
+      highlight: "IA"
     },
     {
-      text: "Transformamos cliques em clientes",
-      highlight: "clientes"
+      text: "Menos tarefas,\nmais resultados",
+      highlight: "resultados"
     },
     {
-      text: "Da ideia ao pixel perfeito",
-      highlight: "pixel"
-    },
-    {
-      text: "Seu sucesso, nosso compromisso",
-      highlight: "sucesso"
+      text: "Entre em contacto com os clientes\nmesmo quando está offline",
+      highlight: "offline"
     },
   ];
 
@@ -272,28 +270,28 @@ export default function Home() {
   const [direction, setDirection] = useState(0);
   const testimonials = [
     {
-      name: "Imran Khan",
-      role: "Software Engineer",
+      name: "Carla Nunes, InoveTech Consultores",
+      role: "Diretora Comercial",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
-      text: "Without any doubt I recommend Alcaline Solutions as one of the best web design and digital marketing agencies. One of the best agencies I've come across so far. Wouldn't be hesitated to introduce their work to someone else."
+      text: "Antes perdia horas com emails e lembretes. Agora é tudo automático e posso focar-me em fechar negócios. Libertou-me completamente o dia."
     },
     {
-      name: "Alexander M. Smith",
-      role: "CEO, TechCorp",
+      name: "João Pires, Nexa Solutions ",
+      role: "CEO",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-      text: "A equipa da Pixel Web superou as nossas expectativas. O site ficou incrível e o suporte é excelente!"
+      text: "A prospeção corre sozinha, todos os dias. Eu só entro quando o cliente já está interessado. Poupo tempo e consigo falar com mais pessoas."
     },
     {
-      name: "Patricia R. Miller",
-      role: "Marketing Director",
+      name: "Ana Silva, Vértice Solutions",
+      role: "Diretora Financeira",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-      text: "Profissionais, rápidos e criativos. Recomendo a todos que querem crescer online."
+      text: "Investi menos recursos e já estou a ver a faturação a crescer. O sistema automatizou processos que antes consumiam muito tempo, permitindo-me focar no que realmente importa: aumentar as vendas."
     },
     {
-      name: "Michael J. Brown",
-      role: "Entrepreneur",
+      name: "Ricardo Moreira, Omega Instalações",
+      role: "Sócio-Gerente",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
-      text: "O melhor investimento digital que já fiz. O resultado foi além do esperado!"
+      text: "Antes andava a saltar entre ficheiros e notas. Agora está tudo num só sítio, organizado e automático. Investi menos e já vejo a faturação a subir, porque a equipa está mais focada nas tarefas operacionais que realmente trazem resultados. Ganho tempo e eficiência, o que faz toda a diferença."
     },
   ];
   const testimonialVariants = {
@@ -324,8 +322,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-gray-900 to-gray-800">
-      <Navbar />
-      <main className="flex-1 w-full overflow-hidden">
+      <main className="flex-1 w-full overflow-hidden mt-16">
         {/* Hero Section */}
         <div className="w-full px-4 md:px-8 py-2 md:py-4 relative overflow-hidden bg-gradient-to-b from-black via-gray-900 to-gray-800">
           {/* Linhas Futuristas Animadas atrás da AI + mais linhas neon */}
@@ -395,9 +392,15 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
-                Desenvolvemos websites inovadores e personalizados que
-                potencializam o crescimento do seu negócio online. Transforme
-                sua presença digital com soluções à medida.
+                NEXTJAI, The next generation of AI.
+              </motion.p>
+              <motion.p 
+                className="text-gray-600 text-base md:text-base max-w-lg cursor-default mt-0 pb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              >
+                A nossa IA trata de encontrar contactos, enviar mensagens, marcar reuniões e manter tudo organizado. Automatizamos o marketing, o atendimento e as tarefas chatas. <br />Foca-se em vender, nós tratamos do resto.
               </motion.p>
               <motion.a
                 href="/contact"
@@ -432,6 +435,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+
         {/* Reasons Section - agora logo após o hero */}
         <div className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-gray-800 to-black relative overflow-hidden">
           {/* Linhas neon adicionais */}
@@ -472,48 +476,48 @@ export default function Home() {
             <div ref={parallaxRef} onMouseMove={handleParallax} onMouseLeave={resetParallax} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
-                  title: "Entrega Rápida",
-                  description: "Priorizamos processos ágeis e eficientes, garantindo que seu site esteja pronto para uso no menor tempo possível.",
+                  title: "Aumente sua Receita em até 30%",
+                  description: "Impulsione vendas e produtividade com automações inteligentes. Nossa IA identifica oportunidades de lucro ocultas e executa ações em tempo real para acelerar seus resultados financeiros.",
                   icon: <i className="fas fa-rocket text-4xl mb-4 text-white"></i>,
+                  stat: "30",
+                  statLabel: "Crescimento médio na faturação em 30 dias",
+                  bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
+                  hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
+                  animation: "transition-all duration-300 hover:scale-110",
+                  suffix: "%"
+                },
+                {
+                  title: "Reduza Custos Operacionais em até 48h",
+                  description: "Elimine desperdícios e otimize recursos em dois dias. Nossa solução substitui processos manuais por rotinas automatizadas que economizam tempo e dinheiro — sem complicações.",
+                  icon: <i className="fas fa-chart-line text-4xl mb-4 text-white"></i>,
                   stat: "48",
-                  statLabel: "Tempo médio de entrega",
+                  statLabel: "Tempo médio para redução de custos com automação",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
                   animation: "transition-all duration-300 hover:scale-110",
                   suffix: "h"
                 },
                 {
-                  title: "Acrescentamos Valor",
-                  description: "Nosso trabalho vai além do desenvolvimento; buscamos agregar valor ao seu negócio através de estratégias que aumentam a visibilidade.",
-                  icon: <i className="fas fa-chart-line text-4xl mb-4 text-white"></i>,
-                  stat: "150",
-                  statLabel: "Aumento médio em conversões",
-                  bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
-                  hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
-                  animation: "transition-all duration-300 hover:scale-110",
-                  suffix: "%"
-                },
-                {
-                  title: "Soluções Escaláveis",
-                  description: "Desenvolvemos projetos que acompanham o crescimento da sua empresa, permitindo expansões e atualizações conforme as demandas do mercado evoluem.",
+                  title: "Escale com Segurança: 100% dos Projetos São Expansíveis",
+                  description: "Conforme seu negócio evolui, nossos sistemas acompanham. A infraestrutura é flexível, modular e preparada para múltiplos níveis de operação — sem necessidade de reconstruções.",
                   icon: <i className="fas fa-expand-arrows-alt text-4xl mb-4 text-white"></i>,
                   stat: "100",
-                  statLabel: "Projetos escaláveis",
+                  statLabel: "Soluções preparadas para crescer com sua empresa",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
                   animation: "transition-all duration-300 hover:scale-110",
                   suffix: "%"
                 },
                 {
-                  title: "Suporte Contínuo",
-                  description: "Oferecemos suporte pós-lançamento e manutenção contínua, assegurando que o site se mantenha seguro e atualizado.",
+                  title: "Converta Melhor com IA: +150% em Taxa de Conversão",
+                  description: "Use inteligência artificial para criar jornadas de compra inteligentes, personalizadas e automáticas. Vendas mais eficazes, atendimento proativo e dados que realmente trabalham por você.",
                   icon: <i className="fas fa-headset text-4xl mb-4 text-white"></i>,
-                  stat: "24",
-                  statLabel: "Suporte disponível",
+                  stat: "150",
+                  statLabel: "Média de aumento na conversão após automação com IA",
                   bgColor: "bg-gradient-to-b from-gray-900 to-gray-800",
                   hoverEffect: "hover:scale-105 hover:shadow-[0_0_16px_#fff]",
                   animation: "transition-all duration-300 hover:scale-110",
-                  suffix: "/7"
+                  suffix: "%"
                 }
               ].map((reason, index) => (
                 <motion.div
@@ -582,6 +586,11 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <div className="relative  flex flex-col items-center p-0">
+            <div className=" md:w-4/5 h-0.5 bg-gradient-to-r from-white/30 via-white/60 to-white/30 " style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+        </div>
+
         {/* Services Section - agora depois das razões */}
         <div id="services-section" className="w-full px-4 md:px-8 py-8 md:py-16 bg-gradient-to-b from-black via-gray-900 to-gray-800 relative overflow-hidden">
           {/* Linhas neon adicionais */}
@@ -604,7 +613,7 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="text-3xl md:text-4xl font-bold mb-4 cursor-default text-white"
               >
-                Os nossos serviços
+                O que podemos oferecer
               </motion.h2>
               <motion.p 
                 initial={{ opacity: 0 }}
@@ -618,8 +627,8 @@ export default function Home() {
             </motion.div>
 
             <div 
-              className="relative w-full flex justify-center items-center transition-transform duration-500 ease-in-out overflow-visible" 
-              style={{ minHeight: 450 }}
+              className="relative w-full flex justify-center items-center transition-transform duration-700 ease-in-out overflow-visible" 
+              style={{ minHeight: 480 }}
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
@@ -638,12 +647,12 @@ export default function Home() {
                     className={`service-card absolute left-1/2 top-0 w-[90%] sm:w-[80%] md:w-2/5`}
                     initial={{ opacity: 0, scale: 0.8, x: "-50%" }}
                     animate={{
-                      opacity: isCenter ? 1 : isPrev || isNext ? 0.5 : 0,
-                      scale: isCenter ? 1.1 : 0.9,
-                      x: isCenter ? "-50%" : isPrev ? "-160%" : "60%",
+                      opacity: isCenter ? 1 : isPrev || isNext ? 0.6 : 0,
+                      scale: isCenter ? 1.1 : 0.85,
+                      x: isCenter ? "-50%" : isPrev ? "-170%" : "70%",
                       zIndex: isCenter ? 2 : 1,
                     }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    transition={{ duration: 0.65, ease: "easeInOut" }}
                     whileHover={isCenter ? { scale: 1.15 } : {}}
                     onClick={() => goToServiceSlide(index)}
                   >
@@ -678,7 +687,7 @@ export default function Home() {
             </div>
 
             <motion.div 
-              className="flex justify-center mt-6 gap-2"
+              className="flex justify-center mt-8 gap-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
@@ -687,11 +696,11 @@ export default function Home() {
               {services.map((_, index) => (
                 <motion.button
                   key={index}
-                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
-                    index === currentServiceIndex ? "bg-black" : "bg-gray-300"
-                  } hover:bg-gray-400 transition-colors focus:outline-none`}
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full ${
+                    index === currentServiceIndex ? "bg-white shadow-[0_0_8px_#fff]" : "bg-gray-500"
+                  } hover:bg-white hover:shadow-[0_0_8px_#fff] transition-all duration-300 focus:outline-none`}
                   onClick={() => goToServiceSlide(index)}
-                  whileHover={{ scale: 1.2 }}
+                  whileHover={{ scale: 1.3 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -720,65 +729,81 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="text-2xl md:text-3xl font-bold cursor-default text-white drop-shadow-[0_0_8px_#fff]"
               >
-                O que dizem sobre nós
+                Testemunhos Valiosos
               </motion.h2>
             </motion.div>
             {/* MOBILE: apenas 1 pessoa ativa, setas, sem quote.svg */}
-            <div className="block md:hidden max-w-xs mx-auto">
+            <div className="block md:hidden max-w-sm mx-auto">
               <motion.div
                 key={testimonialIndex}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="flex flex-col items-center bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-6 shadow-lg relative"
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center bg-gradient-to-b from-gray-900 to-gray-800 rounded-2xl p-6 shadow-xl relative border border-white/10"
               >
                 <img 
                   src={testimonials[testimonialIndex].image} 
                   alt={testimonials[testimonialIndex].name} 
-                  className="w-20 h-20 rounded-full mx-auto mb-4 border-4 border-white/20 shadow-[0_0_16px_#fff]" 
+                  className="w-16 h-16 rounded-full mx-auto mb-4 border-2 border-white/30 shadow-lg" 
                 />
-                <div className="flex justify-center mb-2">
+                <div className="flex justify-center mb-3">
                   {Array(5).fill().map((_, i) => (
-                    <i key={i} className="fas fa-star text-white text-xs"></i>
+                    <i key={i} className="fas fa-star text-white text-sm mr-1"></i>
                   ))}
                 </div>
-                <p className="text-base font-medium text-white mb-1 text-center">{testimonials[testimonialIndex].name}</p>
-                <p className="text-xs text-gray-400 mb-4 text-center">{testimonials[testimonialIndex].role}</p>
-                <p className="text-gray-200 text-sm text-center mb-4">{testimonials[testimonialIndex].text}</p>
+                <p className="text-white text-center mb-4 text-sm">{testimonials[testimonialIndex].text}</p>
+                <p className="text-white font-medium text-center">{testimonials[testimonialIndex].name}</p>
+                <p className="text-gray-400 text-sm text-center mb-4">{testimonials[testimonialIndex].role}</p>
                 <div className="flex justify-between w-full mt-2">
-                  <button onClick={handlePrevTestimonial} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200">
+                  <button onClick={handlePrevTestimonial} className="p-2 rounded-full bg-white/10 hover:bg-white/30 transition-all duration-200 hover:scale-110">
                     <FaChevronLeft className="text-white text-lg" />
                   </button>
-                  <button onClick={handleNextTestimonial} className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200">
+                  <div className="flex space-x-2 items-center">
+                    {testimonials.map((_, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === testimonialIndex ? "bg-white" : "bg-white/30"}`}
+                        onClick={() => {
+                          setDirection(idx > testimonialIndex ? 1 : -1);
+                          setTestimonialIndex(idx);
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+                  <button onClick={handleNextTestimonial} className="p-2 rounded-full bg-white/10 hover:bg-white/30 transition-all duration-200 hover:scale-110">
                     <FaChevronRight className="text-white text-lg" />
                   </button>
                 </div>
               </motion.div>
             </div>
             {/* DESKTOP: layout antigo */}
-            <div className="hidden md:block max-w-4xl mx-auto relative">
-              <div className="text-center mb-8 md:mb-12 px-4 md:px-16">
+            <div className="hidden md:block max-w-5xl mx-auto relative">
+              <div className="text-center mb-10 md:mb-16 px-4 md:px-16">
                 <motion.div
                   id="testimonial-content"
-                  className="relative min-h-[200px] flex items-center justify-center mb-20 transition-all duration-300"
+                  className="relative min-h-[220px] flex items-center justify-center mb-24 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.6 }}
                 >
-                  <button 
+                  <motion.button 
                     onClick={handlePrevTestimonial} 
-                    className="absolute left-[-60px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200"
+                    className="absolute left-[-60px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/30 transition-all duration-200 border border-white/20"
+                    whileHover={{ scale: 1.15, x: -5 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <FaChevronLeft className="text-white text-xl" />
-                  </button>
-                  <button 
+                  </motion.button>
+                  <motion.button 
                     onClick={handleNextTestimonial} 
-                    className="absolute right-[-60px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200"
+                    className="absolute right-[-60px] top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/30 transition-all duration-200 border border-white/20"
+                    whileHover={{ scale: 1.15, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <FaChevronRight className="text-white text-xl" />
-                  </button>
+                  </motion.button>
                   <div className="max-w-2xl mx-auto">
                     <AnimatePresence mode="wait" custom={direction}>
                       <motion.div
@@ -791,25 +816,33 @@ export default function Home() {
                         transition={{ duration: 0.4 }}
                         className="flex flex-col items-center"
                       >
-                        <motion.p 
-                          className="text-base md:text-lg cursor-default text-white mb-6" 
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          {testimonials[testimonialIndex].text}
-                        </motion.p>
+                        <motion.div className="relative">
+                          <img 
+                            src="/src/assets/quote_left.svg" 
+                            alt="Quote mark" 
+                            className="absolute left-[-30px] top-[-20px] w-6 h-6 opacity-50"
+                          />
+                          <motion.p 
+                            className="text-base md:text-lg cursor-default text-white mb-6 leading-relaxed" 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            {testimonials[testimonialIndex].text}
+                          </motion.p>
+                          <img 
+                            src="/src/assets/quote_right.svg" 
+                            alt="Quote mark" 
+                            className="absolute right-[-30px] bottom-[-10px] w-6 h-6 opacity-50"
+                          />
+                        </motion.div>
                         <motion.div
                           className="flex flex-col items-center"
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: 0.1 }}
                         >
-                          <img 
-                            src={testimonials[testimonialIndex].image} 
-                            alt={testimonials[testimonialIndex].name} 
-                            className="w-16 h-16 rounded-full border-2 border-white/20 shadow-[0_0_16px_#fff] mb-3" 
-                          />
+                          
                           <p className="text-white font-medium">{testimonials[testimonialIndex].name}</p>
                           <p className="text-gray-400 text-sm">{testimonials[testimonialIndex].role}</p>
                         </motion.div>
@@ -839,13 +872,19 @@ export default function Home() {
                         setTestimonialIndex(index);
                       }}
                     >
-                      <div className="mb-2">
+                      <motion.div 
+                        className="mb-3"
+                        whileHover={{ scale: 1.1, rotate: index === testimonialIndex ? 5 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
                         <img 
                           src={client.image} 
                           alt={client.name} 
-                          className="w-16 h-16 rounded-full mx-auto transition-all duration-300" 
+                          className={`w-16 h-16 rounded-full mx-auto transition-all duration-300 border-2 ${
+                            index === testimonialIndex ? 'border-white shadow-[0_0_15px_rgba(255,255,255,0.5)]' : 'border-white/30'
+                          }`}
                         />
-                      </div>
+                      </motion.div>
                       <div className="flex justify-center mb-1">
                         {Array(5).fill().map((_, i) => (
                           <i key={i} className="fas fa-star text-white text-xs"></i>

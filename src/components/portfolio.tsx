@@ -139,8 +139,7 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-800 via-gray-900 to-black">
-      <Navbar />
-      <main className="flex-1 relative overflow-x-hidden">
+      <main className="flex-1 relative overflow-x-hidden mt-16">
         <div className="container mx-auto py-16 px-4 relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: -30 }}

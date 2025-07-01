@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect, useRef } from "react";
+import graphics from "@/assets/graphics.png";
 
 const timelineItems = [
   {
@@ -48,63 +49,73 @@ const timelineItems = [
 const serviceTabsData = [
   {
     id: "budget",
-    title: "Budget Overview",
+    title: "Prospeção feita por si, todos os dias",
     icon: <i className="fas fa-chart-line text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
-      "Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida que atendem às necessidades específicas do seu negócio.",
+      "Já imaginou acordar com reuniões marcadas sem ter mexido um dedo? A nossa IA trabalha por si todos os dias: encontra novos clientes, inicia conversas e agenda reuniões automaticamente.",
+    paragraph2: 
+      "Enquanto você foca em fechar negócios, a tecnologia faz o trabalho de base. Menos tempo em prospeção, mais tempo a faturar. Simples, eficaz e sem esforço.",
     image:
       "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    heading: "Desenvolvimento de Websites",
+    heading: "Prospeção feita por si, todos os dias",
   },
   {
     id: "design",
-    title: "Design & Sketch",
+    title: "Marketing automático que funciona",
     icon: <i className="fas fa-pencil-ruler text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
-      "Criamos designs modernos e intuitivos, com foco na experiência do usuário e sua identidade visual para garantir uma presença online única e memorável que destaca sua marca no mercado digital.",
+      "Campanhas de email, SMS ou WhatsApp que realmente trazem resultados — sem precisar escrever ou clicar em nada. A nossa IA envia mensagens personalizadas no momento certo para os contactos certos.",
+    paragraph2:
+      "Enquanto outros ainda estão a planear o que fazer, você já está a gerar vendas no piloto automático. Menos tempo a pensar em marketing, mais dinheiro a entrar.",
     image:
       "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-    heading: "Design & Sketch",
+    heading: "Marketing automático que funciona",
   },
   {
     id: "dev",
-    title: "Web Development",
+    title: "CRM atualizado sem esforço",
     icon: <i className="fas fa-code text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
-      "Implementamos seu projeto usando as tecnologias mais modernas e práticas de desenvolvimento ágil, garantindo alta performance, escalabilidade e segurança para sua aplicação web ou mobile.",
+      "Esqueça o trabalho chato de registar leads ou atualizar tarefas. O nosso sistema faz isso tudo por si automaticamente — cada conversa, cada contacto, tudo no lugar certo.",
+    paragraph2:
+      "Com o CRM sempre atualizado, tomar decisões e acompanhar oportunidades fica mais fácil e rápido. Menos cliques, mais negócio fechado.",
     image:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    heading: "Web Development",
+    heading: "CRM atualizado sem esforço",
   },
   {
     id: "website",
-    title: "Optimize website",
+    title: "Ganhe tempo em tarefas repetitivas",
     icon: <i className="fas fa-tachometer-alt text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
-      "Otimizamos seu site para melhor desempenho, velocidade e SEO, garantindo que seu negócio tenha visibilidade e alcance mais clientes online. Nossas estratégias de otimização são baseadas em dados e melhores práticas do mercado.",
+      "Responder a mensagens, organizar tarefas, enviar lembretes… tudo isso consome tempo e energia. A IA trata dessas rotinas por si, todos os dias.",
+    paragraph2:
+      "Assim, você pode focar no que realmente importa: crescer, vender, liderar. Com menos horas de trabalho, o resultado multiplica-se.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
-    heading: "Optimize Website",
+    heading: "Ganhe tempo em tarefas repetitivas",
   },
   {
     id: "dashboard",
-    title: "Custom Dashboard",
+    title: "Agente 24h por dia",
     icon: <i className="fas fa-chart-pie text-white drop-shadow-[0_0_8px_#fff]"></i>,
     description:
-      "Desenvolvemos dashboards personalizados que oferecem insights valiosos sobre seu negócio, facilitando a tomada de decisões estratégicas e o monitoramento em tempo real do desempenho de suas operações digitais.",
+      "Enquanto você descansa, a sua IA continua a responder aos clientes, esclarecer dúvidas e manter tudo a funcionar. É como ter um assistente que nunca dorme.",
+    paragraph2:
+      "Oferecer suporte rápido e educado 24h por dia sem precisar de equipa extra? Isso é poupar tempo, reduzir custos e ganhar mais — tudo de uma só vez.",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     secondaryImage:
       "https://images.unsplash.com/photo-1531746790731-6bf607ccff6f?w=800&q=80",
-    heading: "Custom Dashboard",
+    heading: "Agente 24h por dia",
   },
 ];
 
@@ -186,30 +197,29 @@ export default function Services() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-blue-950 to-black">
-      <Navbar />
-      <main className="flex-1 relative overflow-x-hidden">
+      <main className="flex-1 relative overflow-x-hidden mt-16">
         {/* SVG Neon Lines Top */}
         <motion.svg className="absolute left-0 top-0 w-full h-24 z-0 pointer-events-none" width="100%" height="96" viewBox="0 0 1200 96" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 0.18, y: 0 }} transition={{ duration: 1.2 }}>
           <motion.line x1="100" y1="48" x2="1100" y2="48" stroke="#fff" strokeWidth="2" strokeDasharray="20 10" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.2 }} style={{ filter: 'drop-shadow(0 0 12px #fff)' }} />
           <motion.circle cx="900" cy="80" r="16" stroke="#fff" strokeWidth="1.5" strokeDasharray="12 8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
         </motion.svg>
         {/* Seção Confie em nós */}
-        <div className="container mx-auto pt-24 px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto py-0 mt-20 mb-0 md:mt-[-6rem] md:mb-[-10rem]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-0 px-4 ">
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
+              className="mx-auto lg:mx-0 lg:text-left"
             >
               <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
                 Confie e
-                veja o <span className="bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400 bg-clip-text text-transparent">negócio</span>
+                veja o <span className="bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400 bg-clip-text text-transparent">negócio </span>
                 a mudar
               </h2>
               <p className="text-gray-300 mb-8 text-base md:text-lg">
-                Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online. Transforme sua presença digital com soluções à medida. Desenvolvemos websites inovadores e personalizados que potencializam o crescimento do seu negócio online.
+                Ganhe tempo, reduza custos e faça o seu negócio crescer. Com as nossas soluções de automação e inteligência artificial, elimina tarefas manuais que consomem horas valiosas e diminui despesas operacionais. Aumente a produtividade da sua equipa e ofereça um atendimento rápido e eficaz que conquista clientes e impulsiona as vendas. Invista em tecnologia que traz resultados reais e mensuráveis, para que cada euro investido gere retorno concreto.
               </p>
               <div className="flex flex-col md:flex-row gap-4 mb-12 w-full max-w-lg mx-auto lg:mx-0">
                 <div className="relative flex-grow">
@@ -219,34 +229,40 @@ export default function Services() {
                     className="w-full py-3 px-4 border-b-2 border-gray-600 focus:outline-none focus:border-white bg-transparent text-white placeholder-gray-400 transition-colors rounded-md"
                   />
                 </div>
-                <Button className="bg-white text-black hover:bg-gray-100 hover:shadow-[0_0_16px_#fff] px-6 rounded-full self-end transition-all duration-300 w-full md:w-auto">
-                  Contacte-nos
-                </Button>
+                <a href="/contact">
+                  <Button className="bg-white text-black hover:bg-gray-100 hover:shadow-[0_0_16px_#fff] px-6 rounded-full self-end transition-all duration-300 w-full md:w-auto">
+                    Contacte-nos
+                  </Button>
+                </a>
               </div>
             </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="bg-gray-800 rounded-lg overflow-hidden shadow-xl hover:shadow-[0_0_16px_#fff] transition-all duration-300 w-full max-w-xl mx-auto hidden md:block"
+              transition={{ duration: 0.7 }}
+              className="hidden md:block"
             >
-              <div className="grid grid-cols-1 items-center">
-                <div className="overflow-hidden">
-                  <img
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                    alt="Business Growth"
-                    className="w-full h-64 md:h-full object-cover"
-                  />
-                </div>
-              </div>
+              <img
+                src={graphics}
+                alt="Business Growth"
+                className="object-contain h-auto max-w-full"
+                style={{ filter: 'drop-shadow(0 0 16px rgba(255,255,255,0.2))' }}
+              />
             </motion.div>
           </div>
         </div>
         {/* Linha divisória animada */}
-        <motion.div className="w-full flex justify-center my-8" initial={{ opacity: 0, scaleX: 0.8 }} whileInView={{ opacity: 1, scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+        <motion.div className="w-full flex justify-center my-4" initial={{ opacity: 0, scaleX: 0.8 }} whileInView={{ opacity: 1, scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div className="h-1 w-11/12 md:w-3/4 bg-gradient-to-r from-white/10 via-white/60 to-white/10 rounded-full" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
         </motion.div>
+
+        <motion.svg className="absolute left-0 top-0 w-1/3 h-1/3 z-0 pointer-events-none" width="100%" height="100%" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 0.12, scale: 1 }} transition={{ duration: 1.2 }}>
+          <motion.line x1="50" y1="20" x2="350" y2="180" stroke="#fff" strokeWidth="1.2" strokeDasharray="8 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.2, delay: 0.4 }} style={{ filter: 'drop-shadow(0 0 6px #fff)' }} />
+          <motion.circle cx="100" cy="100" r="60" stroke="#fff" strokeWidth="1.5" strokeDasharray="10 8" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.6 }} style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+        </motion.svg>
+
         {/* Nova seção de tabs de serviços */}
         <div className="py-12">
           <div className="container mx-auto px-2 sm:px-4">
@@ -286,10 +302,10 @@ export default function Services() {
               </div>
             </div>
             {/* Conteúdo dinâmico baseado na tab selecionada */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center mt-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center mt-6 pl-4 pr-4 md:mt-8">
               {/* Imagens à esquerda */}
               <div className="order-1 w-full max-w-xl mx-auto">
-                <div className="relative ml-0 md:ml-4">
+                <div className="relative ml-0 md:ml-4 px-6 sm:px-8 md:px-0">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={`main-${activeTab}`}
@@ -305,7 +321,7 @@ export default function Services() {
                             ?.image
                         }
                         alt="Service"
-                        className="w-full h-56 md:h-80 object-cover"
+                        className="w-full h-52 sm:h-56 md:h-80 object-cover"
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -316,7 +332,7 @@ export default function Services() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 40 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
-                      className="absolute -bottom-10 -right-4 md:-bottom-16 md:-right-12 w-2/3 rounded-lg overflow-hidden shadow-lg z-10 hover:shadow-[0_0_16px_#fff] transition-all duration-300"
+                      className="absolute -bottom-14 -right-2 sm:-bottom-10 sm:-right-4 md:-bottom-16 md:-right-12 w-[60%] sm:w-2/3 rounded-lg overflow-hidden shadow-lg z-10 hover:shadow-[0_0_16px_#fff] transition-all duration-300"
                     >
                       <img
                         src={
@@ -324,11 +340,12 @@ export default function Services() {
                             ?.secondaryImage
                         }
                         alt="Service Secondary"
-                        className="w-full h-40 md:h-64 object-cover"
+                        className="w-full h-36 sm:h-40 md:h-64 object-cover"
                       />
                     </motion.div>
                   </AnimatePresence>
                 </div>
+                <div className="mb-16 sm:mb-10 md:mb-0"></div>
               </div>
               {/* Texto à direita */}
               <div className="order-2 w-full max-w-xl mx-auto px-2 md:px-8">
@@ -375,27 +392,29 @@ export default function Services() {
                           ?.description
                       }
                     </motion.p>
+                    
                     <motion.p
-                      className="text-gray-300 mb-6 md:mb-8 text-center md:text-left"
+                      className="text-gray-300 mb-6 md:mb-8 text-base md:text-lg text-center md:text-left"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.4 }}
                     >
-                      Nossos especialistas trabalham com as mais recentes
-                      tecnologias e metodologias para garantir resultados
-                      excepcionais. Cada projeto é tratado com dedicação e
-                      atenção aos detalhes, assegurando que sua visão seja
-                      transformada em realidade digital de forma eficiente e
-                      inovadora.
+                      {
+                        serviceTabsData.find((tab) => tab.id === activeTab)
+                          ?.paragraph2
+                      }
                     </motion.p>
+                    
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.5 }}
                     >
-                      <Button className="bg-white text-black hover:bg-gray-100 hover:shadow-[0_0_16px_#fff] px-6 py-2 rounded-full transition-all duration-300 w-full md:w-auto">
-                        Portfolio
-                      </Button>
+                      <a href="/contact">
+                        <Button className="bg-white text-black hover:bg-gray-100 hover:shadow-[0_0_16px_#fff] px-6 py-2 rounded-full transition-all duration-300 w-full md:w-auto">
+                          Contacte-nos
+                        </Button>
+                      </a>
                     </motion.div>
                   </motion.div>
                 </AnimatePresence>
@@ -442,12 +461,12 @@ export default function Services() {
                   <div className="flex items-baseline justify-center md:justify-start">
                     <p className="text-gray-400 text-sm font-bold mr-2">#1</p>
                     <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
-                      Assemble the right team
+                      Consultoria gratuita
                     </h3>
                   </div>
                   <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
-                    We handle all aspects of vetting and choosing the right team
-                    that you don't have the time, expertise, or desire to do.
+                    Oferecemos consultoria gratuita para entender seu negócio, 
+                    identificar necessidades e preparar a automação ideal.
                   </p>
                 </motion.div>
                 {/* Linha inferior (desktop) */}
@@ -464,12 +483,10 @@ export default function Services() {
                 >
                   <div className="flex items-baseline justify-center md:justify-start">
                     <p className="text-gray-400 text-sm font-bold mr-2">#2</p>
-                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Spirit planning</h3>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Preparação da Proposta</h3>
                   </div>
                   <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
-                    Spirit roadmap is a collective planning effort. Team members
-                    collaborate to clarify items and ensure shared
-                    understanding.
+                    Detalhamos as soluções recomendadas, os benefícios que pode esperar, o cronograma previsto e o investimento necessário para implementar a automação
                   </p>
                 </motion.div>
               </div>
@@ -486,11 +503,9 @@ export default function Services() {
                 >
                   <div className="flex items-baseline justify-center md:justify-start">
                     <p className="text-gray-400 text-sm font-bold mr-2">#3</p>
-                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Tech architecture</h3>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Início do Projeto</h3>
                   </div>
-                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
-                    We break monolithic apps into microservices. Decoupling the
-                    code allows teams to move faster and more independently.
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">Com a proposta aprovada, avançamos para o arranque do projeto. Nesta fase, começamos a implementar as soluções aos seus processos.
                   </p>
                 </motion.div>
                 <div className="absolute h-6 w-0.5 bg-gray-700 top-[50%] left-[73%] hidden md:block"></div>
@@ -505,13 +520,11 @@ export default function Services() {
                   <div className="flex items-baseline justify-center md:justify-start">
                     <p className="text-gray-400 text-sm font-bold mr-2">#4</p>
                     <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
-                      Standups & weekly demos
+                      Testes e Ajustes
                     </h3>
                   </div>
                   <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
-                    Standups, weekly demos, and weekly reviews make sure
-                    everyone can be on the same page and can raise their
-                    concerns.
+                    Nesta fase, o sistema já está implementado, mas é testado exaustivamente para garantir que tudo funciona corretamente no ambiente real
                   </p>
                 </motion.div>
               </div>
@@ -528,12 +541,9 @@ export default function Services() {
                 >
                   <div className="flex items-baseline justify-center md:justify-start">
                     <p className="text-gray-400 text-sm font-bold mr-2">#5</p>
-                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Code reviews</h3>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Formação e Treino</h3>
                   </div>
-                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
-                    Code reviews before release help detect issues like memory
-                    leaks, file leaks, performance signs, and general bad
-                    smells.
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">Esta etapa inclui sessões de formação, manuais e suporte inicial para assegurar que todos saibam tirar o máximo proveito da automação.
                   </p>
                 </motion.div>
                 <div className="absolute h-6 w-0.5 bg-gray-700 top-[50%] left-[73%] hidden md:block"></div>
@@ -547,17 +557,15 @@ export default function Services() {
                 >
                   <div className="flex items-baseline justify-center md:justify-start">
                     <p className="text-gray-400 text-sm font-bold mr-2">#6</p>
-                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Iterative delivery</h3>
+                    <h3 className="font-bold text-sm bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">Lançamento Oficial </h3>
                   </div>
-                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">
-                    We divide the implementation process into several
-                    checkpoints rather than a simple deadline.
+                  <p className="text-xs text-gray-300 mt-1 text-center md:text-left">Com tudo feito, o sistema entra em produção para uso diário. Nesta fase, monitorizamos o desempenho, recolhemos feedback e fazemos intervenções rápidas.
                   </p>
                 </motion.div>
               </div>
             </div>
             {/* Troféu no final */}
-            <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 z-30">
+            <div className="absolute md:right-[-650px] md:top-1/2 bottom-(-6) left-1/2 md:transform md:translate-x-1/2 md:-translate-y-1/2 transform -translate-x-1/2 translate-y-1/2 z-30">
               <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center shadow-[0_0_16px_#fff]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -581,7 +589,7 @@ export default function Services() {
       <div className="relative w-full">
         {/* Linha divisória animada antes do footer */}
         <motion.div 
-          className="w-full flex justify-center mb-8" 
+          className="w-full flex justify-center mb-4" 
           initial={{ opacity: 0, scaleX: 0.8 }} 
           whileInView={{ opacity: 1, scaleX: 1 }} 
           viewport={{ once: true }} 
