@@ -8,9 +8,9 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start gap-8 w-full md:w-auto">
             <a href="/" className="cursor-pointer pr-0 md:pr-16">
               <img
-                src="/src/assets/PIXEL WEB.svg"
+                src="/src/assets/logo-branco-extended.svg"
                 alt="PIXEL WEB"
-                className="h-6 invert font-bold"
+                className="h-11"
               />
             </a>
             <div className="flex flex-wrap justify-center w-full gap-6 md:hidden">

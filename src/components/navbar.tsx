@@ -13,9 +13,9 @@ export default function Navbar() {
         {/* Logo aligned to the left */}
         <a href="/" className="cursor-pointer group">
           <motion.img
-            src="/src/assets/PIXEL WEB.svg"
-            alt="PIXEL WEB"
-            className="h-5 md:h-6 ml-2 md:ml-0 transition-all duration-300 group-hover:scale-105"
+            src="/src/assets/logo-branco-extended.svg"
+            alt="nextjai"
+            className="h-12 md:h-[40px] ml-2 md:ml-0 transition-all duration-300 group-hover:scale-105"
             animate={{ filter: [
               "drop-shadow(0 0 12px #fff8)",
               "drop-shadow(0 0 24px #fff)",

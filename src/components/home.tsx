@@ -322,7 +322,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-black via-gray-900 to-gray-800">
-      <main className="flex-1 w-full overflow-hidden mt-16">
+      <main className="flex-1 w-full overflow-hidden">
         {/* Hero Section */}
         <div className="w-full px-4 md:px-8 py-2 md:py-4 relative overflow-hidden bg-gradient-to-b from-black via-gray-900 to-gray-800">
           {/* Linhas Futuristas Animadas atrás da AI + mais linhas neon */}
@@ -748,7 +748,7 @@ export default function Home() {
                   className="w-16 h-16 rounded-full mx-auto mb-4 border-2 border-white/30 shadow-lg" 
                 />
                 <div className="flex justify-center mb-3">
-                  {Array(5).fill().map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <i key={i} className="fas fa-star text-white text-sm mr-1"></i>
                   ))}
                 </div>
@@ -886,7 +886,7 @@ export default function Home() {
                         />
                       </motion.div>
                       <div className="flex justify-center mb-1">
-                        {Array(5).fill().map((_, i) => (
+                        {[...Array(5)].map((_, i) => (
                           <i key={i} className="fas fa-star text-white text-xs"></i>
                         ))}
                       </div>
