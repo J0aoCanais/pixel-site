@@ -2,8 +2,28 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 export default function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = formRef.current;
+    if (!form) return;
+    const formData = new FormData(form);
+    const data: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      data[key] = value.toString();
+    });
+    await fetch("https://n8n.automacoes.fun/webhook/formularionext", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    form.reset();
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-900 via-black to-black">
       <Navbar />
@@ -43,10 +63,10 @@ export default function ContactForm() {
                     </div>
                   </div>
                   <div className="flex gap-4 justify-center md:justify-start mb-8">
-                    <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
+                    <a href="https://www.instagram.com/nextjai.automation?igsh=a2xubnIyYXBuOHZt&utm_source=qr" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
                       <i className="fab fa-instagram text-white"></i>
                     </a>
-                    <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
+                    <a href="https://wa.me/message/TLSX455SIT2KD1" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
                       <i className="fab fa-whatsapp text-white"></i>
                     </a>
                     <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
@@ -57,16 +77,16 @@ export default function ContactForm() {
                 {/* Divider sutil */}
                 <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent my-4 rounded-full" />
                 {/* Formulário */}
-                <form className="space-y-5">
+                <form className="space-y-5" ref={formRef} onSubmit={handleSubmit}>
                   <div className="flex gap-4 flex-col md:flex-row">
-                    <input type="text" placeholder="Nome" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
-                    <input type="text" placeholder="Apelido" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
+                    <input name="empresa" type="text" placeholder="Empresa" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
+                    <input name="nome" type="text" placeholder="Nome" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
                   </div>
                   <div className="flex gap-4 flex-col md:flex-row">
-                    <input type="email" placeholder="Email" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
-                    <input type="text" placeholder="Telemóvel" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
+                    <input name="email" type="email" placeholder="Email" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
+                    <input name="telemovel" type="text" placeholder="Telemóvel" className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md" />
                   </div>
-                  <textarea placeholder="A sua mensagem..." rows={4} className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md"></textarea>
+                  <textarea name="mensagem" placeholder="A sua mensagem..." rows={4} className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-300 shadow-[0_0_8px_#fff8] backdrop-blur-md"></textarea>
                   <Button className="w-full bg-white text-black hover:bg-gray-100 hover:text-black rounded-lg py-3 font-bold shadow-lg hover:shadow-[0_0_32px_#fff] transition-all duration-300 border-2 border-white text-lg tracking-wide">
                     Enviar Mensagem
                   </Button>
