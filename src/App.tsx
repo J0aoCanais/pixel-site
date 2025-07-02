@@ -3,10 +3,8 @@ import { useRoutes, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Home from "./components/home";
 import Services from "./components/services";
-import Portfolio from "./components/portfolio";
 import routes from "tempo-routes";
 import Navbar from "./components/navbar";
-import Footer from "./components/footer";
 import ContactForm from "./components/contact-form";
 import Layout from "./components/layout";
 import PrivacyPolicy from "./components/privacy-policy";
@@ -46,15 +44,6 @@ function App() {
               element={
                 <Layout>
                   <Services />
-                </Layout>
-              }
-            />
-
-            <Route
-              path="/portfolio"
-              element={
-                <Layout>
-                  <Portfolio />
                 </Layout>
               }
             />

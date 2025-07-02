@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-[100] w-full py-4 px-4 md:px-0 bg-transparent backdrop-blur-md bg-black/35 shadow-md">
       <div className="container mx-auto flex justify-between items-center relative transition-all duration-300">
         {/* Logo aligned to the left */}
-        <a href="/" className="cursor-pointer group">
+        <Link to="/" className="cursor-pointer group">
           <motion.img
             src="/assets/logo-branco-extended.svg"
             alt="nextjai"
@@ -23,18 +23,18 @@ export default function Navbar() {
             ] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
-        </a>
+        </Link>
 
         {/* Desktop Menu - Centered */}
         <div className="hidden md:flex gap-6 items-center z-10 absolute left-1/2 -translate-x-1/2">
-          <a href="/" className="relative group z-10 text-white hover:text-gray-300">
+          <Link to="/" className="relative group z-10 text-white hover:text-gray-300">
             <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_#fff]">Home</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
-          </a>
-          <a href="/services" className="relative group z-10 text-white hover:text-gray-300">
+          </Link>
+          <Link to="/services" className="relative group z-10 text-white hover:text-gray-300">
             <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_#fff]">Services</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
-          </a>
+          </Link>
         </div>
 
         {/* Right side buttons */}
@@ -69,14 +69,16 @@ export default function Navbar() {
             </motion.a>
             */}
           </div>
-          <motion.a href="/contact" className="z-10" whileHover={{ scale: 1.08, filter: "drop-shadow(0 0 16px #fff)" }}>
-            <Button
-              variant="outline"
-              className={`rounded-full border-2 transition-all duration-300 hover:scale-105 border-white bg-transparent text-white hover:bg-white hover:text-black z-10 hover:shadow-[0_0_16px_#fff] ${isContactPage ? "border-white bg-white text-black hover:bg-black hover:text-white" : ""}`}
-            >
-              Contacte-nos
-            </Button>
-          </motion.a>
+          <motion.div className="z-10">
+            <Link to="/contact">
+              <Button
+                variant="outline"
+                className={`rounded-full border-2 transition-all duration-300 hover:scale-105 border-white bg-transparent text-white hover:bg-white hover:text-black z-10 hover:shadow-[0_0_16px_#fff] ${isContactPage ? "border-white bg-white text-black hover:bg-black hover:text-white" : ""}`}
+              >
+                Contacte-nos
+              </Button>
+            </Link>
+          </motion.div>
         </div>
 
         {/* Mobile Menu */}
@@ -113,29 +115,29 @@ export default function Navbar() {
               </SheetTrigger>
               <div className="mb-16"></div>
               <div className="flex-1 flex flex-col justify-center items-center gap-10 text-4xl font-light">
-                <a href="/" className="relative group text-white hover:text-gray-300">
+                <Link to="/" className="relative group text-white hover:text-gray-300">
                   <span className="transition-all duration-300 group-hover:text-gray-400 group-hover:drop-shadow-[0_0_8px_#fff]">
                     Home
                   </span>
                   <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
-                </a>
-                <a href="/services" className="relative group text-white hover:text-gray-300">
+                </Link>
+                <Link to="/services" className="relative group text-white hover:text-gray-300">
                   <span className="transition-all duration-300 group-hover:text-gray-400 group-hover:drop-shadow-[0_0_8px_#fff]">
                     Services
                   </span>
                   <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
-                </a>
+                </Link>
               </div>
 
               <div className="mt-auto w-full">
-                <a href="/contact" className="block w-full">
+                <Link to="/contact" className="block w-full">
                   <Button
                     variant="outline"
                     className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 text-base sm:text-lg py-2.5 sm:py-3 border-white bg-transparent text-white hover:bg-white hover:text-black hover:shadow-[0_0_16px_#fff]`}
                   >
                     Contacte-nos
                   </Button>
-                </a>
+                </Link>
 
                 {/* Social Icons centered for mobile */}
                 <div className="flex justify-center gap-6 mt-10">
