@@ -426,7 +426,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <motion.img
-                src="/src/assets/AI_MODEL.svg"
+                src="/public/assets/AI_MODEL.svg"
                 alt="AI Head"
                 className="relative z-10 w-full max-w-[350px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1000px] h-auto object-contain"
                 whileHover={{ scale: 1.02 }}
@@ -818,7 +818,7 @@ export default function Home() {
                       >
                         <motion.div className="relative">
                           <img 
-                            src="/src/assets/quote_left.svg" 
+                            src="/public/assets/quote_left.svg" 
                             alt="Quote mark" 
                             className="absolute left-[-30px] top-[-20px] w-6 h-6 opacity-50"
                           />
@@ -831,7 +831,7 @@ export default function Home() {
                             {testimonials[testimonialIndex].text}
                           </motion.p>
                           <img 
-                            src="/src/assets/quote_right.svg" 
+                            src="/public/assets/quote_right.svg" 
                             alt="Quote mark" 
                             className="absolute right-[-30px] bottom-[-10px] w-6 h-6 opacity-50"
                           />

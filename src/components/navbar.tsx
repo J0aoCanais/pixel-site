@@ -13,7 +13,7 @@ export default function Navbar() {
         {/* Logo aligned to the left */}
         <a href="/" className="cursor-pointer group">
           <motion.img
-            src="/src/assets/logo-branco-extended.svg"
+            src="/public/assets/logo-branco-extended.svg"
             alt="nextjai"
             className="h-12 md:h-[40px] ml-2 md:ml-0 transition-all duration-300 group-hover:scale-105"
             animate={{ filter: [
