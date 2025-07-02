@@ -4,7 +4,8 @@ import Footer from "./footer";
 import Counter from "./counter-animation";
 import { useEffect, useState, useRef } from "react";
 import { motion, useAnimation, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; 
+import AImodel from "../../public/assets/AI_MODEL.svg"
 
 export default function Home() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
@@ -426,7 +427,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <motion.img
-                src="/public/assets/AI_MODEL.svg"
+                src={AImodel}
                 alt="AI Head"
                 className="relative z-10 w-full max-w-[350px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1000px] h-auto object-contain"
                 whileHover={{ scale: 1.02 }}
