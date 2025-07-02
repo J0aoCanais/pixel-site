@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -6,43 +7,43 @@ export default function Footer() {
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start gap-8 w-full md:w-auto">
-            <a href="/" className="cursor-pointer pr-0 md:pr-[45px]">
+            <Link to="/" className="cursor-pointer pr-0 md:pr-[45px]">
               <img
                 src="/assets/logo-branco-extended.svg"
                 alt="NEXTJAI"
                 className="h-11"
               />
-            </a>
+            </Link>
             <div className="flex flex-wrap justify-center w-full gap-6 md:hidden">
               <div className="flex justify-center w-full" >
-                <a href="/" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300 mx-3">
+                <Link to="/" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300 mx-3">
                   Home
-                </a>
-                <a href="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300 mx-3">
+                </Link>
+                <Link to="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300 mx-3">
                   Services
-                </a>
+                </Link>
               </div>
             </div>
           </div>
 
           <div className="hidden md:flex gap-8">
-            <a href="/" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
+            <Link to="/" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
               Home
-            </a>
-            <a href="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
+            </Link>
+            <Link to="/services" className="text-white hover:text-gray-300 hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300">
               Services
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <a href="/contact">
+            <Link to="/contact">
               <Button
                 variant="outline"
                 className="rounded-full border-2 border-white text-white bg-black hover:bg-white hover:text-black hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300"
               >
                 Contacte-nos
               </Button>
-            </a>
+            </Link>
             <div className="flex gap-4">
               <a
                 href="https://www.instagram.com/nextjai.automation"
@@ -68,9 +69,9 @@ export default function Footer() {
             © 2025. All rights reserved.
           </p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 text-sm text-gray-400 text-center md:text-left order-3 md:order-none">
-            <a href="/privacy" className="text-white text-sm hover:text-white/80 transition-colors duration-300 hover:drop-shadow-[0_0_12px_#fff] pl-0 md:pl-48">
+            <Link to="/privacy" className="text-white text-sm hover:text-white/80 transition-colors duration-300 hover:drop-shadow-[0_0_12px_#fff] pl-0 md:pl-48">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
