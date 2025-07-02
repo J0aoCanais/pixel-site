@@ -140,23 +140,18 @@ export default function Navbar() {
                 {/* Social Icons centered for mobile */}
                 <div className="flex justify-center gap-6 mt-10">
                   <a
-                    href="#"
+                    href="https://www.instagram.com/nextjai.automation"
                     className="text-white hover:text-gray-300 transition-all duration-300 text-xl hover:drop-shadow-[0_0_8px_#fff]"
                   >
                     <i className="fab fa-instagram"></i>
                   </a>
                   <a
-                    href="#"
+                    href="https://wa.me/351915417824"
                     className="text-white hover:text-gray-300 transition-all duration-300 text-xl hover:drop-shadow-[0_0_8px_#fff]"
                   >
                     <i className="fab fa-whatsapp"></i>
                   </a>
-                  <a
-                    href="#"
-                    className="text-white hover:text-gray-300 transition-all duration-300 text-xl hover:drop-shadow-[0_0_8px_#fff]"
-                  >
-                    <i className="fab fa-facebook"></i>
-                  </a>
+                  
                 </div>
               </div>
             </div>

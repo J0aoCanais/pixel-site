@@ -27,7 +27,7 @@ export default function ContactForm() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-900 via-black to-black">
       <Navbar />
-      <main className="flex-1 w-full py-8 md:py-20 relative overflow-hidden">
+      <main className="flex-1 w-full py-20 md:py-20 relative overflow-hidden">
         {/* Neon SVG lines - topo (z-0, behind everything) */}
         <motion.svg className="absolute left-0 top-0 w-full h-full z-0 pointer-events-none" width="100%" height="100%" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg" initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 0.18, scale: 1 }} transition={{ duration: 1.2 }}>
           <motion.line x1="100" y1="50" x2="1100" y2="50" stroke="#fff" strokeWidth="2" strokeDasharray="20 10" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.2 }} style={{ filter: 'drop-shadow(0 0 12px #fff)' }} />
@@ -44,7 +44,7 @@ export default function ContactForm() {
           >
             <div className="flex flex-col md:flex-row w-full">
               {/* Contact Info + Form */}
-              <div className="flex-1 p-8 flex flex-col gap-8 justify-between">
+              <div className="flex-1 p-8 pt-15 flex flex-col gap-8 justify-between">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white drop-shadow-[0_0_12px_#fff] text-center md:text-left">
                     Informações de Contacto
@@ -55,22 +55,19 @@ export default function ContactForm() {
                   <div className="flex flex-col sm:flex-row sm:justify-center md:justify-start gap-8 mb-8">
                     <div className="flex items-center gap-3">
                       <span className="text-2xl text-white drop-shadow-[0_0_12px_#fff] animate-pulse"><i className="fas fa-phone"></i></span>
-                      <span className="text-white font-medium">+102 3456 789</span>
+                      <span className="text-white font-medium">+351 915 417 824</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="text-2xl text-white drop-shadow-[0_0_12px_#fff] animate-pulse"><i className="fas fa-envelope"></i></span>
-                      <span className="text-white font-medium">demo@gmail.com</span>
+                      <span className="text-white font-medium">nextjai.automation@gmail.com</span>
                     </div>
                   </div>
                   <div className="flex gap-4 justify-center md:justify-start mb-8">
-                    <a href="https://www.instagram.com/nextjai.automation?igsh=a2xubnIyYXBuOHZt&utm_source=qr" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
+                    <a href="https://www.instagram.com/nextjai.automation" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
                       <i className="fab fa-instagram text-white"></i>
                     </a>
-                    <a href="https://wa.me/message/TLSX455SIT2KD1" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
+                    <a href="https://wa.me/351915417824" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
                       <i className="fab fa-whatsapp text-white"></i>
-                    </a>
-                    <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/30 transition-all duration-300 shadow-[0_0_12px_#fff] hover:shadow-[0_0_24px_#fff]">
-                      <i className="fab fa-facebook text-white"></i>
                     </a>
                   </div>
                 </div>

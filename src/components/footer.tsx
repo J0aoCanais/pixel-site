@@ -6,10 +6,10 @@ export default function Footer() {
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start gap-8 w-full md:w-auto">
-            <a href="/" className="cursor-pointer pr-0 md:pr-16">
+            <a href="/" className="cursor-pointer pr-0 md:pr-[45px]">
               <img
                 src="/src/assets/logo-branco-extended.svg"
-                alt="PIXEL WEB"
+                alt="NEXTJAI"
                 className="h-11"
               />
             </a>
@@ -45,19 +45,13 @@ export default function Footer() {
             </a>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://www.instagram.com/nextjai.automation"
                 className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300"
               >
                 <i className="fab fa-instagram flex items-center justify-center w-full h-full leading-none"></i>
               </a>
               <a
-                href="#"
-                className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300"
-              >
-                <i className="fab fa-facebook flex items-center justify-center w-full h-full leading-none"></i>
-              </a>
-              <a
-                href="#"
+                href="https://wa.me/351915417824"
                 className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-white text-white hover:bg-white hover:text-black text-xl hover:drop-shadow-[0_0_12px_#fff] transition-all duration-300"
               >
                 <i className="fab fa-whatsapp flex items-center justify-center w-full h-full leading-none"></i>

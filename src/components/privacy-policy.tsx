@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Política de Privacidade – PIXEL WEB
+            Política de Privacidade – NEXTJAI
           </motion.h1>
           
           <motion.div
@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
             <section>
               <h2 className="text-2xl font-semibold mb-4 text-white">1. Introdução</h2>
               <p className="mb-3 text-gray-200">
-                Na PIXEL WEB, valorizamos a sua privacidade e estamos comprometidos com a proteção dos seus dados pessoais. 
+                Na NEXTJAI, valorizamos a sua privacidade e estamos comprometidos com a proteção dos seus dados pessoais. 
                 Esta Política de Privacidade descreve como recolhemos, utilizamos, armazenamos e protegemos as 
                 informações que nos fornece ao utilizar o nosso website e os nossos serviços.
               </p>
@@ -37,9 +37,9 @@ export default function PrivacyPolicy() {
             
             <section>
               <h2 className="text-2xl font-semibold mb-4 text-white">2. Responsável pelo Tratamento de Dados</h2>
-              <p className="mb-2 text-gray-200">PIXEL WEB</p>
-              <p className="mb-2 text-gray-200">Email: demo@gmail.com</p>
-              <p className="text-gray-200">Telefone: +102 3456 789</p>
+              <p className="mb-2 text-gray-200">NEXTJAI</p>
+              <p className="mb-2 text-gray-200">Email: nextjai.automation@gmail.com</p>
+              <p className="text-gray-200">Telefone: +351 915 417 824</p>
             </section>
             
             <section>
@@ -86,7 +86,7 @@ export default function PrivacyPolicy() {
                 <li>Autoridades competentes, em caso de obrigação legal.</li>
               </ul>
               <p className="mt-3 text-gray-200">
-                A PIXEL WEB garante que todos os terceiros cumprem com a legislação de proteção de dados aplicável e apenas tratam os dados conforme instruções contratuais.
+                A NEXTJAI garante que todos os terceiros cumprem com a legislação de proteção de dados aplicável e apenas tratam os dados conforme instruções contratuais.
               </p>
             </section>
             
@@ -128,7 +128,7 @@ export default function PrivacyPolicy() {
                 <li>Retirar o consentimento a qualquer momento (quando aplicável).</li>
               </ul>
               <p className="mt-3 text-gray-200">
-                Para exercer os seus direitos, envie um pedido para demo@gmail.com.
+                Para exercer os seus direitos, envie um pedido para nextjai.automation@gmail.com .
               </p>
             </section>
             
@@ -173,7 +173,7 @@ export default function PrivacyPolicy() {
                 As alterações serão publicadas nesta página com data de atualização. Recomendamos que reveja regularmente.
               </p>
               <p className="text-gray-200">
-                <strong>Última atualização:</strong> 01 de julho de 2025
+                <strong>Última atualização:</strong> 03 de julho de 2025
               </p>
             </section>
             
@@ -182,8 +182,8 @@ export default function PrivacyPolicy() {
               <p className="mb-3 text-gray-200">
                 Se tiver dúvidas ou preocupações sobre esta Política de Privacidade, contacte-nos:
               </p>
-              <p className="mb-2 text-gray-200">Email: demo@gmail.com</p>
-              <p className="text-gray-200">Telefone: +102 3456 789</p>
+              <p className="mb-2 text-gray-200">Email: nextjai.automation@gmail.com</p>
+              <p className="text-gray-200">Telefone: +351 915 417 824</p>
             </section>
           </motion.div>
         </div>
