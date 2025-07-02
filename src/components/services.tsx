@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState, useEffect, useRef } from "react";
-import graphics from "../../public/assets/graphics.png";
+import graphics from "/assets/graphics.png";
 
 const timelineItems = [
   {

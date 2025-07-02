@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start gap-8 w-full md:w-auto">
             <a href="/" className="cursor-pointer pr-0 md:pr-[45px]">
               <img
-                src="/public/assets/logo-branco-extended.svg"
+                src="/assets/logo-branco-extended.svg"
                 alt="NEXTJAI"
                 className="h-11"
               />
