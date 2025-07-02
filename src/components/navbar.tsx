@@ -3,15 +3,23 @@ import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Navbar() {
   const location = useLocation();
   const isContactPage = location.pathname === "/contact";
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setIsSheetOpen(false);
+    // Scroll to top when navigating
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] w-full py-4 pr-4 ml-[-1] md:px-0 bg-transparent backdrop-blur-md bg-black/35 shadow-md">
       <div className="container mx-auto flex justify-between items-center relative transition-all duration-300">
         {/* Logo aligned to the left */}
-        <Link to="/" className="cursor-pointer group">
+        <Link to="/" className="cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <motion.img
             src="/assets/logo-branco-extended.svg"
             alt="nextjai"
@@ -27,11 +35,11 @@ export default function Navbar() {
 
         {/* Desktop Menu - Centered */}
         <div className="hidden md:flex gap-6 items-center z-10 absolute left-1/2 -translate-x-1/2">
-          <Link to="/" className="relative group z-10 text-white hover:text-gray-300">
+          <Link to="/" className="relative group z-10 text-white hover:text-gray-300" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_#fff]">Home</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
           </Link>
-          <Link to="/services" className="relative group z-10 text-white hover:text-gray-300">
+          <Link to="/services" className="relative group z-10 text-white hover:text-gray-300" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_#fff]">Services</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
           </Link>
@@ -70,7 +78,7 @@ export default function Navbar() {
             */}
           </div>
           <motion.div className="z-10">
-            <Link to="/contact">
+            <Link to="/contact" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <Button
                 variant="outline"
                 className={`rounded-full border-2 transition-all duration-300 hover:scale-105 border-white bg-transparent text-white hover:bg-white hover:text-black z-10 hover:shadow-[0_0_16px_#fff] ${isContactPage ? "border-white bg-white text-black hover:bg-black hover:text-white" : ""}`}
@@ -82,7 +90,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <Sheet>
+        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           {/* Hamburger button absolutely positioned to the right */}
           <SheetTrigger className="md:hidden absolute right-4 top-1/2 -translate-y-1/2 z-20">
             <div className="w-8 h-8 flex flex-col justify-center gap-1.5 group">
@@ -115,13 +123,13 @@ export default function Navbar() {
               </SheetTrigger>
               <div className="mb-16"></div>
               <div className="flex-1 flex flex-col justify-center items-center gap-10 text-4xl font-light">
-                <Link to="/" className="relative group text-white hover:text-gray-300">
+                <Link to="/" className="relative group text-white hover:text-gray-300" onClick={handleLinkClick}>
                   <span className="transition-all duration-300 group-hover:text-gray-400 group-hover:drop-shadow-[0_0_8px_#fff]">
                     Home
                   </span>
                   <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
                 </Link>
-                <Link to="/services" className="relative group text-white hover:text-gray-300">
+                <Link to="/services" className="relative group text-white hover:text-gray-300" onClick={handleLinkClick}>
                   <span className="transition-all duration-300 group-hover:text-gray-400 group-hover:drop-shadow-[0_0_8px_#fff]">
                     Services
                   </span>
@@ -130,7 +138,7 @@ export default function Navbar() {
               </div>
 
               <div className="mt-auto w-full">
-                <Link to="/contact" className="block w-full">
+                <Link to="/contact" className="block w-full" onClick={handleLinkClick}>
                   <Button
                     variant="outline"
                     className={`w-full rounded-full border-2 transition-all duration-300 hover:scale-[1.02] active:scale-100 text-base sm:text-lg py-2.5 sm:py-3 border-white bg-transparent text-white hover:bg-white hover:text-black hover:shadow-[0_0_16px_#fff]`}
