@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
@@ -11,9 +11,9 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-[100] w-full py-4 px-4 md:px-0 bg-transparent backdrop-blur-md bg-black/35 shadow-md">
       <div className="container mx-auto flex justify-between items-center relative transition-all duration-300">
         {/* Logo aligned to the left */}
-        <Link to="/" className="cursor-pointer group">
+        <a href="/" className="cursor-pointer group">
           <motion.img
-            src="/assets/logo-branco-extended.svg"
+            src="../../public/assets/logo-branco-extended.svg"
             alt="nextjai"
             className="h-12 md:h-[40px] ml-2 md:ml-0 transition-all duration-300 group-hover:scale-105"
             animate={{ filter: [
@@ -23,18 +23,18 @@ export default function Navbar() {
             ] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
-        </Link>
+        </a>
 
         {/* Desktop Menu - Centered */}
         <div className="hidden md:flex gap-6 items-center z-10 absolute left-1/2 -translate-x-1/2">
-          <Link to="/" className="relative group z-10 text-white hover:text-gray-300">
+          <a href="/" className="relative group z-10 text-white hover:text-gray-300">
             <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_#fff]">Home</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
-          </Link>
-          <Link to="/services" className="relative group z-10 text-white hover:text-gray-300">
+          </a>
+          <a href="/services" className="relative group z-10 text-white hover:text-gray-300">
             <span className="transition-all duration-300 group-hover:drop-shadow-[0_0_8px_#fff]">Services</span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full group-hover:drop-shadow-[0_0_8px_#fff]"></span>
-          </Link>
+          </a>
         </div>
 
         {/* Right side buttons */}
